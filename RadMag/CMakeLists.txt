@@ -8,16 +8,22 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Network REQUIRED)
 
 set (MYSOURCES "${PROJECT_SOURCE_DIR}/gui/mainwindow.h"
     "${PROJECT_SOURCE_DIR}/gui/mainwindow.cpp"
     "${PROJECT_SOURCE_DIR}/gui/controlsguibottom.h"
-    "${PROJECT_SOURCE_DIR}/gui/controlsguibottom.cpp")
+    "${PROJECT_SOURCE_DIR}/gui/controlsguibottom.cpp"
+    "${PROJECT_SOURCE_DIR}/gui/controlsguiheader.h"
+    "${PROJECT_SOURCE_DIR}/gui/controlsguiheader.cpp"
+    "${PROJECT_SOURCE_DIR}/requests/requestsdata.h"
+    "${PROJECT_SOURCE_DIR}/requests/requestsdata.cpp"
+    "${PROJECT_SOURCE_DIR}/models/requestsmodel.h"
+    "${PROJECT_SOURCE_DIR}/models/requestsmodel.cpp")
 
 
 add_executable(${PROJECT_NAME} "main.cpp" ${MYSOURCES})
 
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Core Qt5::Widgets)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Core Qt5::Widgets Qt5::Network)

@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QWidget>
+#include <QPushButton>
+#include <QHBoxLayout>
 
 class ControlsGuiBottom : public QWidget
 {
@@ -10,9 +12,10 @@ class ControlsGuiBottom : public QWidget
 public:
     explicit ControlsGuiBottom(QWidget *parent = nullptr);
 
-signals:
 
-public slots:
+private:
+    QPushButton* playButton;
+    QHBoxLayout* mainGuiBottomLayout;
 };
 
 #endif // CONTROLSGUIBOTTOM_H

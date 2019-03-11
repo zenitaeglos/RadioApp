@@ -4,13 +4,18 @@
 #include <QMainWindow>
 #include <QObject>
 #include <QLineEdit>
-#include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QTableView>
 #include <QPushButton>
 #include <QWidget>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 #include "controlsguibottom.h"
-
+#include "controlsguiheader.h"
+#include "models/requestsmodel.h"
 
 class MainWindow : public QMainWindow
 {
@@ -18,14 +23,22 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
 
+signals:
+    void searchClicked();
+
+private slots:
+    void fetch();
+    void fillResultsFromRequest(QNetworkReply *networkReply);
+
 private:
     void setupUI();
     QVBoxLayout* mainLayout;
-
-    QLineEdit* searchRadioLineEdit;
     QTableView* radioResultsTableView;
     QWidget* mainWidget;
     ControlsGuiBottom* controlsGuiBottom;
+    ControlsGuiHeader* controlsGuiHeader;
+    requestsmodel* requestsModel;
+    QNetworkAccessManager* manager;
 
 };
 
