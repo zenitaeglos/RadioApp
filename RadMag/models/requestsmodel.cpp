@@ -28,6 +28,17 @@ QVariant requestsmodel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+QVariant requestsmodel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    Q_UNUSED(section);
+    if (role == Qt::DisplayRole) {
+        if (orientation == Qt::Horizontal)
+            return "Radios";
+    }
+
+    return QVariant();
+}
+
 void requestsmodel::setRequestedData(QList<RequestsData *> newRequest)
 {
     beginResetModel();
