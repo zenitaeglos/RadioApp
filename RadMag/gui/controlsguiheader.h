@@ -21,7 +21,7 @@ public:
     QLineEdit* getSearchLineEdit() const;
 
 private:
-    QHBoxLayout* guiHeaderLayout;    
+    QHBoxLayout* guiHeaderLayout;
     QPushButton* searchStationsButton;
     QLineEdit* searchLineEdit;
 };

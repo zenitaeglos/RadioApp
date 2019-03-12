@@ -1,8 +1,8 @@
 #include "controlsguibottom.h"
 
 ControlsGuiBottom::ControlsGuiBottom(QWidget *parent) : QWidget(parent),
-    playButton(new QPushButton(this)),
-    mainGuiBottomLayout(new QHBoxLayout)
+    mainGuiBottomLayout(new QHBoxLayout),
+    playButton(new QPushButton(this))
 {
     playButton->setText("play");
 
