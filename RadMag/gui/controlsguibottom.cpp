@@ -10,3 +10,8 @@ ControlsGuiBottom::ControlsGuiBottom(QWidget *parent) : QWidget(parent),
 
     setLayout(mainGuiBottomLayout);
 }
+
+QPushButton *ControlsGuiBottom::getPlayButton() const
+{
+    return playButton;
+}

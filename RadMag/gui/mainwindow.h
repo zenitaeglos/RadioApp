@@ -6,12 +6,12 @@
 #include <QLineEdit>
 #include <QVBoxLayout>
 #include <QTableView>
+#include <QHeaderView>
 #include <QPushButton>
 #include <QWidget>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QJsonDocument>
-#include <QJsonObject>
 #include <QJsonArray>
 #include "controlsguibottom.h"
 #include "controlsguiheader.h"
@@ -29,6 +29,7 @@ signals:
 private slots:
     void fetch();
     void fillResultsFromRequest(QNetworkReply *networkReply);
+    void play();
 
 private:
     void setupUI();

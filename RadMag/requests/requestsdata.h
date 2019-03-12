@@ -3,18 +3,22 @@
 
 #include <QObject>
 
-class RequestsData : public QObject
+class RequestsData
 {
-    Q_OBJECT
+
 public:
-    explicit RequestsData(QObject *parent = nullptr);
+    explicit RequestsData();
 
+    //getters
     QString getName() const;
-
+    QString getUrl() const;
+    //setters
     void setName(const QString &newName);
+    void setUrlName(const QString &newUrlName);
 
 private:
     QString name;
+    QString urlName;
 };
 
 #endif // REQUESTSDATA_H

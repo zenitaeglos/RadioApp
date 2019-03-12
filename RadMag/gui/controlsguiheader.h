@@ -7,6 +7,9 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 
+/*
+ *header widget. Mainly for search bar.
+ */
 
 class ControlsGuiHeader : public QWidget
 {
@@ -14,11 +17,13 @@ class ControlsGuiHeader : public QWidget
 public:
     explicit ControlsGuiHeader(QWidget *parent = nullptr);
 
-    QPushButton* searchStationsButton;
-    QLineEdit* searchLineEdit;
+    QPushButton* getSearchStationsButton() const;
+    QLineEdit* getSearchLineEdit() const;
 
 private:
-    QHBoxLayout* guiHeaderLayout;
+    QHBoxLayout* guiHeaderLayout;    
+    QPushButton* searchStationsButton;
+    QLineEdit* searchLineEdit;
 };
 
 #endif // CONTROLSGUIHEADER_H
