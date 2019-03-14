@@ -36,6 +36,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Core Qt5::Widgets Qt5::Networ
 
 
 if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    install(TARGETS RadMag DESTINATION bin)
     set(CPACK_GENERATOR "DEB")
     set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Alejandro Martinez, Sebastian Niedworok")
     set(CPACK_PACKAGE_VERSION_MAJOR ${RadMag_VERSION_MAJOR})
