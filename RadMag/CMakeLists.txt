@@ -42,7 +42,7 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     set(CPACK_PACKAGE_VERSION_MINOR RadMag_VERSION_MINOR)
     set(CPACK_PACKAGE_VERSION_PATCH RadMag_VERSION_PATCH)
     set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Internet Radio Station")
-
+    include(CPack)
 
 endif()
 
