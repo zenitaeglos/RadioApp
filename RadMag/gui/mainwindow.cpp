@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include <QFileInfo>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     mainLayout(new QVBoxLayout),
@@ -6,8 +7,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     mainWidget(new QWidget(this)),
     controlsGuiBottom(new ControlsGuiBottom(this)),
     controlsGuiHeader(new ControlsGuiHeader(this)),
-    requestsModel(new requestsmodel(this)),
-    manager(new QNetworkAccessManager(this))
+    requestsModel(new RequestsModel(this)),
+    manager(new QNetworkAccessManager(this)),
+    player(new QMediaPlayer(this)),
+    playList(new QMediaPlaylist(this))
 {
     //function to create the UI
     setupUI();
@@ -27,10 +30,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(this, &MainWindow::searchClicked, this, &MainWindow::fetch);
     connect(manager, &QNetworkAccessManager::finished, this, &MainWindow::fillResultsFromRequest);
     connect(controlsGuiBottom->getPlayButton(), &QPushButton::clicked, this, &MainWindow::play);
+
+    //TODO: Refactor everything. FillResultsFromReuqest, play. It needs to stop, double click options.
 }
 
 void MainWindow::fetch()
 {
+    downloadType = JsonFetch;
     QString lineEditText(controlsGuiHeader->getSearchLineEdit()->text());
     QString str("http://www.radio-browser.info/webservice/json/stations/byname/");
     manager->get(QNetworkRequest(QUrl(str + lineEditText)));
@@ -40,27 +46,63 @@ void MainWindow::fetch()
 void MainWindow::fillResultsFromRequest(QNetworkReply *networkReply)
 {
     QByteArray data = networkReply->readAll();
-    QJsonDocument document = QJsonDocument::fromJson(data);
+    switch (downloadType) {
+    case JsonFetch:
+    {
+        QJsonDocument document = QJsonDocument::fromJson(data);
 
-    QJsonArray array = document.array();
-    QList<RequestsData*> dataForModel;
+        QJsonArray array = document.array();
+        QList<RequestsData*> dataForModel;
 
-    //TODO add favicon to the list.
-    //add link to access the webpage
+        //TODO add favicon to the list.
+        //add link to access the webpage
 
-    for (int i = 0; i < array.size(); i++) {
-        RequestsData* data = new RequestsData;
-        data->setName(array.at(i)["name"].toString());
-        dataForModel.append(data);
-        data->setUrlName(array.at(i)["url"].toString());
+        for (int i = 0; i < array.size(); i++) {
+            RequestsData* data = new RequestsData;
+            data->setName(array.at(i)["name"].toString());
+            dataForModel.append(data);
+            data->setUrlName(array.at(i)["url"].toString());
+        }
+        requestsModel->setRequestedData(dataForModel);
+        break;
     }
-    requestsModel->setRequestedData(dataForModel);
+    case PlayListFetch:
+    {
+        QList<QByteArray> listByte = data.split('\n');
+        for (QByteArray byteArray : listByte) {
+            playList->addMedia(QUrl(byteArray));
+        }
+        player->setPlaylist(playList);
+        player->setVolume(50);
+        player->play();
+
+        break;
+    }
+    }
+
 }
 
 void MainWindow::play()
 {
-    qDebug() << "play the music";
-    //TODO call the QMultimedia to be able to play the url
+
+    radioResultsTableView->currentIndex();
+
+    QModelIndex radioSelectedIndex = radioResultsTableView->selectionModel()->currentIndex();
+    if (radioSelectedIndex.row() >= 0) {
+        RequestsData* data = requestsModel->dataInstance(radioSelectedIndex.row());
+        QFileInfo info = data->getUrl();
+
+        if (!info.suffix().compare(QLatin1String("m3u"), Qt::CaseInsensitive)) {
+            downloadType = PlayListFetch;
+            manager->get(QNetworkRequest(QUrl(QString(data->getUrl()))));
+        }
+        else {
+            playList->addMedia(QUrl(data->getUrl()));
+            player->setPlaylist(playList);
+            player->setVolume(50);
+            player->play();
+        }
+    }
 }
 
 void MainWindow::setupUI()

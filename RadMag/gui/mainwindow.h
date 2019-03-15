@@ -13,6 +13,9 @@
 #include <QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonArray>
+#include <QtMultimedia>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
 #include "controlsguibottom.h"
 #include "controlsguiheader.h"
 #include "models/requestsmodel.h"
@@ -21,6 +24,11 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
+    enum DownloadType {
+        JsonFetch,
+        PlayListFetch,
+    };
+
     explicit MainWindow(QWidget *parent = nullptr);
 
 signals:
@@ -38,8 +46,11 @@ private:
     QWidget* mainWidget;
     ControlsGuiBottom* controlsGuiBottom;
     ControlsGuiHeader* controlsGuiHeader;
-    requestsmodel* requestsModel;
+    RequestsModel* requestsModel;
     QNetworkAccessManager* manager;
+    DownloadType downloadType;
+    QMediaPlayer* player;
+    QMediaPlaylist* playList;
 
 };
 

@@ -1,23 +1,23 @@
 #include "requestsmodel.h"
 
-requestsmodel::requestsmodel(QObject *parent) : QAbstractTableModel (parent)
+RequestsModel::RequestsModel(QObject *parent) : QAbstractTableModel (parent)
 {
 
 }
 
-int requestsmodel::rowCount(const QModelIndex &parent) const
+int RequestsModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return requestsData.size();
 }
 
-int requestsmodel::columnCount(const QModelIndex &parent) const
+int RequestsModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return 1;
 }
 
-QVariant requestsmodel::data(const QModelIndex &index, int role) const
+QVariant RequestsModel::data(const QModelIndex &index, int role) const
 {
     if (requestsData.size() == 0)
         return QVariant();
@@ -28,7 +28,7 @@ QVariant requestsmodel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QVariant requestsmodel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant RequestsModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     Q_UNUSED(section);
     if (role == Qt::DisplayRole) {
@@ -39,9 +39,14 @@ QVariant requestsmodel::headerData(int section, Qt::Orientation orientation, int
     return QVariant();
 }
 
-void requestsmodel::setRequestedData(QList<RequestsData *> newRequest)
+void RequestsModel::setRequestedData(QList<RequestsData *> newRequest)
 {
     beginResetModel();
     requestsData = newRequest;
     endResetModel();
+}
+
+RequestsData *RequestsModel::dataInstance(int row)
+{
+    return requestsData.at(row);
 }

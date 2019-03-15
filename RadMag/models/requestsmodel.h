@@ -5,11 +5,11 @@
 #include <QAbstractTableModel>
 #include "requests/requestsdata.h"
 
-class requestsmodel : public QAbstractTableModel
+class RequestsModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    explicit requestsmodel(QObject *parent = nullptr);
+    explicit RequestsModel(QObject *parent = nullptr);
 
     int rowCount(const QModelIndex& parent) const override;
     int columnCount(const QModelIndex& parent) const override;
@@ -19,7 +19,7 @@ public:
     //set our own custom data for this table model
     void setRequestedData(QList<RequestsData*> newRequest);
 
-
+    RequestsData* dataInstance(int row);
 private:
     QList<RequestsData*> requestsData;
 };
