@@ -59,12 +59,8 @@ void MainWindow::fillResultsFromRequest(QNetworkReply *networkReply)
         //add link to access the webpage
 
         for (int i = 0; i < array.size(); i++) {
-            RequestsData* data = new RequestsData;
-            data->setName(array.at(i)["name"].toString());
+            RequestsData* data = new RequestsData(array.at(i).toObject());
             dataForModel.append(data);
-            data->setUrlName(array.at(i)["url"].toString());
-            data->setBitrate(array.at(i)["bitrate"].toString());
-            data->setCountry(array.at(i)["country"].toString());
         }
         requestsModel->setRequestedData(dataForModel);
         break;
@@ -92,14 +88,14 @@ void MainWindow::play()
     QModelIndex radioSelectedIndex = radioResultsTableView->selectionModel()->currentIndex();
     if (radioSelectedIndex.row() >= 0) {
         RequestsData* data = requestsModel->dataInstance(radioSelectedIndex.row());
-        QFileInfo info = data->getUrl();
+        QFileInfo info = data->getValue(RequestsData::Url);
 
         if (!info.suffix().compare(QLatin1String("m3u"), Qt::CaseInsensitive)) {
             downloadType = PlayListFetch;
-            manager->get(QNetworkRequest(QUrl(QString(data->getUrl()))));
+            manager->get(QNetworkRequest(QUrl(QString(data->getValue(RequestsData::Url)))));
         }
         else {
-            playList->addMedia(QUrl(data->getUrl()));
+            playList->addMedia(QUrl(data->getValue(RequestsData::Url)));
             player->setPlaylist(playList);
             player->setVolume(50);
             player->play();

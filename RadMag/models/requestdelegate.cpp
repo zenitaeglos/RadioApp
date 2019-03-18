@@ -11,14 +11,14 @@ void RequestDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 {
     //all to do
 
-    QRectF square(option.rect.x(), option.rect.y(), option.rect.width(), 120);
+    QRectF square(option.rect.x(), option.rect.y(), option.rect.width(), 60);
 
     painter->drawRect(square);
     QJsonObject jsonObject = index.data().toJsonObject();
 
     painter->drawText(square, Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap, jsonObject["name"].toString());
     painter->drawText(square, Qt::AlignBottom | Qt::AlignLeft | Qt::TextWordWrap, jsonObject["country"].toString());
-    painter->drawText(square, Qt::AlignCenter | Qt::TextWordWrap, jsonObject["biterate"].toString());
+    painter->drawText(square, Qt::AlignCenter | Qt::TextWordWrap, jsonObject["bitrate"].toString());
 
 
 
@@ -26,6 +26,7 @@ void RequestDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 QSize RequestDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    QRect rect(option.rect.x(), option.rect.y(), option.rect.width(), 120);
+    Q_UNUSED(index);
+    QRect rect(option.rect.x(), option.rect.y(), option.rect.width(), 68);
     return rect.size();
 }

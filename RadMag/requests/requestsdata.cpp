@@ -1,46 +1,27 @@
 #include "requestsdata.h"
 
-RequestsData::RequestsData()
+
+RequestsData::RequestsData(QJsonObject jsonObject) :
+    jsonObject(jsonObject)
 {
 
 }
 
-QString RequestsData::getName() const
+QJsonObject RequestsData::getObject() const
 {
-    return name;
+    return jsonObject;
 }
 
-QString RequestsData::getUrl() const
+QString RequestsData::getValue(RequestsData::ObjectKeys key)
 {
-    return urlName;
-}
-
-QString RequestsData::getBitrate() const
-{
-    return bitrate;
-}
-
-QString RequestsData::getCountry() const
-{
-    return country;
-}
-
-void RequestsData::setName(const QString &newName)
-{
-    name = newName;
-}
-
-void RequestsData::setUrlName(const QString &newUrlName)
-{
-    urlName = newUrlName;
-}
-
-void RequestsData::setBitrate(const QString &newBitrate)
-{
-    bitrate = newBitrate;
-}
-
-void RequestsData::setCountry(const QString &newCountry)
-{
-    country = newCountry;
+    switch (key) {
+        case Name:
+        return jsonObject["name"].toString();
+    case Url:
+        return jsonObject["url"].toString();
+    case Bitrate:
+        return jsonObject["bitrate"].toString();
+    case Country:
+        return jsonObject["country"].toString();
+    }
 }

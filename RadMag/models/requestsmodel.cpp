@@ -25,12 +25,7 @@ QVariant RequestsModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     if (role == Qt::DisplayRole) {
-
-        QJsonObject jsonForDelegate;
-        jsonForDelegate["name"] = requestsData.at(index.row())->getName();
-        jsonForDelegate["biterate"] = requestsData.at(index.row())->getBitrate();
-        jsonForDelegate["country"] = requestsData.at(index.row())->getCountry();
-        return jsonForDelegate;
+        return requestsData.at(index.row())->getObject();
     }
     return QVariant();
 }

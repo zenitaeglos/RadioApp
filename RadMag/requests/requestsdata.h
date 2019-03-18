@@ -2,30 +2,28 @@
 #define REQUESTSDATA_H
 
 #include <QObject>
+#include <QJsonObject>
 
 class RequestsData
 {
 
 public:
-    explicit RequestsData();
+    enum ObjectKeys {
+        Name,
+        Url,
+        Bitrate,
+        Country
+    };
+    explicit RequestsData(QJsonObject jsonObject);
 
     //getters
-    QString getName() const;
-    QString getUrl() const;
-    QString getBitrate() const;
-    QString getCountry() const;
-    //setters
-    void setName(const QString &newName);
-    void setUrlName(const QString &newUrlName);
-    void setBitrate(const QString &newBitrate);
-    void setCountry(const QString &newCountry);
+    QJsonObject getObject() const;
+    QString getValue(ObjectKeys key);
+
 
 
 private:
-    QString name;
-    QString urlName;
-    QString bitrate;
-    QString country;
+    QJsonObject jsonObject;
 };
 
 #endif // REQUESTSDATA_H
