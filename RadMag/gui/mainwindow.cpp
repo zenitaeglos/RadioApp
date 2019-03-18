@@ -84,6 +84,10 @@ void MainWindow::play()
 {
     playList->clear();
     radioResultsTableView->currentIndex();
+    if (player->state() == QMediaPlayer::PlayingState) {
+        player->stop();
+        return;
+    }
 
     QModelIndex radioSelectedIndex = radioResultsTableView->selectionModel()->currentIndex();
     if (radioSelectedIndex.row() >= 0) {
@@ -105,6 +109,8 @@ void MainWindow::play()
 
 void MainWindow::setupUI()
 {
+    //TODO add a widget on the side of the tableview to show more information in case an element is
+    //selected
     mainLayout->addWidget(controlsGuiHeader);
     mainLayout->addWidget(radioResultsTableView);
     mainLayout->addWidget(controlsGuiBottom);

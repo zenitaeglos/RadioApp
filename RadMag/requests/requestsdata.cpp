@@ -15,7 +15,7 @@ QJsonObject RequestsData::getObject() const
 QString RequestsData::getValue(RequestsData::ObjectKeys key)
 {
     switch (key) {
-        case Name:
+    case Name:
         return jsonObject["name"].toString();
     case Url:
         return jsonObject["url"].toString();
