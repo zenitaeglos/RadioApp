@@ -24,7 +24,9 @@ set (MYSOURCES "${PROJECT_SOURCE_DIR}/gui/mainwindow.h"
     "${PROJECT_SOURCE_DIR}/requests/requestsdata.h"
     "${PROJECT_SOURCE_DIR}/requests/requestsdata.cpp"
     "${PROJECT_SOURCE_DIR}/models/requestsmodel.h"
-    "${PROJECT_SOURCE_DIR}/models/requestsmodel.cpp")
+    "${PROJECT_SOURCE_DIR}/models/requestsmodel.cpp"
+    "${PROJECT_SOURCE_DIR}/models/requestdelegate.h"
+    "${PROJECT_SOURCE_DIR}/models/requestdelegate.cpp")
 
 
 add_executable(${PROJECT_NAME} "main.cpp" ${MYSOURCES})

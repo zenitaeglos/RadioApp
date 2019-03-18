@@ -1,4 +1,6 @@
 #include "requestsmodel.h"
+#include <QJsonArray>
+#include <QJsonObject>
 
 RequestsModel::RequestsModel(QObject *parent) : QAbstractTableModel (parent)
 {
@@ -23,7 +25,12 @@ QVariant RequestsModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     if (role == Qt::DisplayRole) {
-        return requestsData.at(index.row())->getName();
+
+        QJsonObject jsonForDelegate;
+        jsonForDelegate["name"] = requestsData.at(index.row())->getName();
+        jsonForDelegate["biterate"] = requestsData.at(index.row())->getBitrate();
+        jsonForDelegate["country"] = requestsData.at(index.row())->getCountry();
+        return jsonForDelegate;
     }
     return QVariant();
 }

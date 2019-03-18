@@ -6,6 +6,8 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QHBoxLayout>
+#include <QKeyEvent>
+
 
 /*
  *header widget. Mainly for search bar.
@@ -19,6 +21,8 @@ public:
 
     QPushButton* getSearchStationsButton() const;
     QLineEdit* getSearchLineEdit() const;
+
+    void keyPressEvent(QKeyEvent* event);
 
 private:
     QHBoxLayout* guiHeaderLayout;

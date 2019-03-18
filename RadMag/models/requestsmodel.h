@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QAbstractTableModel>
+#include <QMap>
 #include "requests/requestsdata.h"
 
 class RequestsModel : public QAbstractTableModel

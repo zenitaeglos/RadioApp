@@ -19,6 +19,7 @@
 #include "controlsguibottom.h"
 #include "controlsguiheader.h"
 #include "models/requestsmodel.h"
+#include "models/requestdelegate.h"
 
 class MainWindow : public QMainWindow
 {
@@ -51,6 +52,7 @@ private:
     DownloadType downloadType;
     QMediaPlayer* player;
     QMediaPlaylist* playList;
+    RequestDelegate* delegate;
 
 };
 

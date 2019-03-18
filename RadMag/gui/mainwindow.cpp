@@ -10,7 +10,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     requestsModel(new RequestsModel(this)),
     manager(new QNetworkAccessManager(this)),
     player(new QMediaPlayer(this)),
-    playList(new QMediaPlaylist(this))
+    playList(new QMediaPlaylist(this)),
+    delegate(new RequestDelegate(this))
 {
     //function to create the UI
     setupUI();
@@ -23,7 +24,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     radioResultsTableView->horizontalHeader()->setStretchLastSection(true);
     radioResultsTableView->setStyleSheet("QHeaderView::section {color: white; background-color: #232326; height: 40px;"
                                          "font-size: 20px}");
-
+    radioResultsTableView->setItemDelegate(delegate);
+    radioResultsTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     //connects
     connect(controlsGuiHeader->getSearchStationsButton(), &QPushButton::clicked, this, &MainWindow::searchClicked);
@@ -47,8 +49,7 @@ void MainWindow::fillResultsFromRequest(QNetworkReply *networkReply)
 {
     QByteArray data = networkReply->readAll();
     switch (downloadType) {
-    case JsonFetch:
-    {
+    case JsonFetch: {
         QJsonDocument document = QJsonDocument::fromJson(data);
 
         QJsonArray array = document.array();
@@ -62,12 +63,13 @@ void MainWindow::fillResultsFromRequest(QNetworkReply *networkReply)
             data->setName(array.at(i)["name"].toString());
             dataForModel.append(data);
             data->setUrlName(array.at(i)["url"].toString());
+            data->setBitrate(array.at(i)["bitrate"].toString());
+            data->setCountry(array.at(i)["country"].toString());
         }
         requestsModel->setRequestedData(dataForModel);
         break;
     }
-    case PlayListFetch:
-    {
+    case PlayListFetch:{
         QList<QByteArray> listByte = data.split('\n');
         for (QByteArray byteArray : listByte) {
             playList->addMedia(QUrl(byteArray));
@@ -84,7 +86,7 @@ void MainWindow::fillResultsFromRequest(QNetworkReply *networkReply)
 
 void MainWindow::play()
 {
-
+    playList->clear();
     radioResultsTableView->currentIndex();
 
     QModelIndex radioSelectedIndex = radioResultsTableView->selectionModel()->currentIndex();

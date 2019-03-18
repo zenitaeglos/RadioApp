@@ -1,4 +1,5 @@
 #include "controlsguiheader.h"
+#include <QDebug>
 
 ControlsGuiHeader::ControlsGuiHeader(QWidget *parent) : QWidget(parent),
     guiHeaderLayout(new QHBoxLayout),
@@ -24,4 +25,11 @@ QPushButton* ControlsGuiHeader::getSearchStationsButton() const
 QLineEdit *ControlsGuiHeader::getSearchLineEdit() const
 {
     return searchLineEdit;
+}
+
+void ControlsGuiHeader::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Return) {
+        searchStationsButton->clicked();
+    }
 }
