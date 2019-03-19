@@ -75,6 +75,7 @@ void MainWindow::fillResultsFromRequest(QNetworkReply *networkReply)
         for (QByteArray byteArray : listByte) {
             playList->addMedia(QUrl(byteArray));
         }
+        emit playClicked();
         break;
     }
     }
@@ -94,7 +95,6 @@ void MainWindow::playRadioStation()
         if (!info.suffix().compare(QLatin1String("m3u"), Qt::CaseInsensitive)) {
             downloadType = PlayListFetch;
             fetch(QString(data->getValue(RequestsData::Url)));
-            emit playClicked();
         }
         else {
             playList->addMedia(QUrl(data->getValue(RequestsData::Url)));
