@@ -14,7 +14,7 @@ void RequestDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 
     painter->setRenderHint(QPainter::Antialiasing);
-    painter->setPen(QPen(Qt::black, 0.2));
+    //painter->setPen(QPen(Qt::black, 0.2));
     painter->drawRect(option.rect);
     QJsonObject jsonObject = index.data().toJsonObject();
 

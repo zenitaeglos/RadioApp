@@ -33,12 +33,15 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
 
 signals:
-    void searchClicked();
+    void playClicked();
 
 private slots:
-    void fetch();
+    void searchStation();
+    void fetch(QString stringToSearch);
     void fillResultsFromRequest(QNetworkReply *networkReply);
+    void playRadioStation();
     void play();
+    void stop();
 
 private:
     void setupUI();

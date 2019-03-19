@@ -28,21 +28,26 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     radioResultsTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     //connects
-    connect(controlsGuiHeader->getSearchStationsButton(), &QPushButton::clicked, this, &MainWindow::searchClicked);
-    connect(this, &MainWindow::searchClicked, this, &MainWindow::fetch);
+    connect(controlsGuiHeader->getSearchStationsButton(), &QPushButton::clicked, this, &MainWindow::searchStation);
     connect(manager, &QNetworkAccessManager::finished, this, &MainWindow::fillResultsFromRequest);
-    connect(controlsGuiBottom->getPlayButton(), &QPushButton::clicked, this, &MainWindow::play);
+    connect(controlsGuiBottom->getPlayButton(), &QPushButton::clicked, this, &MainWindow::playRadioStation);
+    connect(controlsGuiBottom->getStopButton(), &QPushButton::clicked, this, &MainWindow::stop);
+    connect(this, &MainWindow::playClicked, this, &MainWindow::play);
 
     //TODO: Refactor everything. FillResultsFromReuqest, play. It needs to stop, double click options.
 }
 
-void MainWindow::fetch()
+void MainWindow::searchStation()
 {
     downloadType = JsonFetch;
     QString lineEditText(controlsGuiHeader->getSearchLineEdit()->text());
     QString str("http://www.radio-browser.info/webservice/json/stations/byname/");
-    manager->get(QNetworkRequest(QUrl(str + lineEditText)));
+    fetch(str + lineEditText);
+}
 
+void MainWindow::fetch(QString stringToSearch)
+{   
+    manager->get(QNetworkRequest(QUrl(stringToSearch)));
 }
 
 void MainWindow::fillResultsFromRequest(QNetworkReply *networkReply)
@@ -80,14 +85,10 @@ void MainWindow::fillResultsFromRequest(QNetworkReply *networkReply)
 
 }
 
-void MainWindow::play()
+void MainWindow::playRadioStation()
 {
     playList->clear();
     radioResultsTableView->currentIndex();
-    if (player->state() == QMediaPlayer::PlayingState) {
-        player->stop();
-        return;
-    }
 
     QModelIndex radioSelectedIndex = radioResultsTableView->selectionModel()->currentIndex();
     if (radioSelectedIndex.row() >= 0) {
@@ -96,15 +97,26 @@ void MainWindow::play()
 
         if (!info.suffix().compare(QLatin1String("m3u"), Qt::CaseInsensitive)) {
             downloadType = PlayListFetch;
-            manager->get(QNetworkRequest(QUrl(QString(data->getValue(RequestsData::Url)))));
+            fetch(QString(data->getValue(RequestsData::Url)));
+            emit playClicked();
         }
         else {
             playList->addMedia(QUrl(data->getValue(RequestsData::Url)));
-            player->setPlaylist(playList);
-            player->setVolume(50);
-            player->play();
+            emit playClicked();
         }
     }
+}
+
+void MainWindow::play()
+{
+    player->setPlaylist(playList);
+    player->setVolume(50);
+    player->play();
+}
+
+void MainWindow::stop()
+{
+    player->stop();
 }
 
 void MainWindow::setupUI()

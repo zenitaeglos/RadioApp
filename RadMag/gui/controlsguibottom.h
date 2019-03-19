@@ -13,10 +13,12 @@ public:
     explicit ControlsGuiBottom(QWidget *parent = nullptr);
 
     QPushButton* getPlayButton() const;
+    QPushButton* getStopButton() const;
 
 private:
     QHBoxLayout* mainGuiBottomLayout;    
     QPushButton* playButton;
+    QPushButton* stopButton;
 };
 
 #endif // CONTROLSGUIBOTTOM_H
