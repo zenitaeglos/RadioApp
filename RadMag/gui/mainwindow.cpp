@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     //connects
     connect(controlsGuiHeader->getSearchStationsButton(), &QPushButton::clicked, this, &MainWindow::searchStation);
-    connect(manager, &QNetworkAccessManager::finished, this, &MainWindow::fillResultsFromRequest);
+    connect(manager, &QNetworkAccessManager::finished, this, &MainWindow::resultsFromRequest);
     connect(controlsGuiBottom->getPlayButton(), &QPushButton::clicked, this, &MainWindow::playRadioStation);
     connect(controlsGuiBottom->getStopButton(), &QPushButton::clicked, this, &MainWindow::stop);
     connect(this, &MainWindow::playClicked, this, &MainWindow::play);
@@ -50,36 +50,19 @@ void MainWindow::fetch(QString stringToSearch)
     manager->get(QNetworkRequest(QUrl(stringToSearch)));
 }
 
-void MainWindow::fillResultsFromRequest(QNetworkReply *networkReply)
+void MainWindow::resultsFromRequest(QNetworkReply *networkReply)
 {
     QByteArray data = networkReply->readAll();
     switch (downloadType) {
     case JsonFetch: {
-        QJsonDocument document = QJsonDocument::fromJson(data);
-
-        QJsonArray array = document.array();
-        QList<RequestsData*> dataForModel;
-
-        //TODO add favicon to the list.
-        //add link to access the webpage
-
-        for (int i = 0; i < array.size(); i++) {
-            RequestsData* data = new RequestsData(array.at(i).toObject());
-            dataForModel.append(data);
-        }
-        requestsModel->setRequestedData(dataForModel);
+        fillDataModel(data);
         break;
     }
     case PlayListFetch:{
-        QList<QByteArray> listByte = data.split('\n');
-        for (QByteArray byteArray : listByte) {
-            playList->addMedia(QUrl(byteArray));
-        }
-        emit playClicked();
+        setPlaylistToPlay(data);
         break;
     }
     }
-
 }
 
 void MainWindow::playRadioStation()
@@ -113,6 +96,35 @@ void MainWindow::play()
 void MainWindow::stop()
 {
     player->stop();
+}
+
+void MainWindow::fillDataModel(QByteArray data)
+{
+    //obtain the data to fill the list of json objects
+    //and send it to the model
+    QJsonDocument document = QJsonDocument::fromJson(data);
+
+    QJsonArray array = document.array();
+    QList<RequestsData*> dataForModel;
+
+    //add link to access the webpage
+
+    for (int i = 0; i < array.size(); i++) {
+        RequestsData* data = new RequestsData(array.at(i).toObject());
+        dataForModel.append(data);
+    }
+    requestsModel->setRequestedData(dataForModel);
+}
+
+void MainWindow::setPlaylistToPlay(QByteArray data)
+{
+    //get the bitrate for the playlist and emit
+    //signal to play it
+    QList<QByteArray> listByte = data.split('\n');
+    for (QByteArray byteArray : listByte) {
+        playList->addMedia(QUrl(byteArray));
+    }
+    emit playClicked();
 }
 
 void MainWindow::setupUI()

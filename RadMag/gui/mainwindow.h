@@ -38,12 +38,14 @@ signals:
 private slots:
     void searchStation();
     void fetch(QString stringToSearch);
-    void fillResultsFromRequest(QNetworkReply *networkReply);
+    void resultsFromRequest(QNetworkReply *networkReply);
     void playRadioStation();
     void play();
     void stop();
 
 private:
+    void fillDataModel(QByteArray data);
+    void setPlaylistToPlay(QByteArray data);
     void setupUI();
     QVBoxLayout* mainLayout;
     QTableView* radioResultsTableView;
