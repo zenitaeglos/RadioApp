@@ -75,10 +75,6 @@ void MainWindow::fillResultsFromRequest(QNetworkReply *networkReply)
         for (QByteArray byteArray : listByte) {
             playList->addMedia(QUrl(byteArray));
         }
-        player->setPlaylist(playList);
-        player->setVolume(50);
-        player->play();
-
         break;
     }
     }
