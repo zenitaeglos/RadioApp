@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(controlsGuiBottom->getPlayButton(), &QPushButton::clicked, this, &MainWindow::playRadioStation);
     connect(controlsGuiBottom->getStopButton(), &QPushButton::clicked, this, &MainWindow::stop);
     connect(this, &MainWindow::playClicked, this, &MainWindow::play);
+    connect(radioResultsTableView, &QTableView::doubleClicked, this, &MainWindow::playRadioStation);
 
     //TODO: Refactor everything. FillResultsFromReuqest, play. It needs to stop, double click options.
 }
@@ -54,14 +55,14 @@ void MainWindow::resultsFromRequest(QNetworkReply *networkReply)
 {
     QByteArray data = networkReply->readAll();
     switch (downloadType) {
-    case JsonFetch: {
-        fillDataModel(data);
-        break;
-    }
-    case PlayListFetch:{
-        setPlaylistToPlay(data);
-        break;
-    }
+        case JsonFetch: {
+            fillDataModel(data);
+            break;
+        }
+        case PlayListFetch:{
+            setPlaylistToPlay(data);
+            break;
+        }
     }
 }
 

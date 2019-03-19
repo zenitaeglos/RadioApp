@@ -16,10 +16,11 @@ void RequestDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     painter->setRenderHint(QPainter::Antialiasing);
     //painter->setPen(QPen(Qt::black, 0.2));
     painter->setPen(Qt::NoPen);
+    painter->setBrush(Qt::NoBrush);
     painter->drawRect(option.rect);
     QJsonObject jsonObject = index.data().toJsonObject();
 
-    painter->setPen(QPen(Qt::white));
+    painter->setPen(QPen(Qt::black));
     font.setPointSize(12);
     painter->setFont(font);
     QRectF nameRect(option.rect.x() + 2, option.rect.y() + 2, option.rect.width(), 30);
@@ -31,7 +32,9 @@ void RequestDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     painter->drawText(countryRect, "Country: " + jsonObject["country"].toString());
     QRectF bitRateRect(countryRect.bottomRight().x(), countryRect.topRight().y(), option.rect.width() - countryRect.width(), 20);
     painter->drawText(bitRateRect, Qt::AlignCenter | Qt::TextWordWrap, "Bitrate: " + jsonObject["bitrate"].toString());
-    painter->drawLine(option.rect.bottomLeft().x(), option.rect.bottomLeft().y(), option.rect.bottomRight().x(), option.rect.bottomRight().y());
+    painter->drawLine(option.rect.bottomLeft().x(), option.rect.bottomLeft().y(),
+                      option.rect.bottomRight().x(), option.rect.bottomRight().y());
+
 }
 
 QSize RequestDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
