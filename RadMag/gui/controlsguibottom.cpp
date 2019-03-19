@@ -5,7 +5,7 @@ ControlsGuiBottom::ControlsGuiBottom(QWidget *parent) : QWidget(parent),
     playButton(new QPushButton(this)),
     stopButton(new QPushButton(this))
 {
-    playButton->setText("play");
+    playButton->setText("Play");
     stopButton->setText("Stop");
 
     mainGuiBottomLayout->addWidget(playButton);
