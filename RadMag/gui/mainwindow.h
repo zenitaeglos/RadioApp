@@ -16,6 +16,9 @@
 #include <QtMultimedia>
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
+#include <QMediaMetaData>
+#include <QDebug>
+#include <QFileInfo>
 #include "controlsguibottom.h"
 #include "controlsguiheader.h"
 #include "models/requestsmodel.h"
@@ -40,6 +43,7 @@ private slots:
     void fetch(QString stringToSearch);
     void resultsFromRequest(QNetworkReply *networkReply);
     void playRadioStation();
+    void printMediaMetaInfo();
     void play();
     void stop();
 

@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include <QFileInfo>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     mainLayout(new QVBoxLayout),
@@ -34,6 +33,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(controlsGuiBottom->getStopButton(), &QPushButton::clicked, this, &MainWindow::stop);
     connect(this, &MainWindow::playClicked, this, &MainWindow::play);
     connect(radioResultsTableView, &QTableView::doubleClicked, this, &MainWindow::playRadioStation);
+
+    connect(player, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::printMediaMetaInfo);
 
     //TODO: Refactor everything. FillResultsFromReuqest, play. It needs to stop, double click options.
 }
@@ -85,6 +86,10 @@ void MainWindow::playRadioStation()
             emit playClicked();
         }
     }
+}
+
+void MainWindow::printMediaMetaInfo() {
+    qDebug() << player->metaData(QMediaMetaData::Title).toString();
 }
 
 void MainWindow::play()
