@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/baseline-play_circle_outline-24px.svg</file>
+        <file>resources/baseline-stop-24px.svg</file>
+        <file>resources/baseline-search-24px.svg</file>
+    </qresource>
+</RCC>
