@@ -20,7 +20,7 @@ void RequestDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     painter->drawRect(option.rect);
     QJsonObject jsonObject = index.data().toJsonObject();
 
-    painter->setPen(QPen(Qt::black));
+    painter->setPen(QPen(Qt::red));
     font.setPointSize(12);
     painter->setFont(font);
     QRectF nameRect(option.rect.x() + 2, option.rect.y() + 2, option.rect.width(), 30);

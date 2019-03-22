@@ -36,6 +36,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     connect(player, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::printMediaMetaInfo);
 
+    connect(controlsGuiHeader->getVolumeSlider(), &QSlider::valueChanged, player, &QMediaPlayer::setVolume);
+
     //TODO: Refactor everything. FillResultsFromReuqest, play. It needs to stop, double click options.
 }
 

@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QKeyEvent>
+#include <QSlider>
 
 
 /*
@@ -21,6 +22,7 @@ public:
 
     QPushButton* getSearchStationsButton() const;
     QLineEdit* getSearchLineEdit() const;
+    QSlider* getVolumeSlider() const;
 
     void keyPressEvent(QKeyEvent* event);
 
@@ -28,6 +30,7 @@ private:
     QHBoxLayout* guiHeaderLayout;
     QPushButton* searchStationsButton;
     QLineEdit* searchLineEdit;
+    QSlider* volumeSlider;
 };
 
 #endif // CONTROLSGUIHEADER_H
