@@ -15,6 +15,8 @@ ControlsGuiHeader::ControlsGuiHeader(QWidget *parent) : QWidget(parent),
     volumeSlider->setValue(50);
     volumeSlider->setMaximumWidth(80);
 
+    searchStationsButton->setMinimumHeight(50);
+
     guiHeaderLayout->addWidget(searchLineEdit);
     guiHeaderLayout->addWidget(searchStationsButton);
 

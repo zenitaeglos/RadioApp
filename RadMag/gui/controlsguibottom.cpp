@@ -8,6 +8,12 @@ ControlsGuiBottom::ControlsGuiBottom(QWidget *parent) : QWidget(parent),
     playButton->setText("Play");
     stopButton->setText("Stop");
 
+    playButton->setMinimumHeight(50);
+    playButton->setMaximumWidth(100);
+
+    stopButton->setMinimumHeight(50);
+    stopButton->setMaximumWidth(100);
+
     mainGuiBottomLayout->addWidget(playButton);
     mainGuiBottomLayout->addWidget(stopButton);
 
