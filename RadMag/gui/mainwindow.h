@@ -9,6 +9,7 @@
 #include <QHeaderView>
 #include <QPushButton>
 #include <QWidget>
+#include <QSplitter>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QJsonDocument>
@@ -23,6 +24,7 @@
 #include "controlsguiheader.h"
 #include "models/requestsmodel.h"
 #include "models/requestdelegate.h"
+#include "models/favouritesmodel.h"
 
 class MainWindow : public QMainWindow
 {
@@ -62,6 +64,9 @@ private:
     QMediaPlayer* player;
     QMediaPlaylist* playList;
     RequestDelegate* delegate;
+    QTableView* favouritesTableView;
+    QHBoxLayout* tablesHLayout;
+    FavouritesModel* favouritesModel;
 
 };
 

@@ -10,7 +10,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     manager(new QNetworkAccessManager(this)),
     player(new QMediaPlayer(this)),
     playList(new QMediaPlaylist(this)),
-    delegate(new RequestDelegate(this))
+    delegate(new RequestDelegate(this)),
+    favouritesTableView(new QTableView),
+    tablesHLayout(new QHBoxLayout),
+    favouritesModel(new FavouritesModel(this))
 {
     //function to create the UI
     setupUI();
@@ -19,12 +22,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     requestsModel->setRequestedData(QList<RequestsData*>());
     radioResultsTableView->setModel(requestsModel);
 
-    //TODO set header style
-    radioResultsTableView->horizontalHeader()->setStretchLastSection(true);
-    radioResultsTableView->setStyleSheet("QHeaderView::section {color: white; background-color: #232326; height: 40px;"
-                                         "font-size: 20px}");
-    radioResultsTableView->setItemDelegate(delegate);
-    radioResultsTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    favouritesTableView->setModel(favouritesModel);
 
     //connects
     connect(controlsGuiHeader->getSearchStationsButton(), &QPushButton::clicked, this, &MainWindow::searchStation);
@@ -137,10 +135,19 @@ void MainWindow::setPlaylistToPlay(QByteArray data)
 
 void MainWindow::setupUI()
 {
-    //TODO add a widget on the side of the tableview to show more information in case an element is
-    //selected
+    //TODO set header style
+    radioResultsTableView->horizontalHeader()->setStretchLastSection(true);
+    radioResultsTableView->setStyleSheet("QHeaderView::section {color: white; background-color: #232326; height: 40px;"
+                                         "font-size: 20px}");
+    radioResultsTableView->setItemDelegate(delegate);
+    radioResultsTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+    favouritesTableView->setMaximumWidth(120);
+    tablesHLayout->addWidget(favouritesTableView);
+    tablesHLayout->addWidget(radioResultsTableView);
+
     mainLayout->addWidget(controlsGuiHeader);
-    mainLayout->addWidget(radioResultsTableView);
+    mainLayout->addLayout(tablesHLayout);
     mainLayout->addWidget(controlsGuiBottom);
 
     mainWidget->setLayout(mainLayout);

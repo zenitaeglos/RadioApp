@@ -7,9 +7,12 @@ ControlsGuiHeader::ControlsGuiHeader(QWidget *parent) : QWidget(parent),
     searchLineEdit(new QLineEdit(this)),
     volumeSlider(new QSlider(Qt::Horizontal, this))
 {
+    searchLineEdit->setPlaceholderText("Search Radio");
     searchLineEdit->setToolTip("Search radio station");
     searchStationsButton->setIcon(QIcon("://resources/baseline-search-24px.svg"));
     searchStationsButton->setIconSize(QSize(searchStationsButton->height() - 8, searchStationsButton->height() - 8));
+
+    searchStationsButton->setToolTip("Search");
 
     volumeSlider->setMinimum(0);
     volumeSlider->setMaximum(100);
