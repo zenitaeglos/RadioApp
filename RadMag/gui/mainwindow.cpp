@@ -22,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     requestsModel->setRequestedData(QList<RequestsData*>());
     radioResultsTableView->setModel(requestsModel);
 
+    //set the model for the playlists that are saved. This has to be used
+    //with sqlite database to save the data
     favouritesTableView->setModel(favouritesModel);
 
     //connects

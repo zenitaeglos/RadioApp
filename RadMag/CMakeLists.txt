@@ -13,7 +13,7 @@ set(RadMag_VERSION_MAJOR 0)
 set(RadMag_VERSION_MINOR 1)
 set(RadMag_VERSION_PATCH 2)
 
-find_package(Qt5 COMPONENTS Core Widgets Network Multimedia Svg REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Network Multimedia Svg Sql REQUIRED)
 
 set (MYSOURCES "${PROJECT_SOURCE_DIR}/gui/mainwindow.h"
     "${PROJECT_SOURCE_DIR}/gui/mainwindow.cpp"
@@ -35,7 +35,7 @@ add_executable(${PROJECT_NAME} "main.cpp" "files.qrc" ${MYSOURCES})
 
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Core Qt5::Widgets Qt5::Network Qt5::Multimedia Qt5::Svg)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Core Qt5::Widgets Qt5::Network Qt5::Multimedia Qt5::Svg Qt5::Sql)
 
 
 
