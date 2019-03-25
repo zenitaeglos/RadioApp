@@ -7,11 +7,13 @@ FavouritesModel::FavouritesModel(QObject *parent) : QAbstractTableModel (parent)
 
 int FavouritesModel::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent);
     return 1;
 }
 
 int FavouritesModel::columnCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent);
     return 1;
 }
 
@@ -24,7 +26,7 @@ QVariant FavouritesModel::headerData(int section, Qt::Orientation orientation, i
 {
     if (role == Qt::DisplayRole) {
         if (orientation == Qt::Horizontal) {
-            return "Playlists";
+            return "Favourites";
         }
     }
     return QVariant();

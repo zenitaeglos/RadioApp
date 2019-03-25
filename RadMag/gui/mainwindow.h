@@ -15,8 +15,6 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QtMultimedia>
-#include <QMediaPlayer>
-#include <QMediaPlaylist>
 #include <QMediaMetaData>
 #include <QDebug>
 #include <QFileInfo>
@@ -25,6 +23,7 @@
 #include "models/requestsmodel.h"
 #include "models/requestdelegate.h"
 #include "models/favouritesmodel.h"
+#include "logic/radioplayer.h"
 
 class MainWindow : public QMainWindow
 {
@@ -36,6 +35,7 @@ public:
     };
 
     explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
 
 signals:
     void playClicked();
@@ -45,9 +45,10 @@ private slots:
     void fetch(QString stringToSearch);
     void resultsFromRequest(QNetworkReply *networkReply);
     void playRadioStation();
-    void printMediaMetaInfo();
+    //void printMediaMetaInfo();
     void play();
     void stop();
+    void setVolume(int value);
 
 private:
     void fillDataModel(QByteArray data);
@@ -61,12 +62,11 @@ private:
     RequestsModel* requestsModel;
     QNetworkAccessManager* manager;
     DownloadType downloadType;
-    QMediaPlayer* player;
-    QMediaPlaylist* playList;
     RequestDelegate* delegate;
     QTableView* favouritesTableView;
     QHBoxLayout* tablesHLayout;
     FavouritesModel* favouritesModel;
+    RadioPlayer* radioPlayer;
 
 };
 

@@ -28,7 +28,9 @@ set (MYSOURCES "${PROJECT_SOURCE_DIR}/gui/mainwindow.h"
     "${PROJECT_SOURCE_DIR}/models/requestdelegate.h"
     "${PROJECT_SOURCE_DIR}/models/requestdelegate.cpp"
     "${PROJECT_SOURCE_DIR}/models/favouritesmodel.h"
-    "${PROJECT_SOURCE_DIR}/models/favouritesmodel.cpp")
+    "${PROJECT_SOURCE_DIR}/models/favouritesmodel.cpp"
+    "${PROJECT_SOURCE_DIR}/logic/radioplayer.h"
+    "${PROJECT_SOURCE_DIR}/logic/radioplayer.cpp")
 
 
 add_executable(${PROJECT_NAME} "main.cpp" "files.qrc" ${MYSOURCES})

@@ -8,12 +8,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     controlsGuiHeader(new ControlsGuiHeader(this)),
     requestsModel(new RequestsModel(this)),
     manager(new QNetworkAccessManager(this)),
-    player(new QMediaPlayer(this)),
-    playList(new QMediaPlaylist(this)),
     delegate(new RequestDelegate(this)),
     favouritesTableView(new QTableView),
     tablesHLayout(new QHBoxLayout),
-    favouritesModel(new FavouritesModel(this))
+    favouritesModel(new FavouritesModel(this)),
+    radioPlayer(new RadioPlayer())
 {
     //function to create the UI
     setupUI();
@@ -26,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     //with sqlite database to save the data
     favouritesTableView->setModel(favouritesModel);
 
+    radioPlayer->setVolume(controlsGuiHeader->getVolumeSlider()->value());
+
     //connects
     connect(controlsGuiHeader->getSearchStationsButton(), &QPushButton::clicked, this, &MainWindow::searchStation);
     connect(manager, &QNetworkAccessManager::finished, this, &MainWindow::resultsFromRequest);
@@ -34,11 +35,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(this, &MainWindow::playClicked, this, &MainWindow::play);
     connect(radioResultsTableView, &QTableView::doubleClicked, this, &MainWindow::playRadioStation);
 
-    connect(player, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::printMediaMetaInfo);
+    //connect(player, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::printMediaMetaInfo);
 
-    connect(controlsGuiHeader->getVolumeSlider(), &QSlider::valueChanged, player, &QMediaPlayer::setVolume);
+    connect(controlsGuiHeader->getVolumeSlider(), &QSlider::valueChanged, this, &MainWindow::setVolume);
+}
 
-    //TODO: Refactor everything. FillResultsFromReuqest, play. It needs to stop, double click options.
+MainWindow::~MainWindow()
+{
+    delete radioPlayer;
 }
 
 void MainWindow::searchStation()
@@ -71,7 +75,7 @@ void MainWindow::resultsFromRequest(QNetworkReply *networkReply)
 
 void MainWindow::playRadioStation()
 {
-    playList->clear();
+    radioPlayer->clearPlayList();
     radioResultsTableView->currentIndex();
 
     QModelIndex radioSelectedIndex = radioResultsTableView->selectionModel()->currentIndex();
@@ -84,26 +88,29 @@ void MainWindow::playRadioStation()
             fetch(QString(data->getValue(RequestsData::Url)));
         }
         else {
-            playList->addMedia(QUrl(data->getValue(RequestsData::Url)));
+            radioPlayer->addMedia(QUrl(data->getValue(RequestsData::Url)));
             emit playClicked();
         }
     }
 }
-
+/*
 void MainWindow::printMediaMetaInfo() {
     qDebug() << player->metaData(QMediaMetaData::Title).toString();
 }
-
+*/
 void MainWindow::play()
 {
-    player->setPlaylist(playList);
-    player->setVolume(50);
-    player->play();
+    radioPlayer->play();
 }
 
 void MainWindow::stop()
 {
-    player->stop();
+    radioPlayer->stop();
+}
+
+void MainWindow::setVolume(int value)
+{
+    radioPlayer->setVolume(value);
 }
 
 void MainWindow::fillDataModel(QByteArray data)
@@ -126,12 +133,7 @@ void MainWindow::fillDataModel(QByteArray data)
 
 void MainWindow::setPlaylistToPlay(QByteArray data)
 {
-    //get the bitrate for the playlist and emit
-    //signal to play it
-    QList<QByteArray> listByte = data.split('\n');
-    for (QByteArray byteArray : listByte) {
-        playList->addMedia(QUrl(byteArray));
-    }
+    radioPlayer->addMedia(data);
     emit playClicked();
 }
 
