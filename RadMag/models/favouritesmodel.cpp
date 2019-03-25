@@ -50,3 +50,10 @@ void FavouritesModel::addFavourite(int position, RequestsData *newFavourite)
     endInsertRows();
 }
 
+void FavouritesModel::removeFavourite(int position)
+{
+    beginRemoveRows(QModelIndex(), position, position);
+    favouritesList.removeAt(position);
+    endRemoveRows();
+}
+

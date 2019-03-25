@@ -46,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(controlsGuiHeader->getVolumeSlider(), &QSlider::valueChanged, this, &MainWindow::setVolume);
 
     connect(addToFavouritesButton, &QPushButton::clicked, this, &MainWindow::addRadioToFavourite);
+    connect(removeFromFavouritesButton, &QPushButton::clicked, this, &MainWindow::removeRadioFromFavourite);
 }
 
 MainWindow::~MainWindow()
@@ -138,6 +139,14 @@ void MainWindow::addRadioToFavourite()
         else {
             favouritesModel->addFavourite(favouritesModel->rowCount(QModelIndex()), requestsModel->dataInstance(indexRadio.row()));
         }
+    }
+}
+
+void MainWindow::removeRadioFromFavourite()
+{
+    QModelIndex index = favouritesTableView->currentIndex();
+    if (index.row() >= 0) {
+        favouritesModel->removeFavourite(index.row());
     }
 }
 

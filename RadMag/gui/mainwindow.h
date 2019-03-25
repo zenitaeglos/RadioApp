@@ -51,6 +51,7 @@ private slots:
     void stop();
     void setVolume(int value);
     void addRadioToFavourite();
+    void removeRadioFromFavourite();
 
 private:
     void fillDataModel(QByteArray data);

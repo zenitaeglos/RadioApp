@@ -20,6 +20,7 @@ public:
 
     void setFavourites(QList<RequestsData*> favList);
     void addFavourite(int position, RequestsData* newFavourite);
+    void removeFavourite(int position);
 
 
 private:
