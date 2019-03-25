@@ -12,7 +12,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     favouritesTableView(new QTableView),
     tablesHLayout(new QHBoxLayout),
     favouritesModel(new FavouritesModel(this)),
-    radioPlayer(new RadioPlayer())
+    radioPlayer(new RadioPlayer()),
+    addToFavouritesButton(new QPushButton(this)),
+    removeFromFavouritesButton(new QPushButton(this)),
+    addDeleteButtonsHorizontalLayout(new QHBoxLayout),
+    favouritesLayout(new QVBoxLayout)
 {
     //function to create the UI
     setupUI();
@@ -22,10 +26,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     radioResultsTableView->setModel(requestsModel);
 
     //set the model for the playlists that are saved. This has to be used
-    //with sqlite database to save the data
+    //with json file to save the data
+    favouritesModel->setFavourites(QList<RequestsData*>());
     favouritesTableView->setModel(favouritesModel);
 
     radioPlayer->setVolume(controlsGuiHeader->getVolumeSlider()->value());
+    controlsGuiBottom->getStopButton()->setDisabled(true);
 
     //connects
     connect(controlsGuiHeader->getSearchStationsButton(), &QPushButton::clicked, this, &MainWindow::searchStation);
@@ -38,6 +44,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     //connect(player, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::printMediaMetaInfo);
 
     connect(controlsGuiHeader->getVolumeSlider(), &QSlider::valueChanged, this, &MainWindow::setVolume);
+
+    connect(addToFavouritesButton, &QPushButton::clicked, this, &MainWindow::addRadioToFavourite);
 }
 
 MainWindow::~MainWindow()
@@ -100,17 +108,37 @@ void MainWindow::printMediaMetaInfo() {
 */
 void MainWindow::play()
 {
+    //set play and stop buttons enable to press and disable
+    controlsGuiBottom->getPlayButton()->setDisabled(true);
+    controlsGuiBottom->getStopButton()->setDisabled(false);
     radioPlayer->play();
 }
 
 void MainWindow::stop()
 {
+    //set play and stop buttons enable to press and disable
+    controlsGuiBottom->getPlayButton()->setDisabled(false);
+    controlsGuiBottom->getStopButton()->setDisabled(true);
     radioPlayer->stop();
 }
 
 void MainWindow::setVolume(int value)
 {
     radioPlayer->setVolume(value);
+}
+
+void MainWindow::addRadioToFavourite()
+{
+    QModelIndex indexRadio = radioResultsTableView->currentIndex();
+    if (indexRadio.row() >= 0) {
+        QModelIndex indexFavourite = favouritesTableView->currentIndex();
+        if (indexFavourite.row() >= 0) {
+            favouritesModel->addFavourite(indexFavourite.row() + 1, requestsModel->dataInstance(indexRadio.row()));
+        }
+        else {
+            favouritesModel->addFavourite(favouritesModel->rowCount(QModelIndex()), requestsModel->dataInstance(indexRadio.row()));
+        }
+    }
 }
 
 void MainWindow::fillDataModel(QByteArray data)
@@ -146,8 +174,22 @@ void MainWindow::setupUI()
     radioResultsTableView->setItemDelegate(delegate);
     radioResultsTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
+    addToFavouritesButton->setText("+");
+    addToFavouritesButton->setToolTip("Add playlist to favourites");
+
+    removeFromFavouritesButton->setText("-");
+    removeFromFavouritesButton->setToolTip("Remove playlist from favourites");
+
+    addDeleteButtonsHorizontalLayout->addWidget(addToFavouritesButton);
+    addDeleteButtonsHorizontalLayout->addWidget(removeFromFavouritesButton);
+
+    favouritesLayout->addLayout(addDeleteButtonsHorizontalLayout);
+    favouritesLayout->addWidget(favouritesTableView);
+
     favouritesTableView->setMaximumWidth(120);
-    tablesHLayout->addWidget(favouritesTableView);
+    favouritesTableView->horizontalHeader()->setStretchLastSection(true);
+
+    tablesHLayout->addLayout(favouritesLayout);
     tablesHLayout->addWidget(radioResultsTableView);
 
     mainLayout->addWidget(controlsGuiHeader);

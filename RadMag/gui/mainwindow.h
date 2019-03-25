@@ -23,6 +23,7 @@
 #include "models/requestsmodel.h"
 #include "models/requestdelegate.h"
 #include "models/favouritesmodel.h"
+#include "models/favouritesdelegate.h"
 #include "logic/radioplayer.h"
 
 class MainWindow : public QMainWindow
@@ -49,6 +50,7 @@ private slots:
     void play();
     void stop();
     void setVolume(int value);
+    void addRadioToFavourite();
 
 private:
     void fillDataModel(QByteArray data);
@@ -67,6 +69,10 @@ private:
     QHBoxLayout* tablesHLayout;
     FavouritesModel* favouritesModel;
     RadioPlayer* radioPlayer;
+    QPushButton* addToFavouritesButton;
+    QPushButton* removeFromFavouritesButton;
+    QHBoxLayout* addDeleteButtonsHorizontalLayout;
+    QVBoxLayout* favouritesLayout;
 
 };
 

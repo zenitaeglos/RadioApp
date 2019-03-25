@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QAbstractTableModel>
+#include "requests/requestsdata.h"
 
 class FavouritesModel : public QAbstractTableModel
 {
@@ -16,9 +17,13 @@ public:
 
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
-signals:
 
-public slots:
+    void setFavourites(QList<RequestsData*> favList);
+    void addFavourite(int position, RequestsData* newFavourite);
+
+
+private:
+    QList<RequestsData*> favouritesList;
 };
 
 #endif // FAVOURITESMODEL_H

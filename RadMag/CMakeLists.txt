@@ -10,8 +10,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 set(RadMag_VERSION_MAJOR 0)
-set(RadMag_VERSION_MINOR 1)
-set(RadMag_VERSION_PATCH 2)
+set(RadMag_VERSION_MINOR 2)
+set(RadMag_VERSION_PATCH 0)
 
 find_package(Qt5 COMPONENTS Core Widgets Network Multimedia Svg Sql REQUIRED)
 
@@ -29,6 +29,8 @@ set (MYSOURCES "${PROJECT_SOURCE_DIR}/gui/mainwindow.h"
     "${PROJECT_SOURCE_DIR}/models/requestdelegate.cpp"
     "${PROJECT_SOURCE_DIR}/models/favouritesmodel.h"
     "${PROJECT_SOURCE_DIR}/models/favouritesmodel.cpp"
+    "${PROJECT_SOURCE_DIR}/models/favouritesdelegate.h"
+    "${PROJECT_SOURCE_DIR}/models/favouritesdelegate.cpp"
     "${PROJECT_SOURCE_DIR}/logic/radioplayer.h"
     "${PROJECT_SOURCE_DIR}/logic/radioplayer.cpp")
 
