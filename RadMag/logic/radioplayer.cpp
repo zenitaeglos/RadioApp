@@ -16,6 +16,7 @@ RadioPlayer::~RadioPlayer()
 void RadioPlayer::play()
 {
     mediaPlayer->play();
+    qDebug() << mediaPlayer->metaData(QMediaMetaData::Date).toString();
 }
 
 void RadioPlayer::stop()

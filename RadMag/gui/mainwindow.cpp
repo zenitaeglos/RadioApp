@@ -206,12 +206,14 @@ void MainWindow::setupUI()
     favouritesLayout->addLayout(addDeleteButtonsHorizontalLayout);
     favouritesLayout->addWidget(favouritesTableView);
 
-    favouritesTableView->setMaximumWidth(120);
+
+    favouritesTableView->setMaximumWidth(this->width() / 3);
     favouritesTableView->horizontalHeader()->setStretchLastSection(true);
     favouritesTableView->setItemDelegate(favouritesDelegate);
 
     tablesHLayout->addLayout(favouritesLayout);
     tablesHLayout->addWidget(radioResultsTableView);
+
 
     mainLayout->addWidget(controlsGuiHeader);
     mainLayout->addLayout(tablesHLayout);
