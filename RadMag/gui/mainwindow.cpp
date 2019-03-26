@@ -16,7 +16,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     addToFavouritesButton(new QPushButton(this)),
     removeFromFavouritesButton(new QPushButton(this)),
     addDeleteButtonsHorizontalLayout(new QHBoxLayout),
-    favouritesLayout(new QVBoxLayout)
+    favouritesLayout(new QVBoxLayout),
+    favouritesDelegate(new FavouritesDelegate(this)),
+    favouritesJsonFile(new FavouritesJson)
 {
     //function to create the UI
     setupUI();
@@ -32,6 +34,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     radioPlayer->setVolume(controlsGuiHeader->getVolumeSlider()->value());
     controlsGuiBottom->getStopButton()->setDisabled(true);
+
+    //load json file with favourites;
+    QList<RequestsData*> dataFromJsonFile = favouritesJsonFile->jsonLoadElements();
+    if (dataFromJsonFile.size() > 0) {
+        favouritesModel->setFavourites(dataFromJsonFile);
+    }
 
     //connects
     connect(controlsGuiHeader->getSearchStationsButton(), &QPushButton::clicked, this, &MainWindow::searchStation);
@@ -52,6 +60,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 MainWindow::~MainWindow()
 {
     delete radioPlayer;
+    delete favouritesJsonFile;
 }
 
 void MainWindow::searchStation()
@@ -139,6 +148,7 @@ void MainWindow::addRadioToFavourite()
         else {
             favouritesModel->addFavourite(favouritesModel->rowCount(QModelIndex()), requestsModel->dataInstance(indexRadio.row()));
         }
+        favouritesJsonFile->addJsonObjectToFile(requestsModel->dataInstance(indexRadio.row())->getObject(), 0);
     }
 }
 
@@ -147,6 +157,7 @@ void MainWindow::removeRadioFromFavourite()
     QModelIndex index = favouritesTableView->currentIndex();
     if (index.row() >= 0) {
         favouritesModel->removeFavourite(index.row());
+        favouritesJsonFile->removeJsonObjectFromFile(index.row());
     }
 }
 
@@ -197,6 +208,7 @@ void MainWindow::setupUI()
 
     favouritesTableView->setMaximumWidth(120);
     favouritesTableView->horizontalHeader()->setStretchLastSection(true);
+    favouritesTableView->setItemDelegate(favouritesDelegate);
 
     tablesHLayout->addLayout(favouritesLayout);
     tablesHLayout->addWidget(radioResultsTableView);

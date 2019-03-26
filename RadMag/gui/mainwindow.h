@@ -25,6 +25,7 @@
 #include "models/favouritesmodel.h"
 #include "models/favouritesdelegate.h"
 #include "logic/radioplayer.h"
+#include "logic/favouritesjson.h"
 
 class MainWindow : public QMainWindow
 {
@@ -74,6 +75,8 @@ private:
     QPushButton* removeFromFavouritesButton;
     QHBoxLayout* addDeleteButtonsHorizontalLayout;
     QVBoxLayout* favouritesLayout;
+    FavouritesDelegate* favouritesDelegate;
+    FavouritesJson* favouritesJsonFile;
 
 };
 

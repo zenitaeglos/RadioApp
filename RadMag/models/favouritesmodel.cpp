@@ -20,7 +20,7 @@ int FavouritesModel::columnCount(const QModelIndex &parent) const
 QVariant FavouritesModel::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole) {
-        return favouritesList.at(index.row())->getValue(RequestsData::Name);
+        return favouritesList.at(index.row())->getObject();
     }
     return QVariant();
 }
