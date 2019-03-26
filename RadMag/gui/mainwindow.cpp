@@ -44,10 +44,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     //connects
     connect(controlsGuiHeader->getSearchStationsButton(), &QPushButton::clicked, this, &MainWindow::searchStation);
     connect(manager, &QNetworkAccessManager::finished, this, &MainWindow::resultsFromRequest);
-    connect(controlsGuiBottom->getPlayButton(), &QPushButton::clicked, this, &MainWindow::playRadioStation);
+    connect(controlsGuiBottom->getPlayButton(), &QPushButton::clicked, this, &MainWindow::playFromRequest);
     connect(controlsGuiBottom->getStopButton(), &QPushButton::clicked, this, &MainWindow::stop);
     connect(this, &MainWindow::playClicked, this, &MainWindow::play);
-    connect(radioResultsTableView, &QTableView::doubleClicked, this, &MainWindow::playRadioStation);
+    connect(radioResultsTableView, &QTableView::doubleClicked, this, &MainWindow::playFromRequest);
 
     //connect(player, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::printMediaMetaInfo);
 
@@ -55,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     connect(addToFavouritesButton, &QPushButton::clicked, this, &MainWindow::addRadioToFavourite);
     connect(removeFromFavouritesButton, &QPushButton::clicked, this, &MainWindow::removeRadioFromFavourite);
+    connect(favouritesTableView, &QTableView::doubleClicked, this, &MainWindow::playFromFavourites);
 }
 
 MainWindow::~MainWindow()
@@ -91,14 +92,12 @@ void MainWindow::resultsFromRequest(QNetworkReply *networkReply)
     }
 }
 
-void MainWindow::playRadioStation()
+void MainWindow::playRadioStation(QModelIndex index)
 {
     radioPlayer->clearPlayList();
-    radioResultsTableView->currentIndex();
 
-    QModelIndex radioSelectedIndex = radioResultsTableView->selectionModel()->currentIndex();
-    if (radioSelectedIndex.row() >= 0) {
-        RequestsData* data = requestsModel->dataInstance(radioSelectedIndex.row());
+    if (index.row() >= 0) {
+        RequestsData* data = requestsModel->dataInstance(index.row());
         QFileInfo info = data->getValue(RequestsData::Url);
 
         if (!info.suffix().compare(QLatin1String("m3u"), Qt::CaseInsensitive)) {
@@ -159,6 +158,22 @@ void MainWindow::removeRadioFromFavourite()
         favouritesModel->removeFavourite(index.row());
         favouritesJsonFile->removeJsonObjectFromFile(index.row());
     }
+}
+
+void MainWindow::playFromRequest()
+{
+    radioResultsTableView->currentIndex();
+
+    QModelIndex radioSelectedIndex = radioResultsTableView->selectionModel()->currentIndex();
+    playRadioStation(radioSelectedIndex);
+}
+
+void MainWindow::playFromFavourites()
+{
+    favouritesTableView->currentIndex();
+
+    QModelIndex radioSelectedIndex = radioResultsTableView->selectionModel()->currentIndex();
+    playRadioStation(radioSelectedIndex);
 }
 
 void MainWindow::fillDataModel(QByteArray data)

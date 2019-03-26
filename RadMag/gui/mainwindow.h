@@ -46,15 +46,17 @@ private slots:
     void searchStation();
     void fetch(QString stringToSearch);
     void resultsFromRequest(QNetworkReply *networkReply);
-    void playRadioStation();
     //void printMediaMetaInfo();
     void play();
     void stop();
     void setVolume(int value);
     void addRadioToFavourite();
     void removeRadioFromFavourite();
+    void playFromRequest();
+    void playFromFavourites();
 
 private:
+    void playRadioStation(QModelIndex index);
     void fillDataModel(QByteArray data);
     void setPlaylistToPlay(QByteArray data);
     void setupUI();
