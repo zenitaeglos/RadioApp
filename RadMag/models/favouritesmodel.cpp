@@ -57,3 +57,8 @@ void FavouritesModel::removeFavourite(int position)
     endRemoveRows();
 }
 
+RequestsData *FavouritesModel::dataInstance(int row)
+{
+    return favouritesList.at(row);
+}
+

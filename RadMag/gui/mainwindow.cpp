@@ -92,22 +92,19 @@ void MainWindow::resultsFromRequest(QNetworkReply *networkReply)
     }
 }
 
-void MainWindow::playRadioStation(QModelIndex index)
+void MainWindow::playRadioStation(RequestsData *data)
 {
     radioPlayer->clearPlayList();
 
-    if (index.row() >= 0) {
-        RequestsData* data = requestsModel->dataInstance(index.row());
-        QFileInfo info = data->getValue(RequestsData::Url);
+    QFileInfo info = data->getValue(RequestsData::Url);
 
-        if (!info.suffix().compare(QLatin1String("m3u"), Qt::CaseInsensitive)) {
-            downloadType = PlayListFetch;
-            fetch(QString(data->getValue(RequestsData::Url)));
-        }
-        else {
-            radioPlayer->addMedia(QUrl(data->getValue(RequestsData::Url)));
-            emit playClicked();
-        }
+    if (!info.suffix().compare(QLatin1String("m3u"), Qt::CaseInsensitive)) {
+        downloadType = PlayListFetch;
+        fetch(QString(data->getValue(RequestsData::Url)));
+    }
+    else {
+        radioPlayer->addMedia(QUrl(data->getValue(RequestsData::Url)));
+        emit playClicked();
     }
 }
 /*
@@ -162,18 +159,21 @@ void MainWindow::removeRadioFromFavourite()
 
 void MainWindow::playFromRequest()
 {
-    radioResultsTableView->currentIndex();
-
     QModelIndex radioSelectedIndex = radioResultsTableView->selectionModel()->currentIndex();
-    playRadioStation(radioSelectedIndex);
+    if (radioSelectedIndex.row() >= 0) {
+        RequestsData* data = requestsModel->dataInstance(radioSelectedIndex.row());
+        playRadioStation(data);
+    }
+
 }
 
 void MainWindow::playFromFavourites()
 {
-    favouritesTableView->currentIndex();
-
-    QModelIndex radioSelectedIndex = radioResultsTableView->selectionModel()->currentIndex();
-    playRadioStation(radioSelectedIndex);
+    QModelIndex radioSelectedIndex = favouritesTableView->selectionModel()->currentIndex();
+    if (radioSelectedIndex.row() >= 0) {
+        RequestsData* data = favouritesModel->dataInstance(radioSelectedIndex.row());
+        playRadioStation(data);
+    }
 }
 
 void MainWindow::fillDataModel(QByteArray data)

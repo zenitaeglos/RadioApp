@@ -22,6 +22,7 @@ public:
     void addFavourite(int position, RequestsData* newFavourite);
     void removeFavourite(int position);
 
+    RequestsData* dataInstance(int row);
 
 private:
     QList<RequestsData*> favouritesList;

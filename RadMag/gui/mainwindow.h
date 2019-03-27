@@ -56,7 +56,7 @@ private slots:
     void playFromFavourites();
 
 private:
-    void playRadioStation(QModelIndex index);
+    void playRadioStation(RequestsData* data);
     void fillDataModel(QByteArray data);
     void setPlaylistToPlay(QByteArray data);
     void setupUI();
