@@ -12,22 +12,16 @@ void RequestDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     //all to do
     QFont font;
 
-
     painter->setRenderHint(QPainter::Antialiasing);
-    //painter->setPen(QPen(Qt::black, 0.2));
-    painter->setPen(Qt::NoPen);
-    painter->setBrush(Qt::NoBrush);
-    painter->drawRect(option.rect);
     QJsonObject jsonObject = index.data().toJsonObject();
 
-    painter->setPen(QPen(Qt::red));
     font.setPointSize(12);
     painter->setFont(font);
-    QRectF nameRect(option.rect.x() + 2, option.rect.y() + 2, option.rect.width(), 30);
+    QRectF nameRect(option.rect.x() + 4, option.rect.y() + 4, option.rect.width(), 30);
     painter->drawText(nameRect, Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap | Qt::TextJustificationForced, jsonObject["name"].toString());
 
     QRectF countryRect(nameRect.x() + 2, nameRect.bottomLeft().y() + 2, option.rect.width() / 2, 30);
-    font.setPointSize(10);
+    font.setPointSize(8);
     painter->setFont(font);
     painter->drawText(countryRect, "Country: " + jsonObject["country"].toString());
     QRectF bitRateRect(countryRect.bottomRight().x(), countryRect.topRight().y(), option.rect.width() - countryRect.width(), 20);

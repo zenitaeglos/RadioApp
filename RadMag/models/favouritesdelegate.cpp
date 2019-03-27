@@ -14,10 +14,10 @@ void FavouritesDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 
     painter->setFont(font);
 
-    QRectF nameRect(option.rect.x() + 2, option.rect.y() + 2, option.rect.width(), option.rect.height());
+    QRectF nameRect(option.rect.x() + 12, option.rect.y(), option.rect.width() - 16, option.rect.height());
 
 
-    painter->drawText(nameRect, Qt::AlignCenter, jsonObject["name"].toString());
+    painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignVCenter, jsonObject["name"].toString());
 }
 
 QSize FavouritesDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
