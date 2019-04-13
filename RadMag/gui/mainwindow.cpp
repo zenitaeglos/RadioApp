@@ -163,6 +163,7 @@ void MainWindow::playFromRequest()
     if (radioSelectedIndex.row() >= 0) {
         RequestsData* data = requestsModel->dataInstance(radioSelectedIndex.row());
         playRadioStation(data);
+        controlsGuiBottom->setRadioName(data->getObject()["name"].toString());
     }
 
 }
@@ -173,6 +174,8 @@ void MainWindow::playFromFavourites()
     if (radioSelectedIndex.row() >= 0) {
         RequestsData* data = favouritesModel->dataInstance(radioSelectedIndex.row());
         playRadioStation(data);
+        qDebug() << data->getObject()["name"].toString();
+        controlsGuiBottom->setRadioName(data->getObject()["name"].toString());
     }
 }
 
