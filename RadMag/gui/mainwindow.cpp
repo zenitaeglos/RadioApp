@@ -126,6 +126,7 @@ void MainWindow::stop()
     controlsGuiBottom->getPlayButton()->setDisabled(false);
     controlsGuiBottom->getStopButton()->setDisabled(true);
     radioPlayer->stop();
+    controlsGuiBottom->setRadioName("");
 }
 
 void MainWindow::setVolume(int value)
