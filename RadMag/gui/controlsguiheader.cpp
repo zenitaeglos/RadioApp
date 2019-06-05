@@ -7,26 +7,7 @@ ControlsGuiHeader::ControlsGuiHeader(QWidget *parent) : QWidget(parent),
     searchLineEdit(new QLineEdit(this)),
     volumeSlider(new QSlider(Qt::Horizontal, this))
 {
-    searchLineEdit->setPlaceholderText("Search Radio");
-    searchLineEdit->setToolTip("Search radio station");
-    searchStationsButton->setIcon(QIcon("://resources/baseline-search-24px.svg"));
-    searchStationsButton->setIconSize(QSize(searchStationsButton->height() - 8, searchStationsButton->height() - 8));
-
-    searchStationsButton->setToolTip("Search");
-
-    volumeSlider->setMinimum(0);
-    volumeSlider->setMaximum(100);
-    volumeSlider->setValue(50);
-    volumeSlider->setMaximumWidth(80);
-
-    searchStationsButton->setMinimumHeight(50);
-
-    guiHeaderLayout->addWidget(searchLineEdit);
-    guiHeaderLayout->addWidget(searchStationsButton);
-
-    guiHeaderLayout->addWidget(volumeSlider);
-
-    setLayout(guiHeaderLayout);
+    setupUI();
 
     //TODO connect enter pressed while QLineEdit on focus with search
 }
@@ -51,4 +32,29 @@ void ControlsGuiHeader::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Return) {
         searchStationsButton->clicked();
     }
+}
+
+void ControlsGuiHeader::setupUI()
+{
+    searchLineEdit->setPlaceholderText("Search Radio");
+    searchLineEdit->setToolTip("Search radio station");
+    searchStationsButton->setIcon(QIcon("://resources/baseline-search-24px.svg"));
+    searchStationsButton->setIconSize(QSize(searchStationsButton->height() - 8, searchStationsButton->height() - 8));
+
+    searchStationsButton->setToolTip("Search");
+
+    volumeSlider->setMinimum(0);
+    volumeSlider->setMaximum(100);
+    volumeSlider->setValue(50);
+    volumeSlider->setMaximumWidth(80);
+
+    //searchStationsButton->setMinimumHeight(50);
+    searchStationsButton->setMaximumHeight(searchLineEdit->height());
+
+    guiHeaderLayout->addWidget(searchLineEdit);
+    guiHeaderLayout->addWidget(searchStationsButton);
+
+    guiHeaderLayout->addWidget(volumeSlider);
+
+    setLayout(guiHeaderLayout);
 }

@@ -27,6 +27,7 @@ public:
     void keyPressEvent(QKeyEvent* event);
 
 private:
+    void setupUI();
     QHBoxLayout* guiHeaderLayout;
     QPushButton* searchStationsButton;
     QLineEdit* searchLineEdit;
