@@ -229,21 +229,23 @@ void MainWindow::setupUI()
     //addDeleteButtonsHorizontalLayout->addWidget(removeFromFavouritesButton);
 
     //favouritesLayout->addLayout(addDeleteButtonsHorizontalLayout);
-    favouritesLayout->addWidget(favouritesTableView);
+    //favouritesLayout->addWidget(favouritesTableView);
     //favouritesTableView->setStyleSheet("background-color:transparent");
 
+    favouritesLayout->addWidget(radioResultsTableView);
+    favouritesLayout->addWidget(controlsGuiBottom);
 
     favouritesTableView->setMaximumWidth(this->width() / 3);
     favouritesTableView->horizontalHeader()->setStretchLastSection(true);
     favouritesTableView->setItemDelegate(favouritesDelegate);
 
+    tablesHLayout->addWidget(favouritesTableView);
+    //tablesHLayout->addWidget(radioResultsTableView);
     tablesHLayout->addLayout(favouritesLayout);
-    tablesHLayout->addWidget(radioResultsTableView);
-
 
     mainLayout->addWidget(controlsGuiHeader);
     mainLayout->addLayout(tablesHLayout);
-    mainLayout->addWidget(controlsGuiBottom);
+    //mainLayout->addWidget(controlsGuiBottom);
 
     mainWidget->setLayout(mainLayout);
 
