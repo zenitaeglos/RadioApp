@@ -16,7 +16,7 @@ int RequestsModel::rowCount(const QModelIndex &parent) const
 int RequestsModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 1;
+    return 2;
 }
 
 QVariant RequestsModel::data(const QModelIndex &index, int role) const
@@ -32,10 +32,16 @@ QVariant RequestsModel::data(const QModelIndex &index, int role) const
 
 QVariant RequestsModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    Q_UNUSED(section);
     if (role == Qt::DisplayRole) {
         if (orientation == Qt::Horizontal)
-            return "Radios";
+            switch (section) {
+                case 0:
+                    return "Radios";
+                case 1:
+                    return  "Favorite";
+                default:
+                    return "";
+            }
     }
 
     return QVariant();

@@ -211,7 +211,10 @@ void MainWindow::setupUI()
     //radioResultsTableView->setStyleSheet("QHeaderView::section {color: white; background-color: #232326; height: 40px;"
     //                                     "font-size: 20px}");
     radioResultsTableView->setItemDelegate(delegate);
+
     radioResultsTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    radioResultsTableView->horizontalHeader()->setFirstSectionMovable(true);
+
     //radioResultsTableView->setStyleSheet("background-image: url(://resources/background-cement-concrete-242236-2.jpg)");
     /*
     radioResultsTableView->setStyleSheet("background-color: transparent;"

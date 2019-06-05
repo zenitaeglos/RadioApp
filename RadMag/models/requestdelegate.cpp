@@ -9,6 +9,8 @@ RequestDelegate::RequestDelegate(QWidget *parent) : QStyledItemDelegate (parent)
 
 void RequestDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    if (index.column() == 1)
+        return;
     //all to do
     QFont font;
     QPen pen;
@@ -18,10 +20,10 @@ void RequestDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     painter->setRenderHint(QPainter::Antialiasing);
     QJsonObject jsonObject = index.data().toJsonObject();
     if (option.state & QStyle::State_HasFocus) {
-        pen.setColor(QColor(Qt::white));
+        //pen.setColor(QColor(Qt::white));
     }
     else {
-        painter->drawImage(option.rect, QImage("://resources/background-cement-concrete-242236-2.jpg"));
+        //painter->drawImage(option.rect, QImage("://resources/background-cement-concrete-242236-2.jpg"));
     }
 
     painter->setPen(pen);
@@ -43,7 +45,7 @@ void RequestDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 QSize RequestDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    Q_UNUSED(index);
+   //Q_UNUSED(index);
     QRect rect(option.rect.x(), option.rect.y(), option.rect.width(), 60);
     return rect.size();
 }
