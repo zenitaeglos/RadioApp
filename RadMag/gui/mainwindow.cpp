@@ -13,8 +13,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     tablesHLayout(new QHBoxLayout),
     favouritesModel(new FavouritesModel(this)),
     radioPlayer(new RadioPlayer()),
-    addToFavouritesButton(new QPushButton(this)),
-    removeFromFavouritesButton(new QPushButton(this)),
+    //addToFavouritesButton(new QPushButton(this)),
+    //removeFromFavouritesButton(new QPushButton(this)),
     addDeleteButtonsHorizontalLayout(new QHBoxLayout),
     favouritesLayout(new QVBoxLayout),
     favouritesDelegate(new FavouritesDelegate(this)),
@@ -53,8 +53,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     connect(controlsGuiHeader->getVolumeSlider(), &QSlider::valueChanged, this, &MainWindow::setVolume);
 
-    connect(addToFavouritesButton, &QPushButton::clicked, this, &MainWindow::addRadioToFavourite);
-    connect(removeFromFavouritesButton, &QPushButton::clicked, this, &MainWindow::removeRadioFromFavourite);
+    //connect(addToFavouritesButton, &QPushButton::clicked, this, &MainWindow::addRadioToFavourite);
+    //connect(removeFromFavouritesButton, &QPushButton::clicked, this, &MainWindow::removeRadioFromFavourite);
     connect(favouritesTableView, &QTableView::doubleClicked, this, &MainWindow::playFromFavourites);
 }
 
@@ -213,23 +213,24 @@ void MainWindow::setupUI()
     radioResultsTableView->setItemDelegate(delegate);
     radioResultsTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     //radioResultsTableView->setStyleSheet("background-image: url(://resources/background-cement-concrete-242236-2.jpg)");
+    /*
     radioResultsTableView->setStyleSheet("background-color: transparent;"
                                          "QHeaderView::section {background-color: transparent;}"
                                          "QHeaderView {background-color: transparent;}"
                                          "QTableCornerButton::section {background-color: transparent;}");
+    */
+    //addToFavouritesButton->setText("+");
+    //addToFavouritesButton->setToolTip("Add playlist to favourites");
 
-    addToFavouritesButton->setText("+");
-    addToFavouritesButton->setToolTip("Add playlist to favourites");
+    //removeFromFavouritesButton->setText("-");
+    //removeFromFavouritesButton->setToolTip("Remove playlist from favourites");
 
-    removeFromFavouritesButton->setText("-");
-    removeFromFavouritesButton->setToolTip("Remove playlist from favourites");
+    //addDeleteButtonsHorizontalLayout->addWidget(addToFavouritesButton);
+    //addDeleteButtonsHorizontalLayout->addWidget(removeFromFavouritesButton);
 
-    addDeleteButtonsHorizontalLayout->addWidget(addToFavouritesButton);
-    addDeleteButtonsHorizontalLayout->addWidget(removeFromFavouritesButton);
-
-    favouritesLayout->addLayout(addDeleteButtonsHorizontalLayout);
+    //favouritesLayout->addLayout(addDeleteButtonsHorizontalLayout);
     favouritesLayout->addWidget(favouritesTableView);
-    favouritesTableView->setStyleSheet("background-color:transparent");
+    //favouritesTableView->setStyleSheet("background-color:transparent");
 
 
     favouritesTableView->setMaximumWidth(this->width() / 3);
