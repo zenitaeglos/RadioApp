@@ -76,7 +76,7 @@ private:
     QPushButton* addToFavouritesButton;
     QPushButton* removeFromFavouritesButton;
     QHBoxLayout* addDeleteButtonsHorizontalLayout;
-    QVBoxLayout* favouritesLayout;
+    QVBoxLayout* resultsAndBottomLayout;
     FavouritesDelegate* favouritesDelegate;
     FavouritesJson* favouritesJsonFile;
 

@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     //addToFavouritesButton(new QPushButton(this)),
     //removeFromFavouritesButton(new QPushButton(this)),
     addDeleteButtonsHorizontalLayout(new QHBoxLayout),
-    favouritesLayout(new QVBoxLayout),
+    resultsAndBottomLayout(new QVBoxLayout),
     favouritesDelegate(new FavouritesDelegate(this)),
     favouritesJsonFile(new FavouritesJson)
 {
@@ -232,8 +232,8 @@ void MainWindow::setupUI()
     //favouritesLayout->addWidget(favouritesTableView);
     //favouritesTableView->setStyleSheet("background-color:transparent");
 
-    favouritesLayout->addWidget(radioResultsTableView);
-    favouritesLayout->addWidget(controlsGuiBottom);
+    resultsAndBottomLayout->addWidget(radioResultsTableView);
+    resultsAndBottomLayout->addWidget(controlsGuiBottom);
 
     favouritesTableView->setMaximumWidth(this->width() / 3);
     favouritesTableView->horizontalHeader()->setStretchLastSection(true);
@@ -241,7 +241,7 @@ void MainWindow::setupUI()
 
     tablesHLayout->addWidget(favouritesTableView);
     //tablesHLayout->addWidget(radioResultsTableView);
-    tablesHLayout->addLayout(favouritesLayout);
+    tablesHLayout->addLayout(resultsAndBottomLayout);
 
     mainLayout->addWidget(controlsGuiHeader);
     mainLayout->addLayout(tablesHLayout);
