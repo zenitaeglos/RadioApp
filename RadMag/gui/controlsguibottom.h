@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QTextEdit>
 
 class ControlsGuiBottom : public QWidget
 {
@@ -22,7 +23,7 @@ private:
     QHBoxLayout* mainGuiBottomLayout;    
     QPushButton* playButton;
     QPushButton* stopButton;
-    QLabel* radioName;
+    QLabel* playerInfo;
 };
 
 #endif // CONTROLSGUIBOTTOM_H

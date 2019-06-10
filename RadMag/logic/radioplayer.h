@@ -8,8 +8,14 @@
 #include <QUrl>
 
 
-class RadioPlayer
+class RadioPlayer : public QObject
 {
+    Q_OBJECT
+
+public
+    slots:
+    signals:
+    void mediaStatusChanged(QString title);
 
 public:
     explicit RadioPlayer();
@@ -25,7 +31,7 @@ public:
 private:
     QMediaPlayer* mediaPlayer;
     QMediaPlaylist* mediaPlayList;
-
+    void fireMediaStatusChanged();
 
 };
 
