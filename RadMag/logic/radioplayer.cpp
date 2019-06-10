@@ -5,6 +5,7 @@ RadioPlayer::RadioPlayer() :
     mediaPlayList(new QMediaPlaylist())
 {
     mediaPlayer->setPlaylist(mediaPlayList);
+    connect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &RadioPlayer::fireMediaStatusChanged);
 }
 
 RadioPlayer::~RadioPlayer()
@@ -16,7 +17,6 @@ RadioPlayer::~RadioPlayer()
 void RadioPlayer::play()
 {
     mediaPlayer->play();
-    qDebug() << mediaPlayer->metaData(QMediaMetaData::Date).toString();
 }
 
 void RadioPlayer::stop()
@@ -45,4 +45,12 @@ void RadioPlayer::setVolume(int value)
 void RadioPlayer::clearPlayList()
 {
     mediaPlayList->clear();
+}
+
+void RadioPlayer::fireMediaStatusChanged()
+{
+    QString mediaInfo = QString();
+    mediaInfo.append("<b>" + mediaPlayer->metaData(QMediaMetaData::Publisher).toString() + "</b><br/>");
+    mediaInfo.append(mediaPlayer->metaData(QMediaMetaData::Title).toString() + "<br/>");
+    emit mediaStatusChanged(mediaInfo);
 }

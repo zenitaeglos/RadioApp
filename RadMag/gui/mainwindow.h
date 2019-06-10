@@ -46,7 +46,7 @@ private slots:
     void searchStation();
     void fetch(QString stringToSearch);
     void resultsFromRequest(QNetworkReply *networkReply);
-    //void printMediaMetaInfo();
+    void updateMediaInfo(QString title);
     void play();
     void stop();
     void setVolume(int value);

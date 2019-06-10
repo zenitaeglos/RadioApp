@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(this, &MainWindow::playClicked, this, &MainWindow::play);
     connect(radioResultsTableView, &QTableView::doubleClicked, this, &MainWindow::playFromRequest);
 
-    //connect(player, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::printMediaMetaInfo);
+    connect(radioPlayer, &RadioPlayer::mediaStatusChanged, this, &MainWindow::updateMediaInfo);
 
     connect(controlsGuiHeader->getVolumeSlider(), &QSlider::valueChanged, this, &MainWindow::setVolume);
 
@@ -107,11 +107,12 @@ void MainWindow::playRadioStation(RequestsData *data)
         emit playClicked();
     }
 }
-/*
-void MainWindow::printMediaMetaInfo() {
-    qDebug() << player->metaData(QMediaMetaData::Title).toString();
+
+
+void MainWindow::updateMediaInfo(QString title) {
+    controlsGuiBottom->setRadioName(title);
 }
-*/
+
 void MainWindow::play()
 {
     //set play and stop buttons enable to press and disable
@@ -164,7 +165,7 @@ void MainWindow::playFromRequest()
     if (radioSelectedIndex.row() >= 0) {
         RequestsData* data = requestsModel->dataInstance(radioSelectedIndex.row());
         playRadioStation(data);
-        controlsGuiBottom->setRadioName(data->getObject()["name"].toString());
+        controlsGuiBottom->setRadioName("playing " + data->getObject()["name"].toString());
     }
 
 }
@@ -176,7 +177,7 @@ void MainWindow::playFromFavourites()
         RequestsData* data = favouritesModel->dataInstance(radioSelectedIndex.row());
         playRadioStation(data);
         qDebug() << data->getObject()["name"].toString();
-        controlsGuiBottom->setRadioName(data->getObject()["name"].toString());
+        controlsGuiBottom->setRadioName("playing " + data->getObject()["name"].toString());
     }
 }
 
