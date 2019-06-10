@@ -22,7 +22,7 @@ QList<RadioStation *> FavouritesJson::jsonLoadElements()
     //add link to access the webpage
 
     for (int i = 0; i < array.size(); i++) {
-        RadioStation* data = new RadioStation(array.at(i).toObject());
+        RadioStation* data = new RadioStation(array.at(i).toObject(), true);
         dataForModel.append(data);
     }
 

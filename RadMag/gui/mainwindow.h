@@ -20,7 +20,7 @@
 #include <QFileInfo>
 #include "controlsguibottom.h"
 #include "controlsguiheader.h"
-#include "models/requestsmodel.h"
+#include "models/radiostationsmodel.h"
 #include "models/requestdelegate.h"
 #include "models/favouritesmodel.h"
 #include "models/favouritesdelegate.h"
@@ -65,7 +65,7 @@ private:
     QWidget* mainWidget;
     ControlsGuiBottom* controlsGuiBottom;
     ControlsGuiHeader* controlsGuiHeader;
-    RequestsModel* requestsModel;
+    RadioStationsModel* radiostationsModel;
     QNetworkAccessManager* manager;
     DownloadType downloadType;
     RequestDelegate* delegate;

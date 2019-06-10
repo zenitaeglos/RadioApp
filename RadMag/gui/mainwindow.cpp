@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     mainWidget(new QWidget(this)),
     controlsGuiBottom(new ControlsGuiBottom(this)),
     controlsGuiHeader(new ControlsGuiHeader(this)),
-    requestsModel(new RequestsModel(this)),
+    radiostationsModel(new RadioStationsModel(this)),
     manager(new QNetworkAccessManager(this)),
     delegate(new RequestDelegate(this)),
     favouritesTableView(new QTableView),
@@ -24,8 +24,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     setupUI();
 
     //set the model values and set the model of the table view
-    requestsModel->setRequestedData(QList<RadioStation*>());
-    radioResultsTableView->setModel(requestsModel);
+    radiostationsModel->setRequestedData(QList<RadioStation*>());
+    radioResultsTableView->setModel(radiostationsModel);
 
     //set the model for the playlists that are saved. This has to be used
     //with json file to save the data
@@ -141,12 +141,12 @@ void MainWindow::addRadioToFavourite()
     if (indexRadio.row() >= 0) {
         QModelIndex indexFavourite = favouritesTableView->currentIndex();
         if (indexFavourite.row() >= 0) {
-            favouritesModel->addFavourite(indexFavourite.row() + 1, requestsModel->dataInstance(indexRadio.row()));
+            favouritesModel->addFavourite(indexFavourite.row() + 1, radiostationsModel->dataInstance(indexRadio.row()));
         }
         else {
-            favouritesModel->addFavourite(favouritesModel->rowCount(QModelIndex()), requestsModel->dataInstance(indexRadio.row()));
+            favouritesModel->addFavourite(favouritesModel->rowCount(QModelIndex()), radiostationsModel->dataInstance(indexRadio.row()));
         }
-        favouritesJsonFile->addJsonObjectToFile(requestsModel->dataInstance(indexRadio.row())->getObject(), 0);
+        favouritesJsonFile->addJsonObjectToFile(radiostationsModel->dataInstance(indexRadio.row())->getObject(), 0);
     }
 }
 
@@ -163,7 +163,7 @@ void MainWindow::playFromRequest()
 {
     QModelIndex radioSelectedIndex = radioResultsTableView->selectionModel()->currentIndex();
     if (radioSelectedIndex.row() >= 0) {
-        RadioStation* data = requestsModel->dataInstance(radioSelectedIndex.row());
+        RadioStation* data = radiostationsModel->dataInstance(radioSelectedIndex.row());
         playRadioStation(data);
         controlsGuiBottom->setRadioName("playing " + data->getObject()["name"].toString());
     }
@@ -194,13 +194,9 @@ void MainWindow::fillDataModel(QByteArray data)
 
     for (int i = 0; i < array.size(); i++) {
         RadioStation* data = new RadioStation(array.at(i).toObject());
-        if (i == 0) {
-            qDebug() << "set 0";
-            data->setFavorite(true);
-        }
         dataForModel.append(data);
     }
-    requestsModel->setRequestedData(dataForModel);
+    radiostationsModel->setRequestedData(dataForModel);
 }
 
 void MainWindow::setPlaylistToPlay(QByteArray data)

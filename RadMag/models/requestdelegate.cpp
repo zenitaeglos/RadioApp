@@ -19,12 +19,6 @@ void RequestDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
     painter->setRenderHint(QPainter::Antialiasing);
     QJsonObject jsonObject = index.data().toJsonObject();
-    if (option.state & QStyle::State_HasFocus) {
-        //pen.setColor(QColor(Qt::white));
-    }
-    else {
-        //painter->drawImage(option.rect, QImage("://resources/background-cement-concrete-242236-2.jpg"));
-    }
 
     painter->setPen(pen);
     font.setPointSize(12);
@@ -38,10 +32,8 @@ void RequestDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     painter->drawText(countryRect, "Country: " + jsonObject["country"].toString());
     QRectF bitRateRect(countryRect.bottomRight().x(), countryRect.topRight().y(), option.rect.width() - countryRect.width(), 20);
     painter->drawText(bitRateRect, Qt::AlignCenter | Qt::TextWordWrap, "Bitrate: " + jsonObject["bitrate"].toString());
-    //painter->drawLine(option.rect.bottomLeft().x(), option.rect.bottomLeft().y(),
-    //                  option.rect.bottomRight().x(), option.rect.bottomRight().y());
 
-    qDebug() << jsonObject["favorite"].toBool();
+    //set the icon to only be border or complete, depending if it belongs to favorites or not.
     if (jsonObject["favorite"].toBool() == true) {
         qDebug() << "it is true";
         QIcon starIcon("://resources/baseline-star-24px.svg");
