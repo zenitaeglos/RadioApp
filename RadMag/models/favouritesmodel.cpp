@@ -36,14 +36,14 @@ QVariant FavouritesModel::headerData(int section, Qt::Orientation orientation, i
     return QVariant();
 }
 
-void FavouritesModel::setFavourites(QList<RequestsData *> favList)
+void FavouritesModel::setFavourites(QList<RadioStation *> favList)
 {
     beginResetModel();
     favouritesList = favList;
     endResetModel();
 }
 
-void FavouritesModel::addFavourite(int position, RequestsData *newFavourite)
+void FavouritesModel::addFavourite(int position, RadioStation *newFavourite)
 {
     beginInsertRows(QModelIndex(), position, position);
     favouritesList.insert(position, newFavourite);
@@ -57,7 +57,7 @@ void FavouritesModel::removeFavourite(int position)
     endRemoveRows();
 }
 
-RequestsData *FavouritesModel::dataInstance(int row)
+RadioStation *FavouritesModel::dataInstance(int row)
 {
     return favouritesList.at(row);
 }

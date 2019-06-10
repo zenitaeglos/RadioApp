@@ -1,5 +1,5 @@
-#ifndef REQUESTSDATA_H
-#define REQUESTSDATA_H
+#ifndef RADIOSTATION_H
+#define RADIOSTATION_H
 
 #include <QObject>
 #include <QJsonObject>
@@ -30,4 +30,4 @@ private:
     QJsonObject jsonObject;
 };
 
-#endif // REQUESTSDATA_H
+#endif // RADIOSTATION_H

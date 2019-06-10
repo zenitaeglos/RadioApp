@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QAbstractTableModel>
 #include <QMap>
-#include "requests/requestsdata.h"
+#include "requests/radiostation.h"
 
 class RequestsModel : public QAbstractTableModel
 {
@@ -18,11 +18,11 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
     //set our own custom data for this table model
-    void setRequestedData(QList<RequestsData*> newRequest);
+    void setRequestedData(QList<RadioStation*> newRequest);
 
-    RequestsData* dataInstance(int row);
+    RadioStation* dataInstance(int row);
 private:
-    QList<RequestsData*> requestsData;
+    QList<RadioStation*> radioStations;
 };
 
 #endif // REQUESTSMODEL_H

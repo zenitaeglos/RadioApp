@@ -24,19 +24,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     setupUI();
 
     //set the model values and set the model of the table view
-    requestsModel->setRequestedData(QList<RequestsData*>());
+    requestsModel->setRequestedData(QList<RadioStation*>());
     radioResultsTableView->setModel(requestsModel);
 
     //set the model for the playlists that are saved. This has to be used
     //with json file to save the data
-    favouritesModel->setFavourites(QList<RequestsData*>());
+    favouritesModel->setFavourites(QList<RadioStation*>());
     favouritesTableView->setModel(favouritesModel);
 
     radioPlayer->setVolume(controlsGuiHeader->getVolumeSlider()->value());
     controlsGuiBottom->getStopButton()->setDisabled(true);
 
     //load json file with favourites;
-    QList<RequestsData*> dataFromJsonFile = favouritesJsonFile->jsonLoadElements();
+    QList<RadioStation*> dataFromJsonFile = favouritesJsonFile->jsonLoadElements();
     if (dataFromJsonFile.size() > 0) {
         favouritesModel->setFavourites(dataFromJsonFile);
     }
@@ -92,18 +92,18 @@ void MainWindow::resultsFromRequest(QNetworkReply *networkReply)
     }
 }
 
-void MainWindow::playRadioStation(RequestsData *data)
+void MainWindow::playRadioStation(RadioStation *data)
 {
     radioPlayer->clearPlayList();
 
-    QFileInfo info = data->getValue(RequestsData::Url);
+    QFileInfo info = data->getValue(RadioStation::Url);
 
     if (!info.suffix().compare(QLatin1String("m3u"), Qt::CaseInsensitive)) {
         downloadType = PlayListFetch;
-        fetch(QString(data->getValue(RequestsData::Url)));
+        fetch(QString(data->getValue(RadioStation::Url)));
     }
     else {
-        radioPlayer->addMedia(QUrl(data->getValue(RequestsData::Url)));
+        radioPlayer->addMedia(QUrl(data->getValue(RadioStation::Url)));
         emit playClicked();
     }
 }
@@ -163,7 +163,7 @@ void MainWindow::playFromRequest()
 {
     QModelIndex radioSelectedIndex = radioResultsTableView->selectionModel()->currentIndex();
     if (radioSelectedIndex.row() >= 0) {
-        RequestsData* data = requestsModel->dataInstance(radioSelectedIndex.row());
+        RadioStation* data = requestsModel->dataInstance(radioSelectedIndex.row());
         playRadioStation(data);
         controlsGuiBottom->setRadioName("playing " + data->getObject()["name"].toString());
     }
@@ -174,7 +174,7 @@ void MainWindow::playFromFavourites()
 {
     QModelIndex radioSelectedIndex = favouritesTableView->selectionModel()->currentIndex();
     if (radioSelectedIndex.row() >= 0) {
-        RequestsData* data = favouritesModel->dataInstance(radioSelectedIndex.row());
+        RadioStation* data = favouritesModel->dataInstance(radioSelectedIndex.row());
         playRadioStation(data);
         qDebug() << data->getObject()["name"].toString();
         controlsGuiBottom->setRadioName("playing " + data->getObject()["name"].toString());
@@ -188,12 +188,16 @@ void MainWindow::fillDataModel(QByteArray data)
     QJsonDocument document = QJsonDocument::fromJson(data);
 
     QJsonArray array = document.array();
-    QList<RequestsData*> dataForModel;
+    QList<RadioStation*> dataForModel;
 
     //add link to access the webpage
 
     for (int i = 0; i < array.size(); i++) {
-        RequestsData* data = new RequestsData(array.at(i).toObject());
+        RadioStation* data = new RadioStation(array.at(i).toObject());
+        if (i == 0) {
+            qDebug() << "set 0";
+            data->setFavorite(true);
+        }
         dataForModel.append(data);
     }
     requestsModel->setRequestedData(dataForModel);
@@ -263,5 +267,5 @@ void MainWindow::setupUI()
     setCentralWidget(mainWidget);
     //gui geometry
     resize(900, 600);
-    setMinimumSize(400, 600);
+    setMinimumSize(600, 600);
 }

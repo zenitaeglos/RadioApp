@@ -6,15 +6,15 @@ FavouritesJson::FavouritesJson()
     jsonFile.setFileName("favourites.json");
 }
 
-QList<RequestsData *> FavouritesJson::jsonLoadElements()
+QList<RadioStation *> FavouritesJson::jsonLoadElements()
 {
     if (!jsonFile.open(QIODevice::ReadOnly)) {
-        return QList<RequestsData*>();
+        return QList<RadioStation*>();
     }
     QByteArray data = jsonFile.readAll();
 
     QJsonDocument document = QJsonDocument::fromJson(data);
-    QList<RequestsData*> dataForModel;
+    QList<RadioStation*> dataForModel;
 
     QJsonArray array = document.array();
 
@@ -22,7 +22,7 @@ QList<RequestsData *> FavouritesJson::jsonLoadElements()
     //add link to access the webpage
 
     for (int i = 0; i < array.size(); i++) {
-        RequestsData* data = new RequestsData(array.at(i).toObject());
+        RadioStation* data = new RadioStation(array.at(i).toObject());
         dataForModel.append(data);
     }
 

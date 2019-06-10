@@ -11,7 +11,7 @@ RequestsModel::RequestsModel(QObject *parent) : QAbstractTableModel (parent)
 int RequestsModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return requestsData.size();
+    return radioStations.size();
 }
 
 int RequestsModel::columnCount(const QModelIndex &parent) const
@@ -22,11 +22,11 @@ int RequestsModel::columnCount(const QModelIndex &parent) const
 
 QVariant RequestsModel::data(const QModelIndex &index, int role) const
 {
-    if (requestsData.size() == 0)
+    if (radioStations.size() == 0)
         return QVariant();
 
     if (role == Qt::DisplayRole) {
-        return requestsData.at(index.row())->getObject();
+        return radioStations.at(index.row())->getObject();
     }
     return QVariant();
 }
@@ -64,14 +64,14 @@ QVariant RequestsModel::headerData(int section, Qt::Orientation orientation, int
     return QVariant();
 }
 
-void RequestsModel::setRequestedData(QList<RequestsData *> newRequest)
+void RequestsModel::setRequestedData(QList<RadioStation *> newRequest)
 {
     beginResetModel();
-    requestsData = newRequest;
+    radioStations = newRequest;
     endResetModel();
 }
 
-RequestsData *RequestsModel::dataInstance(int row)
+RadioStation *RequestsModel::dataInstance(int row)
 {
-    return requestsData.at(row);
+    return radioStations.at(row);
 }

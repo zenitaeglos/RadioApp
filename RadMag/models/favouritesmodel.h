@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QAbstractTableModel>
-#include "requests/requestsdata.h"
+#include "requests/radiostation.h"
 
 class FavouritesModel : public QAbstractTableModel
 {
@@ -18,14 +18,14 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
 
-    void setFavourites(QList<RequestsData*> favList);
-    void addFavourite(int position, RequestsData* newFavourite);
+    void setFavourites(QList<RadioStation*> favList);
+    void addFavourite(int position, RadioStation* newFavourite);
     void removeFavourite(int position);
 
-    RequestsData* dataInstance(int row);
+    RadioStation* dataInstance(int row);
 
 private:
-    QList<RequestsData*> favouritesList;
+    QList<RadioStation*> favouritesList;
 };
 
 #endif // FAVOURITESMODEL_H

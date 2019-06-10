@@ -6,7 +6,7 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QFile>
-#include <requests/requestsdata.h>
+#include <requests/radiostation.h>
 
 class FavouritesJson
 {
@@ -14,7 +14,7 @@ class FavouritesJson
 public:
     explicit FavouritesJson();
 
-    QList<RequestsData*> jsonLoadElements();
+    QList<RadioStation*> jsonLoadElements();
     void addJsonObjectToFile(QJsonObject jsonObject, int position);
     void removeJsonObjectFromFile(int position);
 

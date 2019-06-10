@@ -1,4 +1,4 @@
-#include "requestsdata.h"
+#include "radiostation.h"
 #include <QDebug>
 
 RadioStation::RadioStation(QJsonObject jsonObject, bool favorite /*false*/) :
