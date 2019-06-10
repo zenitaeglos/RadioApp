@@ -214,7 +214,7 @@ void MainWindow::setupUI()
 
     radioResultsTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     radioResultsTableView->horizontalHeader()->setStretchLastSection(true);
-    radioResultsTableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    //radioResultsTableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     //radioResultsTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     //radioResultsTableView->setColumnWidth(0, 300);
     //radioResultsTableView->setColumnWidth(1, 10);
@@ -242,6 +242,7 @@ void MainWindow::setupUI()
 
     resultsAndBottomLayout->addWidget(radioResultsTableView);
     resultsAndBottomLayout->addWidget(controlsGuiBottom);
+
 
     favouritesTableView->setMaximumWidth(this->width() / 3);
     favouritesTableView->horizontalHeader()->setStretchLastSection(true);
