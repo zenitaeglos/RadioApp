@@ -39,7 +39,7 @@ void ControlsGuiHeader::setupUI()
     searchLineEdit->setPlaceholderText("Search Radio");
     searchLineEdit->setToolTip("Search radio station");
     searchStationsButton->setIcon(QIcon("://resources/baseline-search-24px.svg"));
-    searchStationsButton->setIconSize(QSize(searchStationsButton->height() - 8, searchStationsButton->height() - 8));
+    searchStationsButton->setIconSize(QSize(searchStationsButton->height() - 12, searchStationsButton->height() - 12));
 
     searchStationsButton->setToolTip("Search");
 

@@ -26,16 +26,16 @@ void ControlsGuiBottom::setRadioName(QString newRadioName)
 
 void ControlsGuiBottom::setupUI()
 {
-    playButton->setMinimumHeight(80);
-    playButton->setMaximumWidth(80);
+    playButton->setMinimumHeight(40);
+    playButton->setMaximumWidth(40);
     playButton->setIcon(QIcon("://resources/baseline-play_circle_outline-24px.svg"));
-    playButton->setIconSize(QSize(playButton->height() - 8, playButton->height() - 8));
+    playButton->setIconSize(QSize(playButton->height() - 20, playButton->height() - 20));
     playButton->setToolTip("Play");
 
-    stopButton->setMinimumHeight(80);
-    stopButton->setMaximumWidth(80);
+    stopButton->setMinimumHeight(40);
+    stopButton->setMaximumWidth(40);
     stopButton->setIcon(QIcon("://resources/baseline-stop-24px.svg"));
-    stopButton->setIconSize(QSize(stopButton->height() - 8, stopButton->height() - 8));
+    stopButton->setIconSize(QSize(stopButton->height() - 20, stopButton->height() - 20));
     stopButton->setToolTip("Stop");
 
     radioName->setText("");

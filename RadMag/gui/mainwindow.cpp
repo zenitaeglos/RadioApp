@@ -207,13 +207,18 @@ void MainWindow::setPlaylistToPlay(QByteArray data)
 void MainWindow::setupUI()
 {
     //TODO set header style
-    radioResultsTableView->horizontalHeader()->setStretchLastSection(true);
+
     //radioResultsTableView->setStyleSheet("QHeaderView::section {color: white; background-color: #232326; height: 40px;"
     //                                     "font-size: 20px}");
     radioResultsTableView->setItemDelegate(delegate);
 
     radioResultsTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    radioResultsTableView->horizontalHeader()->setFirstSectionMovable(true);
+    radioResultsTableView->horizontalHeader()->setStretchLastSection(true);
+    radioResultsTableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    //radioResultsTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    //radioResultsTableView->setColumnWidth(0, 300);
+    //radioResultsTableView->setColumnWidth(1, 10);
+
 
     //radioResultsTableView->setStyleSheet("background-image: url(://resources/background-cement-concrete-242236-2.jpg)");
     /*

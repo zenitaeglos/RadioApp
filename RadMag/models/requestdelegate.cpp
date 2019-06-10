@@ -40,12 +40,14 @@ void RequestDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     painter->drawText(bitRateRect, Qt::AlignCenter | Qt::TextWordWrap, "Bitrate: " + jsonObject["bitrate"].toString());
     //painter->drawLine(option.rect.bottomLeft().x(), option.rect.bottomLeft().y(),
     //                  option.rect.bottomRight().x(), option.rect.bottomRight().y());
+    QIcon starIcon("://resources/baseline-star_border-24px.svg");
+    painter->drawPixmap(option.rect.x() + option.rect.width() - 40, option.rect.y(), 32, 32, starIcon.pixmap(QSize(32, 32)));
 
 }
 
 QSize RequestDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-   //Q_UNUSED(index);
+    Q_UNUSED(index);
     QRect rect(option.rect.x(), option.rect.y(), option.rect.width(), 60);
     return rect.size();
 }
