@@ -191,10 +191,28 @@ void MainWindow::updateRadioStationFavorite(int position, bool favorite)
     radiostationsModel->updateModelFavorite(position, favorite);
     RadioStation* radio = radiostationsModel->dataInstance(position);
     if (favorite) {
-        favouritesModel->addFavourite(radiostationsModel->rowCount(QModelIndex()), radio);
-        //favouritesJsonFile->addJsonObjectToFile(radio->getObject(), favouritesModel->rowCount(QModelIndex()));
+        bool isAdded = false;
+        for (int i = 0; i < favouritesModel->rowCount(QModelIndex()); i++) {
+            RadioStation* favRadioStation = favouritesModel->dataInstance(i);
+            if (radio->getValue(RadioStation::Url) == favRadioStation->getValue(RadioStation::Url)) {
+                isAdded = true;
+                break;
+            }
+        }
+        if (!isAdded) {
+            favouritesModel->addFavourite(radiostationsModel->rowCount(QModelIndex()), radio);
+            //favouritesJsonFile->addJsonObjectToFile(radio->getObject(), favouritesModel->rowCount(QModelIndex()));
+        }
+
     }
     else {
+        for (int i = 0; i < favouritesModel->rowCount(QModelIndex()); i++) {
+            RadioStation* radioFavorite = favouritesModel->dataInstance(i);
+            if (radio->getValue(RadioStation::Url) == radioFavorite->getValue(RadioStation::Url)) {
+                favouritesModel->removeFavourite(i);
+                break;
+            }
+        }
         //TODO delete from the favorites
     }
 }
@@ -210,9 +228,18 @@ void MainWindow::fillDataModel(QByteArray data)
 
     //add link to access the webpage
 
+    //check if radio station is already added into the favorites
+    //change type of star depending on if it is true or false
     for (int i = 0; i < array.size(); i++) {
-        RadioStation* data = new RadioStation(array.at(i).toObject());
-        dataForModel.append(data);
+        RadioStation* radio = new RadioStation(array.at(i).toObject());
+        for (int i = 0; i < favouritesModel->rowCount(QModelIndex()); i++) {
+            RadioStation* favoriteRadio = favouritesModel->dataInstance(i);
+            if (radio->getValue(RadioStation::Url) == favoriteRadio->getValue(RadioStation::Url)) {
+                radio->setFavorite(true);
+                break;
+            }
+        }
+        dataForModel.append(radio);
     }
     radiostationsModel->setRequestedData(dataForModel);
 }
