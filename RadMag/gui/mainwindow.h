@@ -68,7 +68,7 @@ private:
     RadioStationsModel* radiostationsModel;
     QNetworkAccessManager* manager;
     DownloadType downloadType;
-    RadioStationDelegate* delegate;
+    RadioStationDelegate* radioStationDelegate;
     QTableView* favouritesTableView;
     QHBoxLayout* tablesHLayout;
     FavouritesModel* favouritesModel;

@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     controlsGuiHeader(new ControlsGuiHeader(this)),
     radiostationsModel(new RadioStationsModel(this)),
     manager(new QNetworkAccessManager(this)),
-    delegate(new RadioStationDelegate(this)),
+    radioStationDelegate(new RadioStationDelegate(this)),
     favouritesTableView(new QTableView),
     tablesHLayout(new QHBoxLayout),
     favouritesModel(new FavouritesModel(this)),
@@ -56,6 +56,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     //connect(addToFavouritesButton, &QPushButton::clicked, this, &MainWindow::addRadioToFavourite);
     //connect(removeFromFavouritesButton, &QPushButton::clicked, this, &MainWindow::removeRadioFromFavourite);
     connect(favouritesTableView, &QTableView::doubleClicked, this, &MainWindow::playFromFavourites);
+
+    connect(radioStationDelegate, &RadioStationDelegate::starClicked, radiostationsModel, &RadioStationsModel::updateModelFavorite);
+
 }
 
 MainWindow::~MainWindow()
@@ -211,7 +214,7 @@ void MainWindow::setupUI()
 
     //radioResultsTableView->setStyleSheet("QHeaderView::section {color: white; background-color: #232326; height: 40px;"
     //                                     "font-size: 20px}");
-    radioResultsTableView->setItemDelegate(delegate);
+    radioResultsTableView->setItemDelegate(radioStationDelegate);
 
     radioResultsTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     radioResultsTableView->horizontalHeader()->setStretchLastSection(true);

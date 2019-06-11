@@ -1,4 +1,4 @@
-#include "requestdelegate.h"
+#include "radiostationdelegate.h"
 #include <QDebug>
 #include <QJsonObject>
 
@@ -35,7 +35,6 @@ void RadioStationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
     //set the icon to only be border or complete, depending if it belongs to favorites or not.
     if (jsonObject["favorite"].toBool() == true) {
-        qDebug() << "it is true";
         QIcon starIcon("://resources/baseline-star-24px.svg");
         painter->drawPixmap(option.rect.x() + option.rect.width() - 40, option.rect.y(), 32, 32, starIcon.pixmap(QSize(32, 32)));
     }
@@ -52,3 +51,19 @@ QSize RadioStationDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
     QRect rect(option.rect.x(), option.rect.y(), option.rect.width(), 60);
     return rect.size();
 }
+
+bool RadioStationDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+    if (event->type() == QEvent::MouseButtonPress) {
+        QMouseEvent* mouse = (QMouseEvent*)event;
+        if (mouse->pos().x() > option.rect.width() - 30 && mouse->pos().y() < option.rect.y() + 30) {
+            QJsonObject jsonObject = model->data(index).toJsonObject();
+            bool favorite = true;
+            if (jsonObject["favorite"].toBool())
+                favorite = false;
+            emit starClicked(index.row(), favorite);
+        }
+
+    }
+}
+

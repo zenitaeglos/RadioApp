@@ -5,7 +5,9 @@
 #include <QWidget>
 #include <QStyledItemDelegate>
 #include <QPainter>
-
+#include <QEvent>
+#include <QMouseEvent>
+#include "../requests/radiostation.h"
 
 class RadioStationDelegate : public QStyledItemDelegate
 {
@@ -17,8 +19,12 @@ public:
     void paint(QPainter* painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
-signals:
+    //catch mouse clicks to add or remove favorites
+    bool editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index) override;
 
+signals:
+    //change type of star to show whether it is a favorite or not
+    void starClicked(int delegatePosition, bool favorite);
 
 public slots:
 };

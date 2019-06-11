@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QAbstractTableModel>
 #include <QMap>
+#include <QDebug>
 #include "requests/radiostation.h"
 
 class RadioStationsModel : public QAbstractTableModel
@@ -21,6 +22,10 @@ public:
     void setRequestedData(QList<RadioStation*> newRequest);
 
     RadioStation* dataInstance(int row);
+
+    //update element of the model
+    void updateModelFavorite(int position, bool favorite);
+
 private:
     QList<RadioStation*> radioStations;
 };

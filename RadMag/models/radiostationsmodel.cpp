@@ -76,3 +76,14 @@ RadioStation *RadioStationsModel::dataInstance(int row)
 {
     return radioStations.at(row);
 }
+
+void RadioStationsModel::updateModelFavorite(int position, bool favorite)
+{
+
+    beginInsertRows(QModelIndex(), position, position + 1);
+    RadioStation* radio = dataInstance(position);
+    radio->setFavorite(favorite);
+    endInsertRows();
+}
+
+
