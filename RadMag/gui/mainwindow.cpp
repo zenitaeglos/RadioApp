@@ -191,28 +191,14 @@ void MainWindow::updateRadioStationFavorite(int position, bool favorite)
     radiostationsModel->updateModelFavorite(position, favorite);
     RadioStation* radio = radiostationsModel->dataInstance(position);
     if (favorite) {
-        bool isAdded = false;
-        for (int i = 0; i < favouritesModel->rowCount(QModelIndex()); i++) {
-            RadioStation* favRadioStation = favouritesModel->dataInstance(i);
-            if (radio->getValue(RadioStation::Url) == favRadioStation->getValue(RadioStation::Url)) {
-                isAdded = true;
-                break;
-            }
-        }
-        if (!isAdded) {
+        if (!CompareModels::findRadioStationInModel(radio, favouritesModel)) {
             favouritesModel->addFavourite(radiostationsModel->rowCount(QModelIndex()), radio);
             //favouritesJsonFile->addJsonObjectToFile(radio->getObject(), favouritesModel->rowCount(QModelIndex()));
         }
 
     }
     else {
-        for (int i = 0; i < favouritesModel->rowCount(QModelIndex()); i++) {
-            RadioStation* radioFavorite = favouritesModel->dataInstance(i);
-            if (radio->getValue(RadioStation::Url) == radioFavorite->getValue(RadioStation::Url)) {
-                favouritesModel->removeFavourite(i);
-                break;
-            }
-        }
+        CompareModels::removeRadioFromModel(radio, favouritesModel);
         //TODO delete from the favorites
     }
 }

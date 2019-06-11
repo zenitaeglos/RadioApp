@@ -26,6 +26,7 @@
 #include "models/favouritesdelegate.h"
 #include "logic/radioplayer.h"
 #include "logic/favouritesjson.h"
+#include "logic/comparemodels.h"
 
 class MainWindow : public QMainWindow
 {

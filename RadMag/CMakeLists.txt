@@ -34,8 +34,9 @@ set (MYSOURCES "${PROJECT_SOURCE_DIR}/gui/mainwindow.h"
     "${PROJECT_SOURCE_DIR}/logic/radioplayer.h"
     "${PROJECT_SOURCE_DIR}/logic/radioplayer.cpp"
     "${PROJECT_SOURCE_DIR}/logic/favouritesjson.h"
-    "${PROJECT_SOURCE_DIR}/logic/favouritesjson.cpp")
-
+    "${PROJECT_SOURCE_DIR}/logic/favouritesjson.cpp"
+    "${PROJECT_SOURCE_DIR}/logic/comparemodels.h"
+    "${PROJECT_SOURCE_DIR}/logic/comparemodels.cpp")
 
 add_executable(${PROJECT_NAME} "main.cpp" "files.qrc" ${MYSOURCES})
 
