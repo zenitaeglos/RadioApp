@@ -55,6 +55,9 @@ private slots:
     void playFromRequest();
     void playFromFavourites();
 
+    // update both tableviews depending on whether the star gives a favorite or not
+    void updateRadioStationFavorite(int position, bool favorite);
+
 private:
     void playRadioStation(RadioStation* data);
     void fillDataModel(QByteArray data);

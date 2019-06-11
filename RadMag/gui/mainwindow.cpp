@@ -57,8 +57,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     //connect(removeFromFavouritesButton, &QPushButton::clicked, this, &MainWindow::removeRadioFromFavourite);
     connect(favouritesTableView, &QTableView::doubleClicked, this, &MainWindow::playFromFavourites);
 
-    connect(radioStationDelegate, &RadioStationDelegate::starClicked, radiostationsModel, &RadioStationsModel::updateModelFavorite);
+    //connect(radioStationDelegate, &RadioStationDelegate::starClicked, radiostationsModel, &RadioStationsModel::updateModelFavorite);
+    connect(radioStationDelegate, &RadioStationDelegate::starClicked, this, &MainWindow::updateRadioStationFavorite);
 
+    connect(favouritesDelegate, &FavouritesDelegate::removeClicked, favouritesModel, &FavouritesModel::removeFavourite);
 }
 
 MainWindow::~MainWindow()
@@ -181,6 +183,19 @@ void MainWindow::playFromFavourites()
         playRadioStation(data);
         qDebug() << data->getObject()["name"].toString();
         controlsGuiBottom->setRadioName("playing " + data->getObject()["name"].toString());
+    }
+}
+
+void MainWindow::updateRadioStationFavorite(int position, bool favorite)
+{
+    radiostationsModel->updateModelFavorite(position, favorite);
+    RadioStation* radio = radiostationsModel->dataInstance(position);
+    if (favorite) {
+        favouritesModel->addFavourite(radiostationsModel->rowCount(QModelIndex()), radio);
+        //favouritesJsonFile->addJsonObjectToFile(radio->getObject(), favouritesModel->rowCount(QModelIndex()));
+    }
+    else {
+        //TODO delete from the favorites
     }
 }
 

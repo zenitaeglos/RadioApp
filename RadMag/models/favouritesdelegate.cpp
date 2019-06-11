@@ -27,3 +27,13 @@ QSize FavouritesDelegate::sizeHint(const QStyleOptionViewItem &option, const QMo
     Q_UNUSED(index);
     return option.rect.size();
 }
+
+bool FavouritesDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+    if (event->type() == QEvent::MouseButtonPress) {
+        QMouseEvent* mouse = (QMouseEvent*)event;
+        if (mouse->pos().x() > option.rect.width() - 20 && mouse->pos().y() < option.rect.y() + 20) {
+            emit removeClicked(index.row());
+        }
+    }
+}
