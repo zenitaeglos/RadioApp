@@ -21,7 +21,7 @@
 #include "controlsguibottom.h"
 #include "controlsguiheader.h"
 #include "models/radiostationsmodel.h"
-#include "models/requestdelegate.h"
+#include "models/radiostationdelegate.h"
 #include "models/favouritesmodel.h"
 #include "models/favouritesdelegate.h"
 #include "logic/radioplayer.h"
@@ -68,7 +68,7 @@ private:
     RadioStationsModel* radiostationsModel;
     QNetworkAccessManager* manager;
     DownloadType downloadType;
-    RequestDelegate* delegate;
+    RadioStationDelegate* delegate;
     QTableView* favouritesTableView;
     QHBoxLayout* tablesHLayout;
     FavouritesModel* favouritesModel;

@@ -7,17 +7,18 @@
 #include <QPainter>
 
 
-class RequestDelegate : public QStyledItemDelegate
+class RadioStationDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 public:
-    explicit RequestDelegate(QWidget *parent = nullptr);
+    explicit RadioStationDelegate(QWidget *parent = nullptr);
 
 
     void paint(QPainter* painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
 signals:
+
 
 public slots:
 };

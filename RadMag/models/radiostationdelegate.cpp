@@ -2,12 +2,12 @@
 #include <QDebug>
 #include <QJsonObject>
 
-RequestDelegate::RequestDelegate(QWidget *parent) : QStyledItemDelegate (parent)
+RadioStationDelegate::RadioStationDelegate(QWidget *parent) : QStyledItemDelegate (parent)
 {
 
 }
 
-void RequestDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void RadioStationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     if (index.column() == 1)
         return;
@@ -46,7 +46,7 @@ void RequestDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 }
 
-QSize RequestDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+QSize RadioStationDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     Q_UNUSED(index);
     QRect rect(option.rect.x(), option.rect.y(), option.rect.width(), 60);
