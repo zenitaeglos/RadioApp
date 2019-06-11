@@ -193,13 +193,13 @@ void MainWindow::updateRadioStationFavorite(int position, bool favorite)
     if (favorite) {
         if (!CompareModels::findRadioStationInModel(radio, favouritesModel)) {
             favouritesModel->addFavourite(radiostationsModel->rowCount(QModelIndex()), radio);
-            //favouritesJsonFile->addJsonObjectToFile(radio->getObject(), favouritesModel->rowCount(QModelIndex()));
+            favouritesJsonFile->addJsonObjectToFile(radio->getObject(), 0);
         }
 
     }
     else {
-        CompareModels::removeRadioFromModel(radio, favouritesModel);
-        //TODO delete from the favorites
+        int radioPositionToDelete = CompareModels::removeRadioFromModel(radio, favouritesModel);
+        favouritesJsonFile->removeJsonObjectFromFile(radioPositionToDelete);
     }
 }
 

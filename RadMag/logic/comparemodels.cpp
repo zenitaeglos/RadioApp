@@ -18,13 +18,14 @@ bool CompareModels::findRadioStationInModel(RadioStation *radioStation, Favourit
     return isAdded;
 }
 
-void CompareModels::removeRadioFromModel(RadioStation *radioStation, FavouritesModel *model)
+int CompareModels::removeRadioFromModel(RadioStation *radioStation, FavouritesModel *model)
 {
     for (int i = 0; i < model->rowCount(QModelIndex()); i++) {
         RadioStation* radioFavorite = model->dataInstance(i);
         if (radioStation->getValue(RadioStation::Url) == radioFavorite->getValue(RadioStation::Url)) {
             model->removeFavourite(i);
-            break;
+            return i;
         }
     }
+    return -1;
 }

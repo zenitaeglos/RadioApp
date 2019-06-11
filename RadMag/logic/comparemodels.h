@@ -12,7 +12,7 @@ public:
     CompareModels();
 
     bool static findRadioStationInModel(RadioStation* radioStation, FavouritesModel* model);
-    void static removeRadioFromModel(RadioStation* radioStation, FavouritesModel* model);
+    int static removeRadioFromModel(RadioStation* radioStation, FavouritesModel* model);
 };
 
 #endif // COMPAREMODELS_H
