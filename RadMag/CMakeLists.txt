@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 set(RadMag_VERSION_MAJOR 0)
-set(RadMag_VERSION_MINOR 2)
+set(RadMag_VERSION_MINOR 8)
 set(RadMag_VERSION_PATCH 0)
 
 find_package(Qt5 COMPONENTS Core Widgets Network Multimedia Svg Sql REQUIRED)
