@@ -59,6 +59,8 @@ private slots:
     // update both tableviews depending on whether the star gives a favorite or not
     void updateRadioStationFavorite(int position, bool favorite);
     void removeRadioStationFromFavorite(int position);
+    //setcurrentindex from favorite
+    void currentIndexFavorite(int index);
 
 private:
     void playRadioStation(RadioStation* data);

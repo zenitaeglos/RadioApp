@@ -62,6 +62,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     //connect(favouritesDelegate, &FavouritesDelegate::removeClicked, favouritesModel, &FavouritesModel::removeFavourite);
     connect(favouritesDelegate, &FavouritesDelegate::removeClicked, this, &MainWindow::removeRadioFromFavourite);
+    connect(favouritesDelegate, &FavouritesDelegate::playFavoriteClicked, this, &MainWindow::playFromFavourites);
+    connect(favouritesDelegate, &FavouritesDelegate::currentIndexChanged, this, &MainWindow::currentIndexFavorite);
 }
 
 MainWindow::~MainWindow()
@@ -208,6 +210,12 @@ void MainWindow::removeRadioStationFromFavorite(int position)
 {
     favouritesModel->removeFavourite(position);
     favouritesJsonFile->removeJsonObjectFromFile(position);
+}
+
+void MainWindow::currentIndexFavorite(int index)
+{
+    QModelIndex favoriteIndex = favouritesTableView->indexAt(QPoint(index, 0));
+    favouritesTableView->selectionModel()->setCurrentIndex(favoriteIndex, QItemSelectionModel::ClearAndSelect);
 }
 
 void MainWindow::fillDataModel(QByteArray data)

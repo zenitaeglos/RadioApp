@@ -35,5 +35,15 @@ bool FavouritesDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, c
         if (mouse->pos().x() > option.rect.width() - 20 && mouse->pos().y() < option.rect.y() + 20) {
             emit removeClicked(index.row());
         }
+        else {
+            qDebug() << "clik";
+            emit currentIndexChanged(index.row());
+        }
     }
+    if (event->type() == QEvent::MouseButtonDblClick) {
+        QMouseEvent* mouse = static_cast<QMouseEvent*>(event);
+        if (mouse->pos().x() < option.rect.width() - 20)
+            emit playFavoriteClicked();
+    }
+    return true;
 }

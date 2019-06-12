@@ -26,6 +26,10 @@ public:
 signals:
     //delete an element from favorites
     void removeClicked(int position);
+    // double click signal to play favorite
+    void playFavoriteClicked();
+    //set current index
+    void currentIndexChanged(int index);
 
 public slots:
 };
