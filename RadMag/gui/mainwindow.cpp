@@ -262,39 +262,10 @@ void MainWindow::setPlaylistToPlay(QByteArray data)
 
 void MainWindow::setupUI()
 {
-    //TODO set header style
-
-    //radioResultsTableView->setStyleSheet("QHeaderView::section {color: white; background-color: #232326; height: 40px;"
-    //                                     "font-size: 20px}");
     radioResultsTableView->setItemDelegate(radioStationDelegate);
 
     radioResultsTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     radioResultsTableView->horizontalHeader()->setStretchLastSection(true);
-    //radioResultsTableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
-    //radioResultsTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    //radioResultsTableView->setColumnWidth(0, 300);
-    //radioResultsTableView->setColumnWidth(1, 10);
-
-
-    //radioResultsTableView->setStyleSheet("background-image: url(://resources/background-cement-concrete-242236-2.jpg)");
-    /*
-    radioResultsTableView->setStyleSheet("background-color: transparent;"
-                                         "QHeaderView::section {background-color: transparent;}"
-                                         "QHeaderView {background-color: transparent;}"
-                                         "QTableCornerButton::section {background-color: transparent;}");
-    */
-    //addToFavouritesButton->setText("+");
-    //addToFavouritesButton->setToolTip("Add playlist to favourites");
-
-    //removeFromFavouritesButton->setText("-");
-    //removeFromFavouritesButton->setToolTip("Remove playlist from favourites");
-
-    //addDeleteButtonsHorizontalLayout->addWidget(addToFavouritesButton);
-    //addDeleteButtonsHorizontalLayout->addWidget(removeFromFavouritesButton);
-
-    //favouritesLayout->addLayout(addDeleteButtonsHorizontalLayout);
-    //favouritesLayout->addWidget(favouritesTableView);
-    //favouritesTableView->setStyleSheet("background-color:transparent");
 
     resultsAndBottomLayout->addWidget(radioResultsTableView);
     resultsAndBottomLayout->addWidget(controlsGuiBottom);
@@ -305,12 +276,10 @@ void MainWindow::setupUI()
     favouritesTableView->setItemDelegate(favouritesDelegate);
 
     tablesHLayout->addWidget(favouritesTableView);
-    //tablesHLayout->addWidget(radioResultsTableView);
     tablesHLayout->addLayout(resultsAndBottomLayout);
 
     mainLayout->addWidget(controlsGuiHeader);
     mainLayout->addLayout(tablesHLayout);
-    //mainLayout->addWidget(controlsGuiBottom);
 
     mainWidget->setLayout(mainLayout);
 
