@@ -64,5 +64,6 @@ bool RadioStationDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
             emit starClicked(index.row(), favorite);
         }
     }
+    return true;
 }
 
