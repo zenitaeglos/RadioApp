@@ -60,7 +60,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     //connect(radioStationDelegate, &RadioStationDelegate::starClicked, radiostationsModel, &RadioStationsModel::updateModelFavorite);
     connect(radioStationDelegate, &RadioStationDelegate::starClicked, this, &MainWindow::updateRadioStationFavorite);
 
-    connect(favouritesDelegate, &FavouritesDelegate::removeClicked, favouritesModel, &FavouritesModel::removeFavourite);
+    //connect(favouritesDelegate, &FavouritesDelegate::removeClicked, favouritesModel, &FavouritesModel::removeFavourite);
+    connect(favouritesDelegate, &FavouritesDelegate::removeClicked, this, &MainWindow::removeRadioFromFavourite);
 }
 
 MainWindow::~MainWindow()
@@ -201,6 +202,12 @@ void MainWindow::updateRadioStationFavorite(int position, bool favorite)
         int radioPositionToDelete = CompareModels::removeRadioFromModel(radio, favouritesModel);
         favouritesJsonFile->removeJsonObjectFromFile(radioPositionToDelete);
     }
+}
+
+void MainWindow::removeRadioStationFromFavorite(int position)
+{
+    favouritesModel->removeFavourite(position);
+    favouritesJsonFile->removeJsonObjectFromFile(position);
 }
 
 void MainWindow::fillDataModel(QByteArray data)
