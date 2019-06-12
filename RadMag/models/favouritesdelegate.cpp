@@ -36,7 +36,7 @@ bool FavouritesDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, c
             emit removeClicked(index.row());
         }
         else {
-            qDebug() << "clik";
+            qDebug() << index.row();
             emit currentIndexChanged(index.row());
         }
     }

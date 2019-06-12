@@ -26,6 +26,9 @@ signals:
     //change type of star to show whether it is a favorite or not
     void starClicked(int delegatePosition, bool favorite);
 
+    void currentIndexChanged(int index);
+    void doubleClickPressed();
+
 public slots:
 };
 

@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(controlsGuiBottom->getPlayButton(), &QPushButton::clicked, this, &MainWindow::playFromRequest);
     connect(controlsGuiBottom->getStopButton(), &QPushButton::clicked, this, &MainWindow::stop);
     connect(this, &MainWindow::playClicked, this, &MainWindow::play);
-    connect(radioResultsTableView, &QTableView::doubleClicked, this, &MainWindow::playFromRequest);
+    //connect(radioResultsTableView, &QTableView::doubleClicked, this, &MainWindow::playFromRequest);
 
     connect(radioPlayer, &RadioPlayer::mediaStatusChanged, this, &MainWindow::updateMediaInfo);
 
@@ -64,6 +64,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(favouritesDelegate, &FavouritesDelegate::removeClicked, this, &MainWindow::removeRadioFromFavourite);
     connect(favouritesDelegate, &FavouritesDelegate::playFavoriteClicked, this, &MainWindow::playFromFavourites);
     connect(favouritesDelegate, &FavouritesDelegate::currentIndexChanged, this, &MainWindow::currentIndexFavorite);
+
+    connect(radioStationDelegate, &RadioStationDelegate::currentIndexChanged, this, &MainWindow::currentIndexRadioStation);
+    connect(radioStationDelegate, &RadioStationDelegate::doubleClickPressed, this, &MainWindow::playFromRequest);
 }
 
 MainWindow::~MainWindow()
@@ -214,8 +217,14 @@ void MainWindow::removeRadioStationFromFavorite(int position)
 
 void MainWindow::currentIndexFavorite(int index)
 {
-    QModelIndex favoriteIndex = favouritesTableView->indexAt(QPoint(index, 0));
-    favouritesTableView->selectionModel()->setCurrentIndex(favoriteIndex, QItemSelectionModel::ClearAndSelect);
+    QModelIndex favoriteIndex = favouritesModel->index(index, 0);
+    favouritesTableView->setCurrentIndex(favoriteIndex);
+}
+
+void MainWindow::currentIndexRadioStation(int index)
+{
+    QModelIndex radioStationIndex = radiostationsModel->index(index, 0);
+    radioResultsTableView->setCurrentIndex(radioStationIndex);
 }
 
 void MainWindow::fillDataModel(QByteArray data)

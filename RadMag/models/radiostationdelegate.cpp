@@ -55,7 +55,7 @@ QSize RadioStationDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
 bool RadioStationDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
     if (event->type() == QEvent::MouseButtonPress) {
-        QMouseEvent* mouse = (QMouseEvent*)event;
+        QMouseEvent* mouse = static_cast<QMouseEvent*>(event);
         if (mouse->pos().x() > option.rect.width() - 30 && mouse->pos().y() < option.rect.y() + 30) {
             QJsonObject jsonObject = model->data(index).toJsonObject();
             bool favorite = true;
@@ -63,6 +63,14 @@ bool RadioStationDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
                 favorite = false;
             emit starClicked(index.row(), favorite);
         }
+        else {
+            emit currentIndexChanged(index.row());
+        }
+    }
+    if (event->type() == QEvent::MouseButtonDblClick) {
+        QMouseEvent* mouse = static_cast<QMouseEvent*>(event);
+        if (mouse->pos().x() < option.rect.width() - 30)
+            emit doubleClickPressed();
     }
     return true;
 }

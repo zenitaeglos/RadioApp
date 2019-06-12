@@ -61,6 +61,7 @@ private slots:
     void removeRadioStationFromFavorite(int position);
     //setcurrentindex from favorite
     void currentIndexFavorite(int index);
+    void currentIndexRadioStation(int index);
 
 private:
     void playRadioStation(RadioStation* data);
