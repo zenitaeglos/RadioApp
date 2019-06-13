@@ -170,7 +170,7 @@ void MainWindow::removeRadioFromFavourite()
         if (position > -1) {
             RadioStation* radioStarToRemove = radiostationsModel->dataInstance(position);
             QJsonObject jsonObject = radioStarToRemove->getObject();
-            radioStarToRemove->setFavorite(!jsonObject[RadioStation::getType(RadioStation::IsFavorite)].toBool());
+            radiostationsModel->updateModelFavorite(position, !jsonObject[RadioStation::getType(RadioStation::IsFavorite)].toBool());
         }
         favouritesModel->removeFavourite(index.row());
         favouritesJsonFile->removeJsonObjectFromFile(index.row());
@@ -194,8 +194,7 @@ void MainWindow::playFromFavourites()
     if (radioSelectedIndex.row() >= 0) {
         RadioStation* data = favouritesModel->dataInstance(radioSelectedIndex.row());
         playRadioStation(data);
-        qDebug() << data->getObject()[RadioStation::getType(RadioStation::Name)].toString();
-        controlsGuiBottom->setRadioName("playing " + data->getObject()["name"].toString());
+        controlsGuiBottom->setRadioName("playing " + data->getObject()[RadioStation::getType(RadioStation::Name)].toString());
     }
 }
 

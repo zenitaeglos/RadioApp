@@ -15,18 +15,7 @@ QJsonObject RadioStation::getObject() const
 
 QString RadioStation::getValue(RadioStation::ObjectKeys key) const
 {
-    switch (key) {
-    case Name:
-        return jsonObject["name"].toString();
-    case Url:
-        return jsonObject["url"].toString();
-    case Bitrate:
-        return jsonObject["bitrate"].toString();
-    case Country:
-        return jsonObject["country"].toString();
-    case IsFavorite:
-        return jsonObject["favorite"].toString();
-    }
+    return jsonObject[getType(key)].toString();
 }
 
 QString RadioStation::getType(RadioStation::ObjectKeys key)
