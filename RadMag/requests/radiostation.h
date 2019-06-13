@@ -19,7 +19,8 @@ public:
 
     //getters
     QJsonObject getObject() const;
-    QString getValue(ObjectKeys key);
+    QString getValue(ObjectKeys key) const;
+    QString static getType(ObjectKeys key);
 
     //setter
     void setFavorite(bool favorite);

@@ -13,7 +13,7 @@ QJsonObject RadioStation::getObject() const
     return jsonObject;
 }
 
-QString RadioStation::getValue(RadioStation::ObjectKeys key)
+QString RadioStation::getValue(RadioStation::ObjectKeys key) const
 {
     switch (key) {
     case Name:
@@ -26,6 +26,22 @@ QString RadioStation::getValue(RadioStation::ObjectKeys key)
         return jsonObject["country"].toString();
     case IsFavorite:
         return jsonObject["favorite"].toString();
+    }
+}
+
+QString RadioStation::getType(RadioStation::ObjectKeys key)
+{
+    switch (key) {
+        case Name:
+            return "name";
+        case Url:
+            return "url";
+        case Bitrate:
+            return "bitrate";
+        case Country:
+            return "country";
+        case IsFavorite:
+            return "favorite";
     }
 }
 

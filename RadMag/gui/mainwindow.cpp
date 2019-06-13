@@ -165,6 +165,13 @@ void MainWindow::removeRadioFromFavourite()
 {
     QModelIndex index = favouritesTableView->currentIndex();
     if (index.row() >= 0) {
+        RadioStation* radio = favouritesModel->dataInstance(index.row());
+        int position = CompareModels::findRadioStationInModel(radio, radiostationsModel);
+        if (position > -1) {
+            RadioStation* radioStarToRemove = radiostationsModel->dataInstance(position);
+            QJsonObject jsonObject = radioStarToRemove->getObject();
+            radioStarToRemove->setFavorite(!jsonObject[RadioStation::getType(RadioStation::IsFavorite)].toBool());
+        }
         favouritesModel->removeFavourite(index.row());
         favouritesJsonFile->removeJsonObjectFromFile(index.row());
     }
@@ -176,7 +183,7 @@ void MainWindow::playFromRequest()
     if (radioSelectedIndex.row() >= 0) {
         RadioStation* data = radiostationsModel->dataInstance(radioSelectedIndex.row());
         playRadioStation(data);
-        controlsGuiBottom->setRadioName("playing " + data->getObject()["name"].toString());
+        controlsGuiBottom->setRadioName("playing " + data->getObject()[RadioStation::getType(RadioStation::Name)].toString());
     }
 
 }
@@ -187,7 +194,7 @@ void MainWindow::playFromFavourites()
     if (radioSelectedIndex.row() >= 0) {
         RadioStation* data = favouritesModel->dataInstance(radioSelectedIndex.row());
         playRadioStation(data);
-        qDebug() << data->getObject()["name"].toString();
+        qDebug() << data->getObject()[RadioStation::getType(RadioStation::Name)].toString();
         controlsGuiBottom->setRadioName("playing " + data->getObject()["name"].toString());
     }
 }
@@ -197,7 +204,7 @@ void MainWindow::updateRadioStationFavorite(int position, bool favorite)
     radiostationsModel->updateModelFavorite(position, favorite);
     RadioStation* radio = radiostationsModel->dataInstance(position);
     if (favorite) {
-        if (!CompareModels::findRadioStationInModel(radio, favouritesModel)) {
+        if (CompareModels::findRadioStationInModel(radio, favouritesModel) == -1) {
             favouritesModel->addFavourite(radiostationsModel->rowCount(QModelIndex()), radio);
             favouritesJsonFile->addJsonObjectToFile(radio->getObject(), 0);
         }

@@ -29,9 +29,9 @@ void RadioStationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
     QRectF countryRect(nameRect.x() + 2, nameRect.bottomLeft().y() + 2, option.rect.width() / 2, 30);
     font.setPointSize(8);
     painter->setFont(font);
-    painter->drawText(countryRect, "Country: " + jsonObject["country"].toString());
+    painter->drawText(countryRect, "Country: " + jsonObject[RadioStation::getType(RadioStation::Country)].toString());
     QRectF bitRateRect(countryRect.bottomRight().x(), countryRect.topRight().y(), option.rect.width() - countryRect.width(), 20);
-    painter->drawText(bitRateRect, Qt::AlignCenter | Qt::TextWordWrap, "Bitrate: " + jsonObject["bitrate"].toString());
+    painter->drawText(bitRateRect, Qt::AlignCenter | Qt::TextWordWrap, "Bitrate: " + jsonObject[RadioStation::getType(RadioStation::Bitrate)].toString());
 
     //set the icon to only be border or complete, depending if it belongs to favorites or not.
     if (jsonObject["favorite"].toBool() == true) {
@@ -59,7 +59,7 @@ bool RadioStationDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
         if (mouse->pos().x() > option.rect.width() - 30 && mouse->pos().y() < option.rect.y() + 30) {
             QJsonObject jsonObject = model->data(index).toJsonObject();
             bool favorite = true;
-            if (jsonObject["favorite"].toBool())
+            if (jsonObject[RadioStation::getType(RadioStation::IsFavorite)].toBool())
                 favorite = false;
             emit starClicked(index.row(), favorite);
         }

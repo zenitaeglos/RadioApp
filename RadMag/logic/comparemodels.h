@@ -13,7 +13,7 @@ class CompareModels
 public:
     CompareModels();
 
-    bool static findRadioStationInModel(RadioStation* radioStation, QAbstractTableModel* model);
+    int static findRadioStationInModel(RadioStation* radioStation, QAbstractTableModel* model);
     int static removeRadioFromModel(RadioStation* radioStation, FavouritesModel* model);
 };
 

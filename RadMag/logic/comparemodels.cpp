@@ -5,11 +5,12 @@ CompareModels::CompareModels()
 
 }
 
-bool CompareModels::findRadioStationInModel(RadioStation *radioStation, QAbstractTableModel *model)
+int CompareModels::findRadioStationInModel(RadioStation *radioStation, QAbstractTableModel *model)
 {
+    int position = -1;
     FavouritesModel* favModel = dynamic_cast<FavouritesModel*>(model);
     RadioStationsModel* radioModel = dynamic_cast<RadioStationsModel*>(model);
-    bool isAdded = false;
+
     for (int i = 0; i < model->rowCount(QModelIndex()); i++) {
         RadioStation* favRadioStation = nullptr;
         if (favModel)
@@ -18,11 +19,11 @@ bool CompareModels::findRadioStationInModel(RadioStation *radioStation, QAbstrac
             favRadioStation = radioModel->dataInstance(i);
 
         if (radioStation->getValue(RadioStation::Url) == favRadioStation->getValue(RadioStation::Url)) {
-            isAdded = true;
+            position = i;
             break;
         }
     }
-    return isAdded;
+    return position;
 }
 
 int CompareModels::removeRadioFromModel(RadioStation *radioStation, FavouritesModel *model)
