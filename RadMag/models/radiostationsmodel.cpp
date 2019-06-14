@@ -79,11 +79,8 @@ RadioStation *RadioStationsModel::dataInstance(int row)
 
 void RadioStationsModel::updateModelFavorite(int position, bool favorite)
 {
-
-    //beginInsertRows(QModelIndex(), position, position + 1);
     RadioStation* radio = dataInstance(position);
     radio->setFavorite(favorite);
-    //endInsertRows();
     QModelIndex index = createIndex(position, 0);
     emit dataChanged(index, index);
 }

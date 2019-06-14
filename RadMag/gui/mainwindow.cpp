@@ -13,8 +13,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     tablesHLayout(new QHBoxLayout),
     favouritesModel(new FavouritesModel(this)),
     radioPlayer(new RadioPlayer()),
-    //addToFavouritesButton(new QPushButton(this)),
-    //removeFromFavouritesButton(new QPushButton(this)),
     addDeleteButtonsHorizontalLayout(new QHBoxLayout),
     resultsAndBottomLayout(new QVBoxLayout),
     favouritesDelegate(new FavouritesDelegate(this)),
@@ -47,20 +45,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(controlsGuiBottom->getPlayButton(), &QPushButton::clicked, this, &MainWindow::playFromRequest);
     connect(controlsGuiBottom->getStopButton(), &QPushButton::clicked, this, &MainWindow::stop);
     connect(this, &MainWindow::playClicked, this, &MainWindow::play);
-    //connect(radioResultsTableView, &QTableView::doubleClicked, this, &MainWindow::playFromRequest);
 
     connect(radioPlayer, &RadioPlayer::mediaStatusChanged, this, &MainWindow::updateMediaInfo);
 
     connect(controlsGuiHeader->getVolumeSlider(), &QSlider::valueChanged, this, &MainWindow::setVolume);
 
-    //connect(addToFavouritesButton, &QPushButton::clicked, this, &MainWindow::addRadioToFavourite);
-    //connect(removeFromFavouritesButton, &QPushButton::clicked, this, &MainWindow::removeRadioFromFavourite);
+
     connect(favouritesTableView, &QTableView::doubleClicked, this, &MainWindow::playFromFavourites);
 
-    //connect(radioStationDelegate, &RadioStationDelegate::starClicked, radiostationsModel, &RadioStationsModel::updateModelFavorite);
     connect(radioStationDelegate, &RadioStationDelegate::starClicked, this, &MainWindow::updateRadioStationFavorite);
 
-    //connect(favouritesDelegate, &FavouritesDelegate::removeClicked, favouritesModel, &FavouritesModel::removeFavourite);
     connect(favouritesDelegate, &FavouritesDelegate::removeClicked, this, &MainWindow::removeRadioFromFavourite);
     connect(favouritesDelegate, &FavouritesDelegate::playFavoriteClicked, this, &MainWindow::playFromFavourites);
     connect(favouritesDelegate, &FavouritesDelegate::currentIndexChanged, this, &MainWindow::currentIndexFavorite);
@@ -144,21 +138,6 @@ void MainWindow::stop()
 void MainWindow::setVolume(int value)
 {
     radioPlayer->setVolume(value);
-}
-
-void MainWindow::addRadioToFavourite()
-{
-    QModelIndex indexRadio = radioResultsTableView->currentIndex();
-    if (indexRadio.row() >= 0) {
-        QModelIndex indexFavourite = favouritesTableView->currentIndex();
-        if (indexFavourite.row() >= 0) {
-            favouritesModel->addFavourite(indexFavourite.row() + 1, radiostationsModel->dataInstance(indexRadio.row()));
-        }
-        else {
-            favouritesModel->addFavourite(favouritesModel->rowCount(QModelIndex()), radiostationsModel->dataInstance(indexRadio.row()));
-        }
-        favouritesJsonFile->addJsonObjectToFile(radiostationsModel->dataInstance(indexRadio.row())->getObject(), 0);
-    }
 }
 
 void MainWindow::removeRadioFromFavourite()

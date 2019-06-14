@@ -51,7 +51,6 @@ private slots:
     void play();
     void stop();
     void setVolume(int value);
-    void addRadioToFavourite();
     void removeRadioFromFavourite();
     void playFromRequest();
     void playFromFavourites();
@@ -81,8 +80,6 @@ private:
     QHBoxLayout* tablesHLayout;
     FavouritesModel* favouritesModel;
     RadioPlayer* radioPlayer;
-    QPushButton* addToFavouritesButton;
-    QPushButton* removeFromFavouritesButton;
     QHBoxLayout* addDeleteButtonsHorizontalLayout;
     QVBoxLayout* resultsAndBottomLayout;
     FavouritesDelegate* favouritesDelegate;
