@@ -28,12 +28,8 @@ int CompareModels::findRadioStationInModel(RadioStation *radioStation, QAbstract
 
 int CompareModels::removeRadioFromModel(RadioStation *radioStation, FavouritesModel *model)
 {
-    for (int i = 0; i < model->rowCount(QModelIndex()); i++) {
-        RadioStation* radioFavorite = model->dataInstance(i);
-        if (radioStation->getValue(RadioStation::Url) == radioFavorite->getValue(RadioStation::Url)) {
-            model->removeFavourite(i);
-            return i;
-        }
-    }
-    return -1;
+    int position = findRadioStationInModel(radioStation, model);
+    if (position > -1)
+        model->removeFavourite(position);
+    return position;
 }
