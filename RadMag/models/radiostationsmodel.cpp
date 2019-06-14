@@ -35,14 +35,7 @@ QVariant RadioStationsModel::headerData(int section, Qt::Orientation orientation
 {
     if (role == Qt::DisplayRole) {
         if (orientation == Qt::Horizontal)
-            switch (section) {
-                case 0:
-                    return "Radios";
-                case 1:
-                    return  "Favorite";
-                default:
-                    return "";
-            }
+            return "Radios";
     }
 
     else if (role == Qt::SizeHintRole) {

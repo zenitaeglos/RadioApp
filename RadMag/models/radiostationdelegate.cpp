@@ -9,9 +9,6 @@ RadioStationDelegate::RadioStationDelegate(QWidget *parent) : QStyledItemDelegat
 
 void RadioStationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    if (index.column() == 1)
-        return;
-    //all to do
     QFont font;
     QPen pen;
     pen.setColor(QColor(Qt::black));
