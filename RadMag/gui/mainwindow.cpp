@@ -229,7 +229,7 @@ void MainWindow::fillDataModel(QByteArray data)
         RadioStation* radio = new RadioStation(array.at(i).toObject());
         for (int i = 0; i < favouritesModel->rowCount(QModelIndex()); i++) {
             RadioStation* favoriteRadio = favouritesModel->dataInstance(i);
-            if (radio->getValue(RadioStation::Url) == favoriteRadio->getValue(RadioStation::Url)) {
+            if (radio->getValue(RadioStation::StationuuID) == favoriteRadio->getValue(RadioStation::StationuuID)) {
                 radio->setFavorite(true);
                 break;
             }
