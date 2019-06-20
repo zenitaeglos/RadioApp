@@ -18,7 +18,7 @@ int CompareModels::findRadioStationInModel(RadioStation *radioStation, QAbstract
         else if (radioModel)
             favRadioStation = radioModel->dataInstance(i);
 
-        if (radioStation->getValue(RadioStation::Url) == favRadioStation->getValue(RadioStation::Url)) {
+        if (radioStation->getValue(RadioStation::StationuuID) == favRadioStation->getValue(RadioStation::StationuuID)) {
             position = i;
             break;
         }

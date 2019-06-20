@@ -31,6 +31,8 @@ QString RadioStation::getType(RadioStation::ObjectKeys key)
             return "country";
         case IsFavorite:
             return "favorite";
+        case StationuuID:
+            return "stationuuid";
     }
 }
 
