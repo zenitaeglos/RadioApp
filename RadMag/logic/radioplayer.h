@@ -12,11 +12,6 @@ class RadioPlayer : public QObject
 {
     Q_OBJECT
 
-public
-    slots:
-    signals:
-    void mediaStatusChanged(QString title);
-
 public:
     explicit RadioPlayer();
     ~RadioPlayer();
@@ -28,10 +23,16 @@ public:
     void setVolume(int value);
     void clearPlayList();
 
+public slots:
+        void fireMediaStatusChanged();
+
+signals:
+    void mediaStatusChanged(QString title);
+
 private:
     QMediaPlayer* mediaPlayer;
     QMediaPlaylist* mediaPlayList;
-    void fireMediaStatusChanged();
+
 
 };
 
