@@ -30,7 +30,7 @@ QVariant FavouritesModel::headerData(int section, Qt::Orientation orientation, i
     Q_UNUSED(section);
     if (role == Qt::DisplayRole) {
         if (orientation == Qt::Horizontal) {
-            return "Favorites";
+            return tr("Favorites");
         }
     }
     return QVariant();

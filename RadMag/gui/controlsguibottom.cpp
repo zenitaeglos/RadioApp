@@ -30,13 +30,13 @@ void ControlsGuiBottom::setupUI()
     playButton->setMaximumWidth(40);
     playButton->setIcon(QIcon("://resources/baseline-play_circle_outline-24px.svg"));
     playButton->setIconSize(QSize(playButton->height() - 20, playButton->height() - 20));
-    playButton->setToolTip("Play");
+    playButton->setToolTip(tr("Play"));
 
     stopButton->setMinimumHeight(40);
     stopButton->setMaximumWidth(40);
     stopButton->setIcon(QIcon("://resources/baseline-stop-24px.svg"));
     stopButton->setIconSize(QSize(stopButton->height() - 20, stopButton->height() - 20));
-    stopButton->setToolTip("Stop");
+    stopButton->setToolTip(tr("Stop"));
 
     playerInfo->setText("");
     playerInfo->setMinimumWidth(width() / 2);

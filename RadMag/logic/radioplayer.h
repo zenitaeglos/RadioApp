@@ -7,6 +7,12 @@
 #include <QMediaMetaData>
 #include <QUrl>
 
+/*!
+ * \brief The RadioPlayer class
+ * \class RadioPlayer: QObject
+ * \title RadioPlayer with metadata and playlists information
+*/
+
 
 class RadioPlayer : public QObject
 {

@@ -36,19 +36,19 @@ void ControlsGuiHeader::keyPressEvent(QKeyEvent *event)
 
 void ControlsGuiHeader::setupUI()
 {
-    searchLineEdit->setPlaceholderText("Search Radio");
-    searchLineEdit->setToolTip("Search radio station");
+    searchLineEdit->setPlaceholderText(tr("Search Radio"));
+    searchLineEdit->setToolTip(tr("Search radio station"));
     searchStationsButton->setIcon(QIcon("://resources/baseline-search-24px.svg"));
     searchStationsButton->setIconSize(QSize(searchStationsButton->height() - 12, searchStationsButton->height() - 12));
 
-    searchStationsButton->setToolTip("Search");
+    searchStationsButton->setToolTip(tr("Search"));
 
     volumeSlider->setMinimum(0);
     volumeSlider->setMaximum(100);
     volumeSlider->setValue(50);
     volumeSlider->setMaximumWidth(80);
+    volumeSlider->setToolTip(tr("Change volume"));
 
-    //searchStationsButton->setMinimumHeight(50);
     searchStationsButton->setMaximumHeight(searchLineEdit->height());
 
     guiHeaderLayout->addWidget(searchLineEdit);

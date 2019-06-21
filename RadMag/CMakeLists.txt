@@ -11,9 +11,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(RadMag_VERSION_MAJOR 0)
 set(RadMag_VERSION_MINOR 9)
-set(RadMag_VERSION_PATCH 4)
+set(RadMag_VERSION_PATCH 5)
 
-find_package(Qt5 COMPONENTS Core Widgets Network Multimedia Svg Sql REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Network Multimedia Svg REQUIRED)
+
+qt5_add_resources(RESOURCE_FILES "files.qrc"
+    "translations.qrc")
 
 set (MYSOURCES "${PROJECT_SOURCE_DIR}/gui/mainwindow.h"
     "${PROJECT_SOURCE_DIR}/gui/mainwindow.cpp"
@@ -38,11 +41,11 @@ set (MYSOURCES "${PROJECT_SOURCE_DIR}/gui/mainwindow.h"
     "${PROJECT_SOURCE_DIR}/logic/comparemodels.h"
     "${PROJECT_SOURCE_DIR}/logic/comparemodels.cpp")
 
-add_executable(${PROJECT_NAME} "main.cpp" "files.qrc" ${MYSOURCES})
+add_executable(${PROJECT_NAME} "main.cpp" ${RESOURCE_FILES} ${MYSOURCES})
 
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Core Qt5::Widgets Qt5::Network Qt5::Multimedia Qt5::Svg Qt5::Sql)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Core Qt5::Widgets Qt5::Network Qt5::Multimedia Qt5::Svg)
 
 
 
