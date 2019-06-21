@@ -23,11 +23,11 @@ public:
     void setVolume(int value);
     void clearPlayList();
 
-signals:
-void mediaStatusChanged(QString title);
-
 private slots:
     void fireMediaStatusChanged();
+
+signals:
+    void mediaStatusChanged(QString title);
 
 private:
     QMediaPlayer* mediaPlayer;
