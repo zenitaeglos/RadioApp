@@ -21,14 +21,16 @@ void RadioStationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
     font.setPointSize(12);
     painter->setFont(font);
     QRectF nameRect(option.rect.x() + 4, option.rect.y() + 4, option.rect.width(), 30);
-    painter->drawText(nameRect, Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap | Qt::TextJustificationForced, jsonObject["name"].toString());
+    painter->drawText(nameRect, Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap | Qt::TextJustificationForced,
+                      jsonObject[RadioStation::getType(RadioStation::Name)].toString());
 
     QRectF countryRect(nameRect.x() + 2, nameRect.bottomLeft().y() + 2, option.rect.width() / 2, 30);
     font.setPointSize(8);
     painter->setFont(font);
     painter->drawText(countryRect, tr("Country: ") + jsonObject[RadioStation::getType(RadioStation::Country)].toString());
     QRectF bitRateRect(countryRect.bottomRight().x(), countryRect.topRight().y(), option.rect.width() - countryRect.width(), 20);
-    painter->drawText(bitRateRect, Qt::AlignCenter | Qt::TextWordWrap, tr("Bitrate: ") + jsonObject[RadioStation::getType(RadioStation::Bitrate)].toString());
+    painter->drawText(bitRateRect,
+                      Qt::AlignCenter | Qt::TextWordWrap, tr("Bitrate: ") + jsonObject[RadioStation::getType(RadioStation::Bitrate)].toString());
 
     //set the icon to only be border or complete, depending if it belongs to favorites or not.
     if (jsonObject["favorite"].toBool() == true) {

@@ -17,7 +17,7 @@ void FavouritesDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     QRectF nameRect(option.rect.x() + 12, option.rect.y(), option.rect.width() - 40, option.rect.height());
 
 
-    painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignVCenter, jsonObject["name"].toString());
+    painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignVCenter, jsonObject[RadioStation::getType(RadioStation::Name)].toString());
     QIcon removeIcon("://resources/baseline-remove_circle_outline-24px.svg");
     painter->drawPixmap(option.rect.width() - 24, option.rect.y() + 4, 20, 20, removeIcon.pixmap(QSize(24, 24)));
 }
