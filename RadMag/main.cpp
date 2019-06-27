@@ -21,7 +21,8 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-    app.setWindowIcon(QIcon("://resources/baseline-play_circle_outline-24px.svg"));
+    //app.setWindowIcon(QIcon("://resources/baseline-play_circle_outline-24px.svg"));
+
     QTranslator translator;
 
     QString local = QLocale::languageToString(QLocale::system().language());

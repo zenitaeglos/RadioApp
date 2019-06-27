@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=RadMag 
+GenericName=Radio Application
+Exec=RadMag
+Terminal=false
+Type=Application
+Icon=radio

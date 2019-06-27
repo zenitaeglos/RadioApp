@@ -4,16 +4,18 @@ project(RadMag LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTORCC OFF)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 set(RadMag_VERSION_MAJOR 0)
 set(RadMag_VERSION_MINOR 9)
-set(RadMag_VERSION_PATCH 5)
+set(RadMag_VERSION_PATCH 6)
 
 find_package(Qt5 COMPONENTS Core Widgets Network Multimedia Svg REQUIRED)
+
+include_directories(${PROJECT_SOURCE_DIR}/share)
 
 qt5_add_resources(RESOURCE_FILES "files.qrc"
     "translations.qrc")
@@ -51,6 +53,19 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Core Qt5::Widgets Qt5::Networ
 
 if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     install(TARGETS RadMag DESTINATION bin)
+    install(FILES share/radmag.desktop DESTINATION /usr/share/applications
+        PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
+        )
+    install(FILES share/radio.png DESTINATION /usr/share/pixmaps)
+    install(FILES share/radio.png
+             DESTINATION share/icons/hicolor/256x256/apps/
+             PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
+             )
+         install(FILES share/radio.png
+             DESTINATION share/icons/gnome/256x256/apps/
+             PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
+             )
+
     set(CPACK_GENERATOR "DEB")
     set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Alejandro Martinez, Sebastian Niedworok")
     set(CPACK_PACKAGE_VERSION_MAJOR ${RadMag_VERSION_MAJOR})
@@ -61,6 +76,8 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     set(CPACK_DEB_COMPONENT_INSTALL ON)
     set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
     set(CPACK_DEBIAN_PACKAGE_GENERATE_SHLIBS ON)
+    set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
+    set(CPACK_PACKAGE_ICON share/radio.png)
     include(CPack)
 
 endif()
