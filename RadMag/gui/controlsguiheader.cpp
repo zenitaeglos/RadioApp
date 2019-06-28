@@ -55,6 +55,8 @@ void ControlsGuiHeader::setupUI()
     guiHeaderLayout->addWidget(searchStationsButton);
 
     guiHeaderLayout->addWidget(volumeSlider);
+    guiHeaderLayout->setMargin(0);
+    guiHeaderLayout->setSpacing(2);
 
     setLayout(guiHeaderLayout);
 }

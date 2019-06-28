@@ -158,12 +158,12 @@ void MainWindow::removeRadioFromFavourite()
 void MainWindow::playFromRequest()
 {
     if (radioPlayer->player()->state() == QMediaPlayer::StoppedState) {
-    QModelIndex radioSelectedIndex = radioResultsTableView->selectionModel()->currentIndex();
-    if (radioSelectedIndex.row() >= 0) {
-        RadioStation* data = radiostationsModel->dataInstance(radioSelectedIndex.row());
-        playRadioStation(data);
-        controlsGuiBottom->setRadioName("playing " + data->getObject()[RadioStation::getType(RadioStation::Name)].toString());
-    }
+        QModelIndex radioSelectedIndex = radioResultsTableView->selectionModel()->currentIndex();
+        if (radioSelectedIndex.row() >= 0) {
+            RadioStation* data = radiostationsModel->dataInstance(radioSelectedIndex.row());
+            playRadioStation(data);
+            controlsGuiBottom->setRadioName("playing " + data->getObject()[RadioStation::getType(RadioStation::Name)].toString());
+        }
     }
     else if (radioPlayer->player()->state() == QMediaPlayer::PlayingState)
         stop();
