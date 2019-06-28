@@ -31,7 +31,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     favouritesTableView->setModel(favouritesModel);
 
     radioPlayer->setVolume(controlsGuiHeader->getVolumeSlider()->value());
-    controlsGuiBottom->getStopButton()->setDisabled(true);
 
     //load json file with favourites;
     QList<RadioStation*> dataFromJsonFile = favouritesJsonFile->jsonLoadElements();
@@ -43,7 +42,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(controlsGuiHeader->getSearchStationsButton(), &QPushButton::clicked, this, &MainWindow::searchStation);
     connect(manager, &QNetworkAccessManager::finished, this, &MainWindow::resultsFromRequest);
     connect(controlsGuiBottom->getPlayButton(), &QPushButton::clicked, this, &MainWindow::playFromRequest);
-    connect(controlsGuiBottom->getStopButton(), &QPushButton::clicked, this, &MainWindow::stop);
     connect(this, &MainWindow::playClicked, this, &MainWindow::play);
 
     connect(radioPlayer, &RadioPlayer::mediaStatusChanged, this, &MainWindow::updateMediaInfo);
@@ -121,17 +119,17 @@ void MainWindow::updateMediaInfo(QString title) {
 void MainWindow::play()
 {
     //set play and stop buttons enable to press and disable
-    //controlsGuiBottom->getPlayButton()->setDisabled(true);
-    controlsGuiBottom->getStopButton()->setDisabled(false);
     controlsGuiBottom->getPlayButton()->setIcon(QIcon("://resources/baseline-stop-24px.svg"));
+    controlsGuiBottom->getPlayButton()->setToolTip("Stop");
     radioPlayer->play();
+
 }
 
 void MainWindow::stop()
 {
     //set play and stop buttons enable to press and disable
-    controlsGuiBottom->getPlayButton()->setDisabled(false);
-    controlsGuiBottom->getStopButton()->setDisabled(true);
+    controlsGuiBottom->getPlayButton()->setIcon(QIcon("://resources/baseline-play_circle_outline-24px.svg"));
+    controlsGuiBottom->getPlayButton()->setToolTip("Play");
     radioPlayer->stop();
     controlsGuiBottom->setRadioName("");
 }
@@ -159,12 +157,16 @@ void MainWindow::removeRadioFromFavourite()
 
 void MainWindow::playFromRequest()
 {
+    if (radioPlayer->player()->state() == QMediaPlayer::StoppedState) {
     QModelIndex radioSelectedIndex = radioResultsTableView->selectionModel()->currentIndex();
     if (radioSelectedIndex.row() >= 0) {
         RadioStation* data = radiostationsModel->dataInstance(radioSelectedIndex.row());
         playRadioStation(data);
         controlsGuiBottom->setRadioName("playing " + data->getObject()[RadioStation::getType(RadioStation::Name)].toString());
     }
+    }
+    else if (radioPlayer->player()->state() == QMediaPlayer::PlayingState)
+        stop();
 
 }
 

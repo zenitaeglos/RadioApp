@@ -3,7 +3,6 @@
 ControlsGuiBottom::ControlsGuiBottom(QWidget *parent) : QWidget(parent),
     mainGuiBottomLayout(new QHBoxLayout),
     playButton(new QPushButton(this)),
-    stopButton(new QPushButton(this)),
     playerInfo(new QLabel(this))
 {
     setupUI();
@@ -12,11 +11,6 @@ ControlsGuiBottom::ControlsGuiBottom(QWidget *parent) : QWidget(parent),
 QPushButton *ControlsGuiBottom::getPlayButton() const
 {
     return playButton;
-}
-
-QPushButton *ControlsGuiBottom::getStopButton() const
-{
-    return stopButton;
 }
 
 void ControlsGuiBottom::setRadioName(QString newRadioName)
@@ -32,18 +26,12 @@ void ControlsGuiBottom::setupUI()
     playButton->setIconSize(QSize(playButton->height() - 20, playButton->height() - 20));
     playButton->setToolTip(tr("Play"));
 
-    stopButton->setMinimumHeight(40);
-    stopButton->setMaximumWidth(40);
-    stopButton->setIcon(QIcon("://resources/baseline-stop-24px.svg"));
-    stopButton->setIconSize(QSize(stopButton->height() - 20, stopButton->height() - 20));
-    stopButton->setToolTip(tr("Stop"));
 
     playerInfo->setText("");
     playerInfo->setMinimumWidth(width() / 2);
     playerInfo->setWordWrap(true);
 
     mainGuiBottomLayout->addWidget(playButton);
-    mainGuiBottomLayout->addWidget(stopButton);
     mainGuiBottomLayout->addWidget(playerInfo);
 
     setLayout(mainGuiBottomLayout);

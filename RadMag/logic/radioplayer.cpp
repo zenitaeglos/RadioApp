@@ -48,6 +48,11 @@ void RadioPlayer::clearPlayList()
     mediaPlayList->clear();
 }
 
+QMediaPlayer *RadioPlayer::player() const
+{
+    return  mediaPlayer;
+}
+
 void RadioPlayer::fireMediaStatusChanged()
 {
     qDebug() << mediaPlayer->isMetaDataAvailable();

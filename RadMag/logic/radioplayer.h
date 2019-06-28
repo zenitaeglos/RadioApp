@@ -28,6 +28,7 @@ public:
     void addMedia(QByteArray data);
     void setVolume(int value);
     void clearPlayList();
+    QMediaPlayer* player() const;
 
 private slots:
     void fireMediaStatusChanged();

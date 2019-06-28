@@ -15,14 +15,12 @@ public:
     explicit ControlsGuiBottom(QWidget *parent = nullptr);
 
     QPushButton* getPlayButton() const;
-    QPushButton* getStopButton() const;
     void setRadioName(QString newRadioName);
 
 private:
     void setupUI();
     QHBoxLayout* mainGuiBottomLayout;    
     QPushButton* playButton;
-    QPushButton* stopButton;
     QLabel* playerInfo;
 };
 
