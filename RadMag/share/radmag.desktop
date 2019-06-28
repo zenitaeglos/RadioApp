@@ -1,7 +1,8 @@
 [Desktop Entry]
-Name=RadMag 
+Name=Radio App
 GenericName=Radio Application
 Exec=RadMag
 Terminal=false
 Type=Application
-Icon=radio
+Icon=radiow48
+Categories=AudioVideo;Player;

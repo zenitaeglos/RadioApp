@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(RadMag_VERSION_MAJOR 0)
 set(RadMag_VERSION_MINOR 9)
-set(RadMag_VERSION_PATCH 6)
+set(RadMag_VERSION_PATCH 7)
 
 find_package(Qt5 COMPONENTS Core Widgets Network Multimedia Svg REQUIRED)
 
@@ -56,23 +56,24 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     install(FILES share/radmag.desktop DESTINATION /usr/share/applications
         PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
         )
-    install(FILES share/radio.png DESTINATION /usr/share/pixmaps)
-    install(FILES share/radio.png
+    install(FILES share/radiow48.png DESTINATION /usr/share/pixmaps)
+    install(FILES share/radiow48.png
              DESTINATION share/icons/hicolor/256x256/apps/
              PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
              )
-         install(FILES share/radio.png
+         install(FILES share/radiow48.png
              DESTINATION share/icons/gnome/256x256/apps/
              PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
              )
+
 
     set(CPACK_GENERATOR "DEB")
     set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Alejandro Martinez, Sebastian Niedworok")
     set(CPACK_PACKAGE_VERSION_MAJOR ${RadMag_VERSION_MAJOR})
     set(CPACK_PACKAGE_VERSION_MINOR ${RadMag_VERSION_MINOR})
     set(CPACK_PACKAGE_VERSION_PATCH ${RadMag_VERSION_PATCH})
-    set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Internet Radio Station")
-    set(CPACK_DEBIAN_PACKAGE_DEBUG)
+    set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Internet Radio Station. Listening to thousands of radio stations")
+
     set(CPACK_DEB_COMPONENT_INSTALL ON)
     set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
     set(CPACK_DEBIAN_PACKAGE_GENERATE_SHLIBS ON)

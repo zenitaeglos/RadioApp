@@ -121,8 +121,9 @@ void MainWindow::updateMediaInfo(QString title) {
 void MainWindow::play()
 {
     //set play and stop buttons enable to press and disable
-    controlsGuiBottom->getPlayButton()->setDisabled(true);
+    //controlsGuiBottom->getPlayButton()->setDisabled(true);
     controlsGuiBottom->getStopButton()->setDisabled(false);
+    controlsGuiBottom->getPlayButton()->setIcon(QIcon("://resources/baseline-stop-24px.svg"));
     radioPlayer->play();
 }
 
