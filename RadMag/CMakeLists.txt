@@ -11,9 +11,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(RadMag_VERSION_MAJOR 0)
 set(RadMag_VERSION_MINOR 9)
-set(RadMag_VERSION_PATCH 7)
+set(RadMag_VERSION_PATCH 8)
 
-find_package(Qt5 COMPONENTS Core Widgets Network Multimedia Svg REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Network Multimedia Svg DBus REQUIRED)
 
 include_directories(${PROJECT_SOURCE_DIR}/share)
 
@@ -41,13 +41,15 @@ set (MYSOURCES "${PROJECT_SOURCE_DIR}/gui/mainwindow.h"
     "${PROJECT_SOURCE_DIR}/logic/favouritesjson.h"
     "${PROJECT_SOURCE_DIR}/logic/favouritesjson.cpp"
     "${PROJECT_SOURCE_DIR}/logic/comparemodels.h"
-    "${PROJECT_SOURCE_DIR}/logic/comparemodels.cpp")
+    "${PROJECT_SOURCE_DIR}/logic/comparemodels.cpp"
+    "${PROJECT_SOURCE_DIR}/notifications/popupnotifications.h"
+    "${PROJECT_SOURCE_DIR}/notifications/popupnotifications.cpp")
 
 add_executable(${PROJECT_NAME} "main.cpp" ${RESOURCE_FILES} ${MYSOURCES})
 
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Core Qt5::Widgets Qt5::Network Qt5::Multimedia Qt5::Svg)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Core Qt5::Widgets Qt5::Network Qt5::Multimedia Qt5::Svg Qt5::DBus)
 
 
 

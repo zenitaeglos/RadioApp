@@ -58,6 +58,9 @@ void RadioPlayer::fireMediaStatusChanged()
     qDebug() << mediaPlayer->isMetaDataAvailable();
     qDebug() << mediaPlayer->metaData(QMediaMetaData::Title).toString();
     QString mediaInfo = QString();
+    if (mediaPlayer->metaData(QMediaMetaData::Title).toString().size() > 0)
+        PopUpNotifications::showPopUpNotification(mediaPlayer->metaData((QMediaMetaData::Publisher)).toString(),
+                                              mediaPlayer->metaData(QMediaMetaData::Title).toString());
     mediaInfo.append("<b>" + mediaPlayer->metaData(QMediaMetaData::Publisher).toString() + "</b><br/>");
     mediaInfo.append(mediaPlayer->metaData(QMediaMetaData::Title).toString() + "<br/>");
     emit mediaStatusChanged(mediaInfo);

@@ -3,7 +3,7 @@
 
 FavouritesJson::FavouritesJson()
 {
-    jsonFile.setFileName("favourites.json");
+    jsonFile.setFileName(".favorites.json");
 }
 
 QList<RadioStation *> FavouritesJson::jsonLoadElements()

@@ -6,6 +6,7 @@
 #include <QMediaPlaylist>
 #include <QMediaMetaData>
 #include <QUrl>
+#include "../notifications/popupnotifications.h"
 
 /*!
  * \brief The RadioPlayer class
