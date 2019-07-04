@@ -10,7 +10,7 @@ PopUpNotifications::PopUpNotifications()
 
 void PopUpNotifications::showPopUpNotification(QString title, QString text)
 {
-    if (title != titleNotification && text != textNotification) {
+    if (text != textNotification && title.size() > 0) {
         titleNotification = title;
         textNotification = text;
         QDBusConnection bus = QDBusConnection::sessionBus();
