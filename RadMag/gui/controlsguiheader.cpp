@@ -3,7 +3,7 @@
 
 ControlsGuiHeader::ControlsGuiHeader(QWidget *parent) : QWidget(parent),
     guiHeaderLayout(new QHBoxLayout),
-    searchStationsButton(new QPushButton(this)),
+    searchStationsButton(new RadioAppButton("://resources/baseline-search-24px.svg", "Search", this)),
     searchLineEdit(new QLineEdit(this)),
     volumeSlider(new QSlider(Qt::Horizontal, this))
 {
@@ -12,7 +12,7 @@ ControlsGuiHeader::ControlsGuiHeader(QWidget *parent) : QWidget(parent),
     //TODO connect enter pressed while QLineEdit on focus with search
 }
 
-QPushButton* ControlsGuiHeader::getSearchStationsButton() const
+RadioAppButton* ControlsGuiHeader::getSearchStationsButton() const
 {
     return searchStationsButton;
 }
@@ -38,10 +38,6 @@ void ControlsGuiHeader::setupUI()
 {
     searchLineEdit->setPlaceholderText(tr("Search Radio"));
     searchLineEdit->setToolTip(tr("Search radio station"));
-    searchStationsButton->setIcon(QIcon("://resources/baseline-search-24px.svg"));
-    searchStationsButton->setIconSize(QSize(searchStationsButton->height() - 12, searchStationsButton->height() - 12));
-
-    searchStationsButton->setToolTip(tr("Search"));
 
     volumeSlider->setMinimum(0);
     volumeSlider->setMaximum(100);

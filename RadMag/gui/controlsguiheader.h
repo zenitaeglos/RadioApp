@@ -8,6 +8,7 @@
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QSlider>
+#include "custom/radioappbutton.h"
 
 
 /*
@@ -20,7 +21,7 @@ class ControlsGuiHeader : public QWidget
 public:
     explicit ControlsGuiHeader(QWidget *parent = nullptr);
 
-    QPushButton* getSearchStationsButton() const;
+    RadioAppButton* getSearchStationsButton() const;
     QLineEdit* getSearchLineEdit() const;
     QSlider* getVolumeSlider() const;
 
@@ -29,7 +30,7 @@ public:
 private:
     void setupUI();
     QHBoxLayout* guiHeaderLayout;
-    QPushButton* searchStationsButton;
+    RadioAppButton* searchStationsButton;
     QLineEdit* searchLineEdit;
     QSlider* volumeSlider;
 };

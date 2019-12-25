@@ -2,7 +2,7 @@
 
 ControlsGuiBottom::ControlsGuiBottom(QWidget *parent) : QWidget(parent),
     mainGuiBottomLayout(new QHBoxLayout),
-    playButton(new QPushButton(this)),
+    playButton(new RadioAppButton("://resources/baseline-play_circle_outline-24px.svg", "Play", this)),
     playerInfo(new QLabel(this))
 {
     setupUI();
@@ -21,10 +21,8 @@ void ControlsGuiBottom::setRadioName(QString newRadioName)
 void ControlsGuiBottom::setupUI()
 {
     playButton->setMinimumHeight(40);
+    playButton->setMaximumHeight(40);
     playButton->setMaximumWidth(40);
-    playButton->setIcon(QIcon("://resources/baseline-play_circle_outline-24px.svg"));
-    playButton->setIconSize(QSize(playButton->height() - 20, playButton->height() - 20));
-    playButton->setToolTip(tr("Play"));
 
 
     playerInfo->setText("");
