@@ -7,6 +7,9 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QTextEdit>
+#include "custom/radioappbutton.h"
+
+
 
 class ControlsGuiBottom : public QWidget
 {
@@ -20,7 +23,7 @@ public:
 private:
     void setupUI();
     QHBoxLayout* mainGuiBottomLayout;    
-    QPushButton* playButton;
+    RadioAppButton* playButton;
     QLabel* playerInfo;
 };
 
