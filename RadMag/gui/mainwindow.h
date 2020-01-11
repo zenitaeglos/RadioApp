@@ -18,6 +18,7 @@
 #include <QMediaMetaData>
 #include <QDebug>
 #include <QFileInfo>
+#include <QMessageBox>
 #include "controlsguibottom.h"
 #include "controlsguiheader.h"
 #include "models/radiostationsmodel.h"

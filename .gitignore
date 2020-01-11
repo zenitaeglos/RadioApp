@@ -8,3 +8,8 @@ RadMag/RadMag_autogen/
 RadMag/cmake_install.cmake
 RadMag/CMakeLists.txt.user
 build-RadMag-Desktop_Qt_5_12_0_clang_64bit4-Default
+build-RadMag-Desktop_Qt_5_12_5_clang_64bit-Debug
+build-RadMag-Desktop_Qt_5_12_5_clang_64bit-Release
+RadMag/CMakeLists.txt.user.4.9-pre1
+RadMag/CMakeLists.txt.user.4.10-pre1
+.DS_Store

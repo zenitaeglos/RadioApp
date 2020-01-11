@@ -83,6 +83,14 @@ void MainWindow::fetch(QString stringToSearch)
 void MainWindow::resultsFromRequest(QNetworkReply *networkReply)
 {
     QByteArray data = networkReply->readAll();
+
+    // if no data is given back by the server, show alert to the user
+    if (data.isEmpty()) {
+        QMessageBox box;
+        box.setText("You either have no Internet connection or the server is currently down");
+        box.exec();
+        return;
+    }
     switch (downloadType) {
         case JsonFetch: {
             fillDataModel(data);
