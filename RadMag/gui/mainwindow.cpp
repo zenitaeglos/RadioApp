@@ -84,10 +84,17 @@ void MainWindow::resultsFromRequest(QNetworkReply *networkReply)
 {
     QByteArray data = networkReply->readAll();
 
+
     // if no data is given back by the server, show alert to the user
     if (data.isEmpty()) {
         QMessageBox box;
         box.setText("You either have no Internet connection or the server is currently down");
+        box.exec();
+        return;
+    }
+    else if (data == "[]") {
+        QMessageBox box;
+        box.setText("There is no results for that search");
         box.exec();
         return;
     }
