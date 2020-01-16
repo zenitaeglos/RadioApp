@@ -22,6 +22,7 @@ public:
 
     QString static resource(Resources resourceString);
     QString static radioFiltered(Filters filter = DataSource::Name);
+    Filters static typeOfFilter(QString filterName);
 };
 
 #endif // DATASOURCE_H

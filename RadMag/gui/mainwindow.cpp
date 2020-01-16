@@ -73,23 +73,12 @@ void MainWindow::searchStation()
     QString lineEditText(controlsGuiHeader->getSearchLineEdit()->text());
     int filterIndex = lineEditText.indexOf(":");
     qDebug() << filterIndex;
-    if (filterIndex > 0) {
 
-    }
-    else {
-
-    }
     QString filterName = lineEditText.right(lineEditText.length() - filterIndex - 1);
     QString filterOption = lineEditText.left(filterIndex);
     qDebug() << filterName << filterOption;
-    QString str;
+    QString str(DataSource::radioFiltered(DataSource::typeOfFilter(filterOption)));
 
-    if (filterOption == "country") {
-        str = DataSource::radioFiltered(DataSource::Country);
-    }
-    else {
-        str = DataSource::radioFiltered();
-    }
     if (filterIndex < 0) {
         qDebug() << "no filter";
         qDebug() << str;
@@ -98,6 +87,7 @@ void MainWindow::searchStation()
     else {
         qDebug() << "filtered";
         qDebug() << str;
+        qDebug() << str + filterName;
         fetch(str + filterName);
     }
 }

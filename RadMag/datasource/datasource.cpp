@@ -29,3 +29,12 @@ QString DataSource::radioFiltered(DataSource::Filters filter)
         return radioPath + "bycountry/";
     }
 }
+
+DataSource::Filters DataSource::typeOfFilter(QString filterName)
+{
+    if (filterName.toLower() == "country")
+        return DataSource::Country;
+    else {
+        return DataSource::Name;
+    }
+}
