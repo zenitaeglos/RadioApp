@@ -19,14 +19,16 @@ QString DataSource::resource(DataSource::Resources resourceString)
     }
 }
 
-QString DataSource::radioFiltered(DataSource::Filters filter)
+QString DataSource::radioFiltered(DataSource::Filters filter /*= DataSource::Name*/)
 {
     QString radioPath = "http://www.radio-browser.info/webservice/json/stations/";
     switch (filter) {
-        case Name:
+    case Name:
         return radioPath + "byname/";
     case Country:
         return radioPath + "bycountry/";
+    case Language:
+        return radioPath + "bylanguage/";
     }
 }
 
@@ -34,7 +36,8 @@ DataSource::Filters DataSource::typeOfFilter(QString filterName)
 {
     if (filterName.toLower() == "country")
         return DataSource::Country;
-    else {
+    else if (filterName.toLower() == "language")
+        return DataSource::Language;
+    else
         return DataSource::Name;
-    }
 }

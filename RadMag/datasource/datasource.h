@@ -16,6 +16,7 @@ public:
     enum Filters {
         Name,
         Country,
+        Language,
     };
 
     DataSource();
