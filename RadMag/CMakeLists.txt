@@ -45,7 +45,9 @@ set (MYSOURCES "${PROJECT_SOURCE_DIR}/gui/mainwindow.h"
     "${PROJECT_SOURCE_DIR}/logic/comparemodels.h"
     "${PROJECT_SOURCE_DIR}/logic/comparemodels.cpp"
     "${PROJECT_SOURCE_DIR}/notifications/popupnotifications.h"
-    "${PROJECT_SOURCE_DIR}/notifications/popupnotifications.cpp")
+    "${PROJECT_SOURCE_DIR}/notifications/popupnotifications.cpp"
+    "${PROJECT_SOURCE_DIR}/datasource/datasource.h"
+    "${PROJECT_SOURCE_DIR}/datasource/datasource.cpp")
 
 add_executable(${PROJECT_NAME} "main.cpp" ${RESOURCE_FILES} ${MYSOURCES})
 

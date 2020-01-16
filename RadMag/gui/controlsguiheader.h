@@ -9,7 +9,7 @@
 #include <QKeyEvent>
 #include <QSlider>
 #include "custom/radioappbutton.h"
-
+#include "datasource/datasource.h"
 
 /*
  *header widget. Mainly for search bar.

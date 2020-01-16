@@ -3,7 +3,7 @@
 
 ControlsGuiHeader::ControlsGuiHeader(QWidget *parent) : QWidget(parent),
     guiHeaderLayout(new QHBoxLayout),
-    searchStationsButton(new RadioAppButton("://resources/baseline-search-24px.svg", "Search", this)),
+    searchStationsButton(new RadioAppButton(DataSource::resource(DataSource::Search), "Search", this)),
     searchLineEdit(new QLineEdit(this)),
     volumeSlider(new QSlider(Qt::Horizontal, this))
 {

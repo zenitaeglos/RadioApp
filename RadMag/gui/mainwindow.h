@@ -28,6 +28,7 @@
 #include "logic/radioplayer.h"
 #include "logic/favouritesjson.h"
 #include "logic/comparemodels.h"
+#include "datasource/datasource.h"
 
 class MainWindow : public QMainWindow
 {

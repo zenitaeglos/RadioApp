@@ -71,8 +71,35 @@ void MainWindow::searchStation()
 {
     downloadType = JsonFetch;
     QString lineEditText(controlsGuiHeader->getSearchLineEdit()->text());
-    QString str("http://www.radio-browser.info/webservice/json/stations/byname/");
-    fetch(str + lineEditText);
+    int filterIndex = lineEditText.indexOf(":");
+    qDebug() << filterIndex;
+    if (filterIndex > 0) {
+
+    }
+    else {
+
+    }
+    QString filterName = lineEditText.right(lineEditText.length() - filterIndex - 1);
+    QString filterOption = lineEditText.left(filterIndex);
+    qDebug() << filterName << filterOption;
+    QString str;
+
+    if (filterOption == "country") {
+        str = DataSource::radioFiltered(DataSource::Country);
+    }
+    else {
+        str = DataSource::radioFiltered();
+    }
+    if (filterIndex < 0) {
+        qDebug() << "no filter";
+        qDebug() << str;
+        fetch(str + lineEditText);
+    }
+    else {
+        qDebug() << "filtered";
+        qDebug() << str;
+        fetch(str + filterName);
+    }
 }
 
 void MainWindow::fetch(QString stringToSearch)
@@ -134,7 +161,7 @@ void MainWindow::updateMediaInfo(QString title) {
 void MainWindow::play()
 {
     //set play and stop buttons enable to press and disable
-    controlsGuiBottom->getPlayButton()->setIcon(QIcon("://resources/baseline-stop-24px.svg"));
+    controlsGuiBottom->getPlayButton()->setIcon(QIcon(DataSource::resource(DataSource::Stop)));
     controlsGuiBottom->getPlayButton()->setToolTip("Stop");
     radioPlayer->play();
 
@@ -143,7 +170,7 @@ void MainWindow::play()
 void MainWindow::stop()
 {
     //set play and stop buttons enable to press and disable
-    controlsGuiBottom->getPlayButton()->setIcon(QIcon("://resources/baseline-play_circle_outline-24px.svg"));
+    controlsGuiBottom->getPlayButton()->setIcon(QIcon(DataSource::resource(DataSource::Play)));
     controlsGuiBottom->getPlayButton()->setToolTip("Play");
     radioPlayer->stop();
     controlsGuiBottom->setRadioName("");

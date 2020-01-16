@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QTextEdit>
 #include "custom/radioappbutton.h"
+#include "datasource/datasource.h"
 
 
 

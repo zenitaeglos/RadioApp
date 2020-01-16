@@ -2,7 +2,7 @@
 
 ControlsGuiBottom::ControlsGuiBottom(QWidget *parent) : QWidget(parent),
     mainGuiBottomLayout(new QHBoxLayout),
-    playButton(new RadioAppButton("://resources/baseline-play_circle_outline-24px.svg", "Play", this)),
+    playButton(new RadioAppButton(DataSource::resource(DataSource::Play), "Play", this)),
     playerInfo(new QLabel(this))
 {
     setupUI();
