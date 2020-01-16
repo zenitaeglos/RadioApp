@@ -25,5 +25,7 @@ QString DataSource::radioFiltered(DataSource::Filters filter)
     switch (filter) {
         case Name:
         return radioPath + "byname/";
+    case Country:
+        return radioPath + "bycountry/";
     }
 }
