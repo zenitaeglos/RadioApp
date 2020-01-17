@@ -72,23 +72,18 @@ void MainWindow::searchStation()
     downloadType = JsonFetch;
     QString lineEditText(controlsGuiHeader->getSearchLineEdit()->text());
     int filterIndex = lineEditText.indexOf(":");
-    qDebug() << filterIndex;
+    QString str;
 
-    QString filterName = lineEditText.right(lineEditText.length() - filterIndex - 1);
-    QString filterOption = lineEditText.left(filterIndex);
-    qDebug() << filterName << filterOption;
-    QString str(DataSource::radioFiltered(DataSource::typeOfFilter(filterOption)));
-
-    if (filterIndex < 0) {
-        qDebug() << "no filter";
-        qDebug() << str;
-        fetch(str + lineEditText);
+    // check for filtering options
+    if (filterIndex > 0) {
+        QString filterName(lineEditText.right(lineEditText.length() - filterIndex - 1));
+        QString filterOption = lineEditText.left(filterIndex);
+        str = DataSource::radioFiltered(DataSource::typeOfFilter(filterOption));
+        fetch(str + filterName);
     }
     else {
-        qDebug() << "filtered";
-        qDebug() << str;
-        qDebug() << str + filterName;
-        fetch(str + filterName);
+        str = DataSource::radioFiltered();
+        fetch(str + lineEditText);
     }
 }
 
