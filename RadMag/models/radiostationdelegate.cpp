@@ -34,11 +34,11 @@ void RadioStationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
     //set the icon to only be border or complete, depending if it belongs to favorites or not.
     if (jsonObject["favorite"].toBool() == true) {
-        QIcon starIcon("://resources/baseline-star-24px.svg");
+        QIcon starIcon(DataSource::resource(DataSource::Star));
         painter->drawPixmap(option.rect.x() + option.rect.width() - 40, option.rect.y(), 32, 32, starIcon.pixmap(QSize(32, 32)));
     }
     else {
-        QIcon starIcon("://resources/baseline-star_border-24px.svg");
+        QIcon starIcon(DataSource::resource(DataSource::StarBorder));
         painter->drawPixmap(option.rect.x() + option.rect.width() - 40, option.rect.y(), 32, 32, starIcon.pixmap(QSize(32, 32)));
     }
 

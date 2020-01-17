@@ -11,12 +11,16 @@ public:
         Play,
         Stop,
         Search,
+        Star,
+        StarBorder,
+        Remove,
     };
 
     enum Filters {
         Name,
         Country,
         Language,
+        Tag,
     };
 
     DataSource();
@@ -24,6 +28,9 @@ public:
     QString static resource(Resources resourceString);
     QString static radioFiltered(Filters filter = DataSource::Name);
     Filters static typeOfFilter(QString filterName);
+
+private:
+    static QString m_radioPath;
 };
 
 #endif // DATASOURCE_H

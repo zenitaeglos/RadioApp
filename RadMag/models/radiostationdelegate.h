@@ -8,6 +8,7 @@
 #include <QEvent>
 #include <QMouseEvent>
 #include "../requests/radiostation.h"
+#include "datasource/datasource.h"
 
 class RadioStationDelegate : public QStyledItemDelegate
 {

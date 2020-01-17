@@ -10,6 +10,7 @@
 #include <QMouseEvent>
 #include <QDebug>
 #include "../requests/radiostation.h"
+#include "datasource/datasource.h"
 
 class FavouritesDelegate : public QStyledItemDelegate
 {
