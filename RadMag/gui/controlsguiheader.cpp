@@ -5,9 +5,12 @@ ControlsGuiHeader::ControlsGuiHeader(QWidget *parent) : QWidget(parent),
     guiHeaderLayout(new QHBoxLayout),
     searchStationsButton(new RadioAppButton(DataSource::resource(DataSource::Search), "Search", this)),
     searchLineEdit(new QLineEdit(this)),
-    volumeSlider(new QSlider(Qt::Horizontal, this))
+    volumeSlider(new QSlider(Qt::Horizontal, this)),
+    completer(new QCompleter(DataSource::completionList(), this))
 {
     setupUI();
+
+    searchLineEdit->setCompleter(completer);
 
     //TODO connect enter pressed while QLineEdit on focus with search
 }

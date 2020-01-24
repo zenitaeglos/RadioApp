@@ -2,6 +2,7 @@
 #define DATASOURCE_H
 
 #include <QString>
+#include <QStringList>
 
 class DataSource
 {
@@ -28,6 +29,7 @@ public:
     QString static resource(Resources resourceString);
     QString static radioFiltered(Filters filter = DataSource::Name);
     Filters static typeOfFilter(QString filterName);
+    QStringList static completionList();
 
 private:
     static QString m_radioPath;

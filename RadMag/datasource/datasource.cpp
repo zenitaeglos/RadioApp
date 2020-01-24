@@ -52,3 +52,17 @@ DataSource::Filters DataSource::typeOfFilter(QString filterName)
     else
         return DataSource::Name;
 }
+
+QStringList DataSource::completionList()
+{
+    QStringList completion;
+
+    completion << "country:" << "country:spain"
+               << "country:germany" << "country:france" << "country:portugal" << "country:belgium" << "country:denmark"
+               << "language:" << "language:english" << "language:german"
+               << "language:spanish" << "tag:"
+               << "tag:jazz" << "tag:pop" << "tag:80s" << "tag:90s";
+
+
+    return completion;
+}

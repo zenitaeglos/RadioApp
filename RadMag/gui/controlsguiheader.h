@@ -8,6 +8,7 @@
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QSlider>
+#include <QCompleter>
 #include "custom/radioappbutton.h"
 #include "datasource/datasource.h"
 
@@ -33,6 +34,7 @@ private:
     RadioAppButton* searchStationsButton;
     QLineEdit* searchLineEdit;
     QSlider* volumeSlider;
+    QCompleter* completer;
 };
 
 #endif // CONTROLSGUIHEADER_H
