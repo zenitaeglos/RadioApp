@@ -99,10 +99,12 @@ void MainWindow::resultsFromRequest(QNetworkReply *networkReply)
 
     // if no data is given back by the server, show alert to the user
     if (data.isEmpty()) {
-        QMessageBox box;
-        box.setText("You either have no Internet connection or the server is currently down");
-        box.exec();
-        return;
+        if (!(downloadType == Favicon)) {
+            QMessageBox box;
+            box.setText("You either have no Internet connection or the server is currently down");
+            box.exec();
+            return;
+        }
     }
     else if (data == "[]") {
         QMessageBox box;
@@ -119,6 +121,12 @@ void MainWindow::resultsFromRequest(QNetworkReply *networkReply)
             setPlaylistToPlay(data);
             break;
         }
+        case Favicon:
+            QPixmap pix;
+            pix.loadFromData(data);
+            QIcon icon(pix);
+            controlsGuiBottom->getRadioIconButton()->setIcon(icon);
+            break;
     }
 }
 
@@ -127,6 +135,11 @@ void MainWindow::playRadioStation(RadioStation *data)
     radioPlayer->clearPlayList();
 
     QFileInfo info = data->getValue(RadioStation::Url);
+
+    if (!data->getValue(RadioStation::Favicon).isEmpty()) {
+        downloadType = Favicon;
+        fetch(QString(data->getValue(RadioStation::Favicon)));
+    }
 
     if (!info.suffix().compare(QLatin1String("m3u"), Qt::CaseInsensitive)) {
         downloadType = PlayListFetch;

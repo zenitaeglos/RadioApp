@@ -14,7 +14,8 @@ public:
         Bitrate,
         Country,
         IsFavorite,
-        StationuuID
+        StationuuID,
+        Favicon
     };
     explicit RadioStation(QJsonObject jsonObject, bool favorite = false);
 
