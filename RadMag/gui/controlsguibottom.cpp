@@ -3,7 +3,8 @@
 ControlsGuiBottom::ControlsGuiBottom(QWidget *parent) : QWidget(parent),
     mainGuiBottomLayout(new QHBoxLayout),
     playButton(new RadioAppButton(DataSource::resource(DataSource::Play), "Play", this)),
-    playerInfo(new QLabel(this))
+    playerInfo(new QLabel(this)),
+    radioIconButton(new QPushButton(this))
 {
     setupUI();
 }
@@ -18,11 +19,21 @@ void ControlsGuiBottom::setRadioName(QString newRadioName)
     playerInfo->setText(newRadioName);
 }
 
+QPushButton *ControlsGuiBottom::getRadioIconButton() const
+{
+    return radioIconButton;
+}
+
 void ControlsGuiBottom::setupUI()
 {
     playButton->setMinimumHeight(40);
     playButton->setMaximumHeight(40);
     playButton->setMaximumWidth(40);
+
+    radioIconButton->setMinimumSize(QSize(60, 60));
+    radioIconButton->setIconSize(QSize(60, 60));
+    radioIconButton->setCheckable(false);
+    radioIconButton->setFlat(true);
 
 
     playerInfo->setText("");
@@ -31,6 +42,8 @@ void ControlsGuiBottom::setupUI()
 
     mainGuiBottomLayout->addWidget(playButton);
     mainGuiBottomLayout->addWidget(playerInfo);
+    //mainGuiBottomLayout->addStretch();
+    mainGuiBottomLayout->addWidget(radioIconButton);
 
     setLayout(mainGuiBottomLayout);
 }

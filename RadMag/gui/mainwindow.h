@@ -37,6 +37,7 @@ public:
     enum DownloadType {
         JsonFetch,
         PlayListFetch,
+        Favicon
     };
 
     explicit MainWindow(QWidget *parent = nullptr);

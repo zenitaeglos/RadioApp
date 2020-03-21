@@ -33,6 +33,8 @@ QString RadioStation::getType(RadioStation::ObjectKeys key)
             return "favorite";
         case StationuuID:
             return "stationuuid";
+        case Favicon:
+            return "favicon";
     }
 }
 

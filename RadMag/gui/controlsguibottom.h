@@ -21,11 +21,14 @@ public:
     QPushButton* getPlayButton() const;
     void setRadioName(QString newRadioName);
 
+    QPushButton* getRadioIconButton() const;
+
 private:
     void setupUI();
     QHBoxLayout* mainGuiBottomLayout;    
     RadioAppButton* playButton;
     QLabel* playerInfo;
+    QPushButton* radioIconButton;
 };
 
 #endif // CONTROLSGUIBOTTOM_H
