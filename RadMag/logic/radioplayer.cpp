@@ -55,8 +55,8 @@ QMediaPlayer *RadioPlayer::player() const
 
 void RadioPlayer::fireMediaStatusChanged()
 {
-    qDebug() << mediaPlayer->isMetaDataAvailable();
-    qDebug() << mediaPlayer->metaData(QMediaMetaData::Title).toString();
+    //qDebug() << mediaPlayer->isMetaDataAvailable();
+    //qDebug() << mediaPlayer->metaData(QMediaMetaData::Title).toString();
     QString mediaInfo = QString();
 
     //send popup notification with updated information

@@ -6,13 +6,17 @@ ControlsGuiHeader::ControlsGuiHeader(QWidget *parent) : QWidget(parent),
     searchStationsButton(new RadioAppButton(DataSource::resource(DataSource::Search), "Search", this)),
     searchLineEdit(new QLineEdit(this)),
     volumeSlider(new QSlider(Qt::Horizontal, this)),
-    completer(new QCompleter(DataSource::completionList(), this))
+    completer(new QCompleter(DataSource::completionList(), this)),
+    networkDataManager(new NetworkDataManager(this))
 {
+    networkDataManager->setDelegate(this);
     setupUI();
 
     searchLineEdit->setCompleter(completer);
 
-    //TODO connect enter pressed while QLineEdit on focus with search
+    // connections
+    connect(searchStationsButton, &QPushButton::clicked, this, &ControlsGuiHeader::fetchRadioStations);
+
 }
 
 RadioAppButton* ControlsGuiHeader::getSearchStationsButton() const
@@ -35,6 +39,45 @@ void ControlsGuiHeader::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Return) {
         searchStationsButton->clicked();
     }
+}
+
+void ControlsGuiHeader::didReceiveData(QByteArray byteArrayReceived)
+{
+    emit dataRecevied(byteArrayReceived);
+}
+
+void ControlsGuiHeader::didNotReceiveData(QString error)
+{
+    // if no data is given back by the server, show alert to the user
+
+    QMessageBox errorMessageBox;
+    errorMessageBox.setWindowTitle("Search failed");
+    errorMessageBox.setText(error);
+    errorMessageBox.exec();
+    return;
+}
+
+void ControlsGuiHeader::fetchRadioStations(bool checked)
+{
+    Q_UNUSED(checked);
+    QString lineEditText = searchLineEdit->text();
+    int filterIndex = lineEditText.indexOf(":");
+    QString baseUrl;
+
+    // check for filtering options
+    if (filterIndex > 0) {
+        QString filterName(lineEditText.right(lineEditText.length() - filterIndex - 1));
+        QString filterOption = lineEditText.left(filterIndex);
+        baseUrl = DataSource::radioFiltered(DataSource::typeOfFilter(filterOption));
+        networkDataManager->fetchData(baseUrl + filterName);
+        //fetch(str + filterName);
+    }
+    else {
+        baseUrl = DataSource::radioFiltered();
+        networkDataManager->fetchData(baseUrl + lineEditText);
+        //fetch(str + lineEditText);
+    }
+    //networkDataManager->fetchData(searchLineEdit->text());
 }
 
 void ControlsGuiHeader::setupUI()

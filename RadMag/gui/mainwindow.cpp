@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     controlsGuiBottom(new ControlsGuiBottom(this)),
     controlsGuiHeader(new ControlsGuiHeader(this)),
     radiostationsModel(new RadioStationsModel(this)),
-    manager(new QNetworkAccessManager(this)),
+    //manager(new QNetworkAccessManager(this)),
     radioStationDelegate(new RadioStationDelegate(this)),
     favouritesTableView(new QTableView),
     tablesHLayout(new QHBoxLayout),
@@ -16,8 +16,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     addDeleteButtonsHorizontalLayout(new QHBoxLayout),
     resultsAndBottomLayout(new QVBoxLayout),
     favouritesDelegate(new FavouritesDelegate(this)),
-    favouritesJsonFile(new FavouritesJson)
+    favouritesJsonFile(new FavouritesJson),
+    networkDataManager(new NetworkDataManager(this))
 {
+    //set network delegate to this class
+    networkDataManager->setDelegate(this);
     //function to create the UI
     setupUI();
 
@@ -39,8 +42,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     }
 
     //connects
-    connect(controlsGuiHeader->getSearchStationsButton(), &QPushButton::clicked, this, &MainWindow::searchStation);
-    connect(manager, &QNetworkAccessManager::finished, this, &MainWindow::resultsFromRequest);
+    //connect(controlsGuiHeader->getSearchStationsButton(), &QPushButton::clicked, this, &MainWindow::searchStation);
+    //connect(manager, &QNetworkAccessManager::finished, this, &MainWindow::resultsFromRequest);
     connect(controlsGuiBottom->getPlayButton(), &QPushButton::clicked, this, &MainWindow::playFromRequest);
     connect(this, &MainWindow::playClicked, this, &MainWindow::play);
 
@@ -59,6 +62,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     connect(radioStationDelegate, &RadioStationDelegate::currentIndexChanged, this, &MainWindow::currentIndexRadioStation);
     connect(radioStationDelegate, &RadioStationDelegate::doubleClickPressed, this, &MainWindow::playFromRequest);
+
+
+    // network delegate from header now takes the json search. When finish it emits signal with the byte array
+    connect(controlsGuiHeader, &ControlsGuiHeader::dataRecevied, this, &MainWindow::setPlaylist);
 }
 
 MainWindow::~MainWindow()
@@ -67,8 +74,54 @@ MainWindow::~MainWindow()
     delete favouritesJsonFile;
 }
 
+void MainWindow::didReceiveData(QByteArray byteArrayReceived)
+{
+    /*
+    receive the data to set a playlist
+    */
+    setPlaylistToPlay(byteArrayReceived);
+}
+
+void MainWindow::didNotReceiveData(QString error)
+{
+    // if no data is given back by the server, show alert to the user
+    QMessageBox errorMessageBox;
+    errorMessageBox.setWindowTitle("Search failed");
+    errorMessageBox.setText(error);
+    errorMessageBox.exec();
+    return;
+}
+
+void MainWindow::setPlaylist(QByteArray playListData)
+{
+    //obtain the data to fill the list of json objects
+    //and send it to the model
+    QJsonDocument document = QJsonDocument::fromJson(playListData);
+
+    QJsonArray array = document.array();
+    QList<RadioStation*> dataForModel;
+
+    //add link to access the webpage
+
+    //check if radio station is already added into the favorites
+    //change type of star depending on if it is true or false
+    for (int i = 0; i < array.size(); i++) {
+        RadioStation* radio = new RadioStation(array.at(i).toObject());
+        for (int i = 0; i < favouritesModel->rowCount(QModelIndex()); i++) {
+            RadioStation* favoriteRadio = favouritesModel->dataInstance(i);
+            if (radio->getValue(RadioStation::StationuuID) == favoriteRadio->getValue(RadioStation::StationuuID)) {
+                radio->setFavorite(true);
+                break;
+            }
+        }
+        dataForModel.append(radio);
+    }
+    radiostationsModel->setRequestedData(dataForModel);
+}
+/*
 void MainWindow::searchStation()
 {
+
     downloadType = JsonFetch;
     QString lineEditText(controlsGuiHeader->getSearchLineEdit()->text());
     int filterIndex = lineEditText.indexOf(":");
@@ -85,15 +138,25 @@ void MainWindow::searchStation()
         str = DataSource::radioFiltered();
         fetch(str + lineEditText);
     }
-}
 
+}
+*/
+/*
 void MainWindow::fetch(QString stringToSearch)
 {   
-    manager->get(QNetworkRequest(QUrl(stringToSearch)));
-}
+    Q_UNUSED(stringToSearch);
+    // to delete
+    //manager->get(QNetworkRequest(QUrl(stringToSearch)));
 
+    //networkDataManager->fetchData(stringToSearch);
+}
+*/
+/*
 void MainWindow::resultsFromRequest(QNetworkReply *networkReply)
 {
+    Q_UNUSED(networkReply);
+    // TODO delete this method
+
     QByteArray data = networkReply->readAll();
 
 
@@ -128,22 +191,27 @@ void MainWindow::resultsFromRequest(QNetworkReply *networkReply)
             controlsGuiBottom->getRadioIconButton()->setIcon(icon);
             break;
     }
-}
 
+}
+*/
 void MainWindow::playRadioStation(RadioStation *data)
 {
     radioPlayer->clearPlayList();
 
     QFileInfo info = data->getValue(RadioStation::Url);
 
+    // send favicon to controlsguibottom
     if (!data->getValue(RadioStation::Favicon).isEmpty()) {
-        downloadType = Favicon;
-        fetch(QString(data->getValue(RadioStation::Favicon)));
+        //downloadType = Favicon;
+        //fetch(QString(data->getValue(RadioStation::Favicon)));
+        controlsGuiBottom->setIconImage(data->getValue(RadioStation::Favicon));
     }
 
     if (!info.suffix().compare(QLatin1String("m3u"), Qt::CaseInsensitive)) {
-        downloadType = PlayListFetch;
-        fetch(QString(data->getValue(RadioStation::Url)));
+        qDebug() << "hay que arraglar esto";
+        //downloadType = PlayListFetch;
+        networkDataManager->fetchData(data->getValue(RadioStation::Url));
+        //fetch(QString(data->getValue(RadioStation::Url)));
     }
     else {
         radioPlayer->addMedia(QUrl(data->getValue(RadioStation::Url)));
@@ -159,8 +227,9 @@ void MainWindow::updateMediaInfo(QString title) {
 void MainWindow::play()
 {
     //set play and stop buttons enable to press and disable
-    controlsGuiBottom->getPlayButton()->setIcon(QIcon(DataSource::resource(DataSource::Stop)));
-    controlsGuiBottom->getPlayButton()->setToolTip("Stop");
+    //controlsGuiBottom->getPlayButton()->setIcon(QIcon(DataSource::resource(DataSource::Stop)));
+    //controlsGuiBottom->getPlayButton()->setToolTip("Stop");
+    controlsGuiBottom->setIconToPlayButton(QIcon(DataSource::resource(DataSource::Stop)), "Stop");
     radioPlayer->play();
 
 }
@@ -168,8 +237,7 @@ void MainWindow::play()
 void MainWindow::stop()
 {
     //set play and stop buttons enable to press and disable
-    controlsGuiBottom->getPlayButton()->setIcon(QIcon(DataSource::resource(DataSource::Play)));
-    controlsGuiBottom->getPlayButton()->setToolTip("Play");
+    controlsGuiBottom->setIconToPlayButton(QIcon(DataSource::resource(DataSource::Play)), "Play");
     radioPlayer->stop();
     controlsGuiBottom->setRadioName("");
 }
@@ -296,7 +364,7 @@ void MainWindow::setupUI()
     radioResultsTableView->horizontalHeader()->setStretchLastSection(true);
 
     resultsAndBottomLayout->addWidget(radioResultsTableView);
-    resultsAndBottomLayout->addWidget(controlsGuiBottom);
+    //resultsAndBottomLayout->addWidget(controlsGuiBottom);
 
 
     favouritesTableView->setMaximumWidth(this->width() / 3);
@@ -308,6 +376,7 @@ void MainWindow::setupUI()
 
     mainLayout->addWidget(controlsGuiHeader);
     mainLayout->addLayout(tablesHLayout);
+    mainLayout->addWidget(controlsGuiBottom);
 
     mainWidget->setLayout(mainLayout);
 
