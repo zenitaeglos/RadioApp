@@ -37,7 +37,6 @@ void ControlsGuiBottom::didReceiveData(QByteArray byteArrayReceived)
     /*
     receive the icon image bytearray
     */
-    qDebug() << byteArrayReceived;
     QPixmap pix;
     pix.loadFromData(byteArrayReceived);
     QIcon icon(pix);
@@ -47,6 +46,7 @@ void ControlsGuiBottom::didReceiveData(QByteArray byteArrayReceived)
 void ControlsGuiBottom::didNotReceiveData(QString error)
 {
     qDebug() << error;
+    //TODO set default icon
 }
 
 void ControlsGuiBottom::setIconImage(QString image)

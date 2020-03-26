@@ -75,9 +75,7 @@ void ControlsGuiHeader::fetchRadioStations(bool checked)
     else {
         baseUrl = DataSource::radioFiltered();
         networkDataManager->fetchData(baseUrl + lineEditText);
-        //fetch(str + lineEditText);
     }
-    //networkDataManager->fetchData(searchLineEdit->text());
 }
 
 void ControlsGuiHeader::setupUI()

@@ -118,82 +118,7 @@ void MainWindow::setPlaylist(QByteArray playListData)
     }
     radiostationsModel->setRequestedData(dataForModel);
 }
-/*
-void MainWindow::searchStation()
-{
 
-    downloadType = JsonFetch;
-    QString lineEditText(controlsGuiHeader->getSearchLineEdit()->text());
-    int filterIndex = lineEditText.indexOf(":");
-    QString str;
-
-    // check for filtering options
-    if (filterIndex > 0) {
-        QString filterName(lineEditText.right(lineEditText.length() - filterIndex - 1));
-        QString filterOption = lineEditText.left(filterIndex);
-        str = DataSource::radioFiltered(DataSource::typeOfFilter(filterOption));
-        fetch(str + filterName);
-    }
-    else {
-        str = DataSource::radioFiltered();
-        fetch(str + lineEditText);
-    }
-
-}
-*/
-/*
-void MainWindow::fetch(QString stringToSearch)
-{   
-    Q_UNUSED(stringToSearch);
-    // to delete
-    //manager->get(QNetworkRequest(QUrl(stringToSearch)));
-
-    //networkDataManager->fetchData(stringToSearch);
-}
-*/
-/*
-void MainWindow::resultsFromRequest(QNetworkReply *networkReply)
-{
-    Q_UNUSED(networkReply);
-    // TODO delete this method
-
-    QByteArray data = networkReply->readAll();
-
-
-    // if no data is given back by the server, show alert to the user
-    if (data.isEmpty()) {
-        if (!(downloadType == Favicon)) {
-            QMessageBox box;
-            box.setText("You either have no Internet connection or the server is currently down");
-            box.exec();
-            return;
-        }
-    }
-    else if (data == "[]") {
-        QMessageBox box;
-        box.setText("There is no results for that search");
-        box.exec();
-        return;
-    }
-    switch (downloadType) {
-        case JsonFetch: {
-            fillDataModel(data);
-            break;
-        }
-        case PlayListFetch:{
-            setPlaylistToPlay(data);
-            break;
-        }
-        case Favicon:
-            QPixmap pix;
-            pix.loadFromData(data);
-            QIcon icon(pix);
-            controlsGuiBottom->getRadioIconButton()->setIcon(icon);
-            break;
-    }
-
-}
-*/
 void MainWindow::playRadioStation(RadioStation *data)
 {
     radioPlayer->clearPlayList();
@@ -202,16 +127,11 @@ void MainWindow::playRadioStation(RadioStation *data)
 
     // send favicon to controlsguibottom
     if (!data->getValue(RadioStation::Favicon).isEmpty()) {
-        //downloadType = Favicon;
-        //fetch(QString(data->getValue(RadioStation::Favicon)));
         controlsGuiBottom->setIconImage(data->getValue(RadioStation::Favicon));
     }
 
     if (!info.suffix().compare(QLatin1String("m3u"), Qt::CaseInsensitive)) {
-        qDebug() << "hay que arraglar esto";
-        //downloadType = PlayListFetch;
         networkDataManager->fetchData(data->getValue(RadioStation::Url));
-        //fetch(QString(data->getValue(RadioStation::Url)));
     }
     else {
         radioPlayer->addMedia(QUrl(data->getValue(RadioStation::Url)));
@@ -227,8 +147,6 @@ void MainWindow::updateMediaInfo(QString title) {
 void MainWindow::play()
 {
     //set play and stop buttons enable to press and disable
-    //controlsGuiBottom->getPlayButton()->setIcon(QIcon(DataSource::resource(DataSource::Stop)));
-    //controlsGuiBottom->getPlayButton()->setToolTip("Stop");
     controlsGuiBottom->setIconToPlayButton(QIcon(DataSource::resource(DataSource::Stop)), "Stop");
     radioPlayer->play();
 

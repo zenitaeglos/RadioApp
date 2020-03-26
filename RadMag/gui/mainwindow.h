@@ -39,11 +39,13 @@ class MainWindow : public QMainWindow, public NetworkDelegate
 {
     Q_OBJECT
 public:
+    /*
     enum DownloadType {
         JsonFetch,
         PlayListFetch,
         Favicon
     };
+    */
 
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -91,7 +93,7 @@ private:
     ControlsGuiHeader* controlsGuiHeader;
     RadioStationsModel* radiostationsModel;
     //QNetworkAccessManager* manager;
-    DownloadType downloadType;
+    //DownloadType downloadType;
     RadioStationDelegate* radioStationDelegate;
     QTableView* favouritesTableView;
     QHBoxLayout* tablesHLayout;
