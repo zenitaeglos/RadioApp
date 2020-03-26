@@ -10,15 +10,15 @@
 #include <QPushButton>
 #include <QWidget>
 #include <QSplitter>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
+//#include <QNetworkAccessManager>
+//#include <QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QtMultimedia>
 #include <QMediaMetaData>
 #include <QDebug>
 #include <QFileInfo>
-#include <QMessageBox>
+//#include <QMessageBox>
 #include "controlsguibottom.h"
 #include "controlsguiheader.h"
 #include "models/radiostationsmodel.h"
@@ -30,26 +30,42 @@
 #include "logic/comparemodels.h"
 #include "datasource/datasource.h"
 
-class MainWindow : public QMainWindow
+
+#include "network/networkdatamanager.h"
+#include "network/networkdelegate.h"
+
+
+class MainWindow : public QMainWindow, public NetworkDelegate
 {
     Q_OBJECT
 public:
+    /*
     enum DownloadType {
         JsonFetch,
         PlayListFetch,
         Favicon
     };
+    */
 
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
+    // delegate network methods
+    virtual void didReceiveData(QByteArray byteArrayReceived) override;
+    virtual void didNotReceiveData(QString error) override;
+
+
 signals:
     void playClicked();
 
+public slots:
+    void setPlaylist(QByteArray playListData);
+
 private slots:
-    void searchStation();
-    void fetch(QString stringToSearch);
-    void resultsFromRequest(QNetworkReply *networkReply);
+    //void searchStation();
+    //void fetch(QString stringToSearch);
+    //void resultsFromRequest(QNetworkReply *networkReply);
     void updateMediaInfo(QString title);
     void play();
     void stop();
@@ -76,8 +92,8 @@ private:
     ControlsGuiBottom* controlsGuiBottom;
     ControlsGuiHeader* controlsGuiHeader;
     RadioStationsModel* radiostationsModel;
-    QNetworkAccessManager* manager;
-    DownloadType downloadType;
+    //QNetworkAccessManager* manager;
+    //DownloadType downloadType;
     RadioStationDelegate* radioStationDelegate;
     QTableView* favouritesTableView;
     QHBoxLayout* tablesHLayout;
@@ -88,6 +104,7 @@ private:
     FavouritesDelegate* favouritesDelegate;
     FavouritesJson* favouritesJsonFile;
 
+    NetworkDataManager* networkDataManager;
 };
 
 #endif // MAINWINDOW_H
