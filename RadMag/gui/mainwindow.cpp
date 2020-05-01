@@ -280,31 +280,42 @@ void MainWindow::setupUI()
 
     radioResultsTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     radioResultsTableView->horizontalHeader()->setStretchLastSection(true);
-    radioResultsTableView->setStyleSheet("QTableView::item{ padding: 0px; margins: 0px }");
+    radioResultsTableView->setStyleSheet("QTableView { background-image: url(://resources/main_bg.png) }");
+    radioResultsTableView->horizontalHeader()->setStyleSheet("QHeaderView { background-color: transparent; color: black }");
+    radioResultsTableView->horizontalHeader()->setSectionsClickable(false);
+    radioResultsTableView->verticalHeader()->setVisible(false);
+    radioResultsTableView->setShowGrid(false);
 
     resultsAndBottomLayout->addWidget(radioResultsTableView);
     //resultsAndBottomLayout->addWidget(controlsGuiBottom);
 
     controlsGuiBottom->setMaximumHeight(60);
     controlsGuiBottom->setMinimumHeight(60);
+    //controlsGuiBottom->setStyleSheet("QWidget { background-image: url(://resources/player_bg.png) }");
+    //controlsGuiBottom->setStyleSheet("QWidget {background-color: blue }");
 
     favouritesTableView->setMaximumWidth(this->width() / 3);
     favouritesTableView->horizontalHeader()->setStretchLastSection(true);
     favouritesTableView->setItemDelegate(favouritesDelegate);
 
+    favouritesTableView->setStyleSheet("QTableView { background-image: url(://resources/sidebar_bg.png) }");
+    favouritesTableView->horizontalHeader()->setStyleSheet("QHeaderView { background-color: transparent; color: white }");
+    favouritesTableView->horizontalHeader()->setSectionsClickable(false);
+    favouritesTableView->setShowGrid(false);
+    favouritesTableView->verticalHeader()->setVisible(false);
+
     tablesHLayout->addWidget(favouritesTableView);
     tablesHLayout->addLayout(resultsAndBottomLayout);
-
-    tablesHLayout->setMargin(0);
-    tablesHLayout->setSpacing(0);
 
     mainLayout->addWidget(controlsGuiHeader);
     mainLayout->addLayout(tablesHLayout);
     mainLayout->addWidget(controlsGuiBottom);
 
     mainLayout->setMargin(0);
+    mainLayout->setSpacing(0);
 
     mainWidget->setLayout(mainLayout);
+    mainWidget->setStyleSheet("QWidget { border: 0px }");
 
 
     setCentralWidget(mainWidget);

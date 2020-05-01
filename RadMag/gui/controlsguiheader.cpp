@@ -82,6 +82,8 @@ void ControlsGuiHeader::setupUI()
 {
     searchLineEdit->setPlaceholderText(tr("Search Radio"));
     searchLineEdit->setToolTip(tr("Search radio station"));
+    searchLineEdit->setStyleSheet("QLineEdit { background-color: white; border-radius: 8px; color: black; }");
+
 
     volumeSlider->setMinimum(0);
     volumeSlider->setMaximum(100);
@@ -95,7 +97,7 @@ void ControlsGuiHeader::setupUI()
     guiHeaderLayout->addWidget(searchStationsButton);
 
     guiHeaderLayout->addWidget(volumeSlider);
-    guiHeaderLayout->setMargin(0);
+    guiHeaderLayout->setMargin(4);
     guiHeaderLayout->setSpacing(2);
 
     setLayout(guiHeaderLayout);

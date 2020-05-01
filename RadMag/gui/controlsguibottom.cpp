@@ -56,24 +56,32 @@ void ControlsGuiBottom::setIconImage(QString image)
 
 void ControlsGuiBottom::setupUI()
 {
-    playButton->setMinimumHeight(40);
-    playButton->setMaximumHeight(40);
-    playButton->setMaximumWidth(40);
+
+    playButton->setMinimumHeight(60);
+    playButton->setMaximumHeight(60);
+    playButton->setMaximumWidth(60);
 
     radioIconButton->setMinimumSize(QSize(60, 60));
     radioIconButton->setIconSize(QSize(60, 60));
     radioIconButton->setCheckable(false);
     radioIconButton->setFlat(true);
 
-
     playerInfo->setText("");
     playerInfo->setMinimumWidth(width() / 2);
     playerInfo->setWordWrap(true);
+    playerInfo->setStyleSheet("QLabel { color: black }");
 
+
+    //setStyleSheet("QWidget { background-color: red; border: 0px }");
+    setStyleSheet("QWidget { border-image: url(://resources/main_bg.png) 0 0 0 0 stretch stretch; border: 0px }");
     mainGuiBottomLayout->addWidget(playButton);
     mainGuiBottomLayout->addWidget(playerInfo);
-    //mainGuiBottomLayout->addStretch();
+
     mainGuiBottomLayout->addWidget(radioIconButton);
+    mainGuiBottomLayout->setContentsMargins(0, 0, 0, 0);
+    mainGuiBottomLayout->setMargin(0);
+    mainGuiBottomLayout->setSpacing(0);
+
 
     setLayout(mainGuiBottomLayout);
 }

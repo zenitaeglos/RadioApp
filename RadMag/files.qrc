@@ -7,5 +7,11 @@
         <file>resources/baseline-star_border-24px.svg</file>
         <file>resources/baseline-star-24px.svg</file>
         <file>resources/baseline-remove_circle_outline-24px.svg</file>
+        <file>resources/sidebar_bg.png</file>
+        <file>resources/banner_bg.png</file>
+        <file>resources/main_bg.png</file>
+        <file>resources/removewhite.svg</file>
+        <file>resources/deletewhite.svg</file>
+        <file>resources/searchbackground.png</file>
     </qresource>
 </RCC>

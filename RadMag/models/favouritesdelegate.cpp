@@ -18,7 +18,7 @@ void FavouritesDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 
 
     painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignVCenter, jsonObject[RadioStation::getType(RadioStation::Name)].toString());
-    QIcon removeIcon(DataSource::resource(DataSource::Remove));
+    QIcon removeIcon(DataSource::resource(DataSource::RemoveWhite));
     painter->drawPixmap(option.rect.width() - 24, option.rect.y() + 4, 20, 20, removeIcon.pixmap(QSize(24, 24)));
 }
 

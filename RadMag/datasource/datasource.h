@@ -15,6 +15,7 @@ public:
         Star,
         StarBorder,
         Remove,
+        RemoveWhite,
     };
 
     enum Filters {

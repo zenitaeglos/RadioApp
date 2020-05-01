@@ -1,6 +1,7 @@
 #include "datasource.h"
 
-QString DataSource::m_radioPath = "http://www.radio-browser.info/webservice/json/stations/";
+//QString DataSource::m_radioPath = "http://www.radio-browser.info/webservice/json/stations/";
+QString DataSource::m_radioPath = "https://nl1.api.radio-browser.info/json/stations/";
 
 DataSource::DataSource()
 {
@@ -22,6 +23,8 @@ QString DataSource::resource(DataSource::Resources resourceString)
         return "://resources/baseline-star_border-24px.svg";
     case Remove:
         return "://resources/baseline-remove_circle_outline-24px.svg";
+    case RemoveWhite:
+        return "://resources/deletewhite.svg";
     default:
         return QString();
     }
