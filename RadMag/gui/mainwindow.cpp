@@ -285,6 +285,8 @@ void MainWindow::setupUI()
     resultsAndBottomLayout->addWidget(radioResultsTableView);
     //resultsAndBottomLayout->addWidget(controlsGuiBottom);
 
+    controlsGuiBottom->setMaximumHeight(60);
+    controlsGuiBottom->setMinimumHeight(60);
 
     favouritesTableView->setMaximumWidth(this->width() / 3);
     favouritesTableView->horizontalHeader()->setStretchLastSection(true);
