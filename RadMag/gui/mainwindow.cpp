@@ -280,6 +280,7 @@ void MainWindow::setupUI()
 
     radioResultsTableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     radioResultsTableView->horizontalHeader()->setStretchLastSection(true);
+    radioResultsTableView->setStyleSheet("QTableView::item{ padding: 0px; margins: 0px }");
 
     resultsAndBottomLayout->addWidget(radioResultsTableView);
     //resultsAndBottomLayout->addWidget(controlsGuiBottom);
@@ -292,9 +293,14 @@ void MainWindow::setupUI()
     tablesHLayout->addWidget(favouritesTableView);
     tablesHLayout->addLayout(resultsAndBottomLayout);
 
+    tablesHLayout->setMargin(0);
+    tablesHLayout->setSpacing(0);
+
     mainLayout->addWidget(controlsGuiHeader);
     mainLayout->addLayout(tablesHLayout);
     mainLayout->addWidget(controlsGuiBottom);
+
+    mainLayout->setMargin(0);
 
     mainWidget->setLayout(mainLayout);
 
