@@ -9,10 +9,12 @@ void FavouritesDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 {
     QJsonObject jsonObject = index.data().toJsonObject();
     QFont font;
+    QPen pen(Qt::white);
 
     font.setPointSize(10);
 
     painter->setFont(font);
+    painter->setPen(pen);
 
     QRectF nameRect(option.rect.x() + 12, option.rect.y(), option.rect.width() - 40, option.rect.height());
 
