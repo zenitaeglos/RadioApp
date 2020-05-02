@@ -25,6 +25,8 @@ QString DataSource::resource(DataSource::Resources resourceString)
         return "://resources/baseline-remove_circle_outline-24px.svg";
     case RemoveWhite:
         return "://resources/deletewhite.svg";
+    case RadioIcon:
+        return "://resources/radioblack.png";
     default:
         return QString();
     }

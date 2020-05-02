@@ -39,8 +39,10 @@ void ControlsGuiBottom::didReceiveData(QByteArray byteArrayReceived)
     */
     QPixmap pix;
     pix.loadFromData(byteArrayReceived);
-    QIcon icon(pix);
-    radioIconButton->setIcon(icon);
+    if (pix.isNull())
+        radioIconButton->setIcon(QIcon(DataSource::resource(DataSource::RadioIcon)));
+    else
+        radioIconButton->setIcon(QIcon(pix));
 }
 
 void ControlsGuiBottom::didNotReceiveData(QString error)
@@ -65,6 +67,7 @@ void ControlsGuiBottom::setupUI()
     radioIconButton->setIconSize(QSize(50, 50));
     radioIconButton->setCheckable(false);
     radioIconButton->setFlat(true);
+    radioIconButton->setIcon(QIcon(DataSource::resource(DataSource::RadioIcon)));
 
     playerInfo->setText("");
     playerInfo->setMinimumWidth(width() / 2);

@@ -16,5 +16,6 @@
         <file>resources/turq.png</file>
         <file>resources/searchb.png</file>
         <file>resources/orange.png</file>
+        <file>resources/radioblack.png</file>
     </qresource>
 </RCC>

@@ -16,6 +16,7 @@ public:
         StarBorder,
         Remove,
         RemoveWhite,
+        RadioIcon,
     };
 
     enum Filters {
