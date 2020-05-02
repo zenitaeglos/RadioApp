@@ -82,23 +82,40 @@ void ControlsGuiHeader::setupUI()
 {
     searchLineEdit->setPlaceholderText(tr("Search Radio"));
     searchLineEdit->setToolTip(tr("Search radio station"));
-    searchLineEdit->setStyleSheet("QLineEdit { background-color: white; border-radius: 8px; color: black; }");
+
+    searchLineEdit->setMinimumHeight(60);
+    searchLineEdit->setMaximumHeight(60);
+    //searchLineEdit->setStyleSheet("QLineEdit { background-image: url(://resources/searchbackground.png); }");
 
 
     volumeSlider->setMinimum(0);
     volumeSlider->setMaximum(100);
     volumeSlider->setValue(50);
     volumeSlider->setMaximumWidth(80);
+    volumeSlider->setMinimumHeight(60);
+    volumeSlider->setMaximumHeight(60);
     volumeSlider->setToolTip(tr("Change volume"));
+
 
     searchStationsButton->setMaximumHeight(searchLineEdit->height());
 
     guiHeaderLayout->addWidget(searchLineEdit);
     guiHeaderLayout->addWidget(searchStationsButton);
 
-    guiHeaderLayout->addWidget(volumeSlider);
-    guiHeaderLayout->setMargin(4);
-    guiHeaderLayout->setSpacing(2);
+    /*
+    searchLineEdit->hide();
+    searchStationsButton->hide();
+    volumeSlider->hide();
+    */
 
+    //setStyleSheet("QWidget { background-color: gray; border: 0px }");
+    setStyleSheet("QWidget { border-image: url(://resources/orange.png) 0 0 0 0 stretch stretch; border: 0px }");
+    guiHeaderLayout->addWidget(volumeSlider);
+    guiHeaderLayout->setContentsMargins(0, 0, 0, 0);
+    guiHeaderLayout->setMargin(0);
+    guiHeaderLayout->setSpacing(0);
+
+    setMinimumHeight(60);
+    setMaximumHeight(60);
     setLayout(guiHeaderLayout);
 }

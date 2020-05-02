@@ -285,29 +285,53 @@ void MainWindow::setupUI()
     radioResultsTableView->horizontalHeader()->setSectionsClickable(false);
     radioResultsTableView->verticalHeader()->setVisible(false);
     radioResultsTableView->setShowGrid(false);
+    radioResultsTableView->horizontalHeader()->setVisible(false);
 
+    resultsAndBottomLayout->addWidget(controlsGuiHeader);
     resultsAndBottomLayout->addWidget(radioResultsTableView);
+    resultsAndBottomLayout->setContentsMargins(0, 0, 0, 0);
     //resultsAndBottomLayout->addWidget(controlsGuiBottom);
 
     controlsGuiBottom->setMaximumHeight(60);
     controlsGuiBottom->setMinimumHeight(60);
     //controlsGuiBottom->setStyleSheet("QWidget { background-image: url(://resources/player_bg.png) }");
     //controlsGuiBottom->setStyleSheet("QWidget {background-color: blue }");
+    //controlsGuiHeader->setMaximumHeight(60);
+    //controlsGuiHeader->setMinimumHeight(60);
 
     favouritesTableView->setMaximumWidth(this->width() / 3);
     favouritesTableView->horizontalHeader()->setStretchLastSection(true);
     favouritesTableView->setItemDelegate(favouritesDelegate);
 
-    favouritesTableView->setStyleSheet("QTableView { background-image: url(://resources/sidebar_bg.png) }");
+    //favouritesTableView->setStyleSheet("QTableView { background-image: url(://resources/sidebar_bg.png) }");
     favouritesTableView->horizontalHeader()->setStyleSheet("QHeaderView { background-color: transparent; color: white }");
     favouritesTableView->horizontalHeader()->setSectionsClickable(false);
     favouritesTableView->setShowGrid(false);
     favouritesTableView->verticalHeader()->setVisible(false);
+    favouritesTableView->horizontalHeader()->setVisible(false);
 
-    tablesHLayout->addWidget(favouritesTableView);
+
+
+    QWidget* widgetTest = new QWidget(this);
+    widgetTest->setMaximumWidth(this->width() / 3);
+    QVBoxLayout* favLay = new QVBoxLayout;
+    QLabel* label = new QLabel("RADMAG", this);
+    label->setAlignment(Qt::AlignCenter);
+
+
+    favLay->addWidget(label);
+    favLay->addWidget(favouritesTableView);
+    widgetTest->setLayout(favLay);
+    //favLay->setMargin(0);
+    //favLay->setSpacing(0);
+    widgetTest->setStyleSheet("QWidget { background-image: url(://resources/sidebar_bg.png) }");
+
+    //tablesHLayout->addWidget(favouritesTableView);
+    tablesHLayout->addWidget(widgetTest);
+
     tablesHLayout->addLayout(resultsAndBottomLayout);
 
-    mainLayout->addWidget(controlsGuiHeader);
+    //mainLayout->addWidget(controlsGuiHeader);
     mainLayout->addLayout(tablesHLayout);
     mainLayout->addWidget(controlsGuiBottom);
 
@@ -315,7 +339,7 @@ void MainWindow::setupUI()
     mainLayout->setSpacing(0);
 
     mainWidget->setLayout(mainLayout);
-    mainWidget->setStyleSheet("QWidget { border: 0px }");
+    mainWidget->setStyleSheet("QWidget { border: 0px; }");
 
 
     setCentralWidget(mainWidget);

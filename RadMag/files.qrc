@@ -13,5 +13,8 @@
         <file>resources/removewhite.svg</file>
         <file>resources/deletewhite.svg</file>
         <file>resources/searchbackground.png</file>
+        <file>resources/turq.png</file>
+        <file>resources/searchb.png</file>
+        <file>resources/orange.png</file>
     </qresource>
 </RCC>
