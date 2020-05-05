@@ -44,12 +44,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     if (favouritesModel->dataInstance(0) == nullptr) {
         favoritesWidget->setMaximumWidth(0);
-        qDebug() << favouritesModel->dataInstance(0);
-        qDebug() << "nullpth";
     }
     else {
         favoritesWidget->setMaximumWidth(this->width() / 4);
-        qDebug() << "no nullptr";
     }
 
 
