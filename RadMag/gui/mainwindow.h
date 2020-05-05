@@ -18,7 +18,7 @@
 #include <QMediaMetaData>
 #include <QDebug>
 #include <QFileInfo>
-//#include <QMessageBox>
+#include <QPropertyAnimation>
 #include "controlsguibottom.h"
 #include "controlsguiheader.h"
 #include "models/radiostationsmodel.h"
@@ -105,6 +105,7 @@ private:
     FavouritesJson* favouritesJsonFile;
 
     NetworkDataManager* networkDataManager;
+    QWidget* favoritesWidget;
 };
 
 #endif // MAINWINDOW_H

@@ -97,7 +97,8 @@ void ControlsGuiHeader::setupUI()
     volumeSlider->setToolTip(tr("Change volume"));
 
 
-    searchStationsButton->setMaximumHeight(searchLineEdit->height());
+    //searchStationsButton->setMaximumHeight(searchLineEdit->height());
+    searchStationsButton->setMaximumHeight(60);
     searchStationsButton->setStyleSheet("QPushButton { padding: 20px; }");
 
     guiHeaderLayout->addWidget(searchLineEdit);

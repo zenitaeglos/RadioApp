@@ -17,7 +17,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     resultsAndBottomLayout(new QVBoxLayout),
     favouritesDelegate(new FavouritesDelegate(this)),
     favouritesJsonFile(new FavouritesJson),
-    networkDataManager(new NetworkDataManager(this))
+    networkDataManager(new NetworkDataManager(this)),
+    favoritesWidget(new QWidget(this))
 {
     //set network delegate to this class
     networkDataManager->setDelegate(this);
@@ -40,6 +41,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     if (dataFromJsonFile.size() > 0) {
         favouritesModel->setFavourites(dataFromJsonFile);
     }
+
+    if (favouritesModel->dataInstance(0) == nullptr) {
+        favoritesWidget->setMaximumWidth(0);
+        qDebug() << favouritesModel->dataInstance(0);
+        qDebug() << "nullpth";
+    }
+    else {
+        favoritesWidget->setMaximumWidth(this->width() / 4);
+        qDebug() << "no nullptr";
+    }
+
 
     //connects
     //connect(controlsGuiHeader->getSearchStationsButton(), &QPushButton::clicked, this, &MainWindow::searchStation);
@@ -179,6 +191,9 @@ void MainWindow::removeRadioFromFavourite()
         favouritesModel->removeFavourite(index.row());
         favouritesJsonFile->removeJsonObjectFromFile(index.row());
     }
+
+    if (favouritesModel->rowCount(QModelIndex()) == 0)
+        favoritesWidget->hide();
 }
 
 void MainWindow::playFromRequest()
@@ -208,6 +223,7 @@ void MainWindow::playFromFavourites()
 
 void MainWindow::updateRadioStationFavorite(int position, bool favorite)
 {
+    int numberOfStations = favouritesModel->rowCount(QModelIndex());
     radiostationsModel->updateModelFavorite(position, favorite);
     RadioStation* radio = radiostationsModel->dataInstance(position);
     if (favorite) {
@@ -221,6 +237,21 @@ void MainWindow::updateRadioStationFavorite(int position, bool favorite)
         int radioPositionToDelete = CompareModels::removeRadioFromModel(radio, favouritesModel);
         favouritesJsonFile->removeJsonObjectFromFile(radioPositionToDelete);
     }
+
+    if (favoritesWidget->isHidden() || numberOfStations == 0) {
+        favoritesWidget->setMaximumWidth(0);
+        if (favoritesWidget->isHidden())
+            favoritesWidget->setVisible(true);
+        QPropertyAnimation* favoritesWidthAnimation = new QPropertyAnimation(favoritesWidget, "minimumWidth");
+        favoritesWidthAnimation->setStartValue(0);
+        favoritesWidthAnimation->setEndValue(this->width() / 4);
+
+        favoritesWidthAnimation->setDuration(500);
+        favoritesWidthAnimation->setEasingCurve(QEasingCurve::OutBack);
+        favoritesWidthAnimation->start();
+    }
+    else if (favouritesModel->rowCount(QModelIndex()) == 0)
+        favoritesWidget->hide();
 }
 
 void MainWindow::removeRadioStationFromFavorite(int position)
@@ -296,8 +327,8 @@ void MainWindow::setupUI()
     controlsGuiBottom->setMinimumHeight(60);
     //controlsGuiBottom->setStyleSheet("QWidget { background-image: url(://resources/player_bg.png) }");
     //controlsGuiBottom->setStyleSheet("QWidget {background-color: blue }");
-    //controlsGuiHeader->setMaximumHeight(60);
-    //controlsGuiHeader->setMinimumHeight(60);
+    controlsGuiHeader->setMaximumHeight(60);
+    controlsGuiHeader->setMinimumHeight(60);
 
     favouritesTableView->setMaximumWidth(this->width() / 3);
     favouritesTableView->horizontalHeader()->setStretchLastSection(true);
@@ -312,22 +343,29 @@ void MainWindow::setupUI()
 
 
 
-    QWidget* widgetTest = new QWidget(this);
-    widgetTest->setMaximumWidth(this->width() / 3);
+
     QVBoxLayout* favLay = new QVBoxLayout;
     QLabel* label = new QLabel("RADMAG", this);
     label->setAlignment(Qt::AlignCenter);
 
+    /*
+    QPropertyAnimation* widgetTestAnimationWidth = new QPropertyAnimation(widgetTest, "maximumWidth");
+    widgetTestAnimationWidth->setStartValue(0);
+    widgetTestAnimationWidth->setEndValue(this->width() / 3);
+    widgetTestAnimationWidth->setDuration(1000);
+    widgetTestAnimationWidth->start();
+    widgetTestAnimationWidth->setEasingCurve(QEasingCurve::OutBack);
+    */
 
     favLay->addWidget(label);
     favLay->addWidget(favouritesTableView);
-    widgetTest->setLayout(favLay);
+    favoritesWidget->setLayout(favLay);
     //favLay->setMargin(0);
     //favLay->setSpacing(0);
-    widgetTest->setStyleSheet("QWidget { background-image: url(://resources/sidebar_bg.png) }");
+    favoritesWidget->setStyleSheet("QWidget { background-image: url(://resources/sidebar_bg.png) }");
 
     //tablesHLayout->addWidget(favouritesTableView);
-    tablesHLayout->addWidget(widgetTest);
+    tablesHLayout->addWidget(favoritesWidget);
 
     tablesHLayout->addLayout(resultsAndBottomLayout);
 
