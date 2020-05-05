@@ -85,7 +85,7 @@ void ControlsGuiHeader::setupUI()
 
     searchLineEdit->setMinimumHeight(60);
     searchLineEdit->setMaximumHeight(60);
-    //searchLineEdit->setStyleSheet("QLineEdit { background-image: url(://resources/searchbackground.png); }");
+    searchLineEdit->setStyleSheet("QLineEdit { font-size: 24px; padding: 10px }");
 
 
     volumeSlider->setMinimum(0);
@@ -98,6 +98,7 @@ void ControlsGuiHeader::setupUI()
 
 
     searchStationsButton->setMaximumHeight(searchLineEdit->height());
+    searchStationsButton->setStyleSheet("QPushButton { padding: 20px; }");
 
     guiHeaderLayout->addWidget(searchLineEdit);
     guiHeaderLayout->addWidget(searchStationsButton);

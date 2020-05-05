@@ -62,6 +62,7 @@ void ControlsGuiBottom::setupUI()
     playButton->setMinimumHeight(60);
     playButton->setMaximumHeight(60);
     playButton->setMaximumWidth(60);
+    playButton->setIconSize(QSize(50, 50));
 
     radioIconButton->setMinimumSize(QSize(60, 60));
     radioIconButton->setIconSize(QSize(50, 50));
