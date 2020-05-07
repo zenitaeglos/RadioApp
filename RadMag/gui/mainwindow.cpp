@@ -235,6 +235,8 @@ void MainWindow::updateRadioStationFavorite(int position, bool favorite)
         favouritesJsonFile->removeJsonObjectFromFile(radioPositionToDelete);
     }
 
+    // Animation to make the favorites tableview hide or show
+    // if at least one radio is saved
     if (favoritesWidget->isHidden() || numberOfStations == 0) {
         favoritesWidget->setMaximumWidth(0);
         if (favoritesWidget->isHidden())
@@ -314,6 +316,7 @@ void MainWindow::setupUI()
     radioResultsTableView->verticalHeader()->setVisible(false);
     radioResultsTableView->setShowGrid(false);
     radioResultsTableView->horizontalHeader()->setVisible(false);
+    radioResultsTableView->setStyleSheet("QTableView { background-color: transparent }");
 
     resultsAndBottomLayout->addWidget(controlsGuiHeader);
     resultsAndBottomLayout->addWidget(radioResultsTableView);
@@ -374,8 +377,10 @@ void MainWindow::setupUI()
     mainLayout->setSpacing(0);
 
     mainWidget->setLayout(mainLayout);
-    mainWidget->setStyleSheet("QWidget { border: 0px; }");
+    mainWidget->setStyleSheet("QWidget { background-image: url(://resources/blue_bg.png); border: 0px; }");
 
+
+    //setWindowFlags(Qt::FramelessWindowHint);
 
     setCentralWidget(mainWidget);
     //gui geometry

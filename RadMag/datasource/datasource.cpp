@@ -18,9 +18,9 @@ QString DataSource::resource(DataSource::Resources resourceString)
     case Search:
         return "://resources/baseline-search-24px.svg";
     case Star:
-        return "://resources/baseline-star-24px.svg";
+        return "://resources/roundwhitestarfilled.png";
     case StarBorder:
-        return "://resources/baseline-star_border-24px.svg";
+        return "://resources/roundwhitestar.png";
     case Remove:
         return "://resources/baseline-remove_circle_outline-24px.svg";
     case RemoveWhite:

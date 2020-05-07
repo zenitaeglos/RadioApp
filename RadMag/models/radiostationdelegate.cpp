@@ -11,7 +11,7 @@ void RadioStationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 {
     QFont font;
     QPen pen;
-    pen.setColor(QColor(Qt::black));
+    pen.setColor(QColor(Qt::white));
 
 
     painter->setRenderHint(QPainter::Antialiasing);
@@ -35,11 +35,11 @@ void RadioStationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
     //set the icon to only be border or complete, depending if it belongs to favorites or not.
     if (jsonObject["favorite"].toBool() == true) {
         QIcon starIcon(DataSource::resource(DataSource::Star));
-        painter->drawPixmap(option.rect.x() + option.rect.width() - 40, option.rect.y(), 32, 32, starIcon.pixmap(QSize(32, 32)));
+        painter->drawPixmap(option.rect.x() + option.rect.width() - 60, option.rect.y(), 32, 32, starIcon.pixmap(QSize(32, 32)));
     }
     else {
         QIcon starIcon(DataSource::resource(DataSource::StarBorder));
-        painter->drawPixmap(option.rect.x() + option.rect.width() - 40, option.rect.y(), 32, 32, starIcon.pixmap(QSize(32, 32)));
+        painter->drawPixmap(option.rect.x() + option.rect.width() - 60, option.rect.y(), 32, 32, starIcon.pixmap(QSize(32, 32)));
     }
 
 }
@@ -55,7 +55,7 @@ bool RadioStationDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
 {
     if (event->type() == QEvent::MouseButtonPress) {
         QMouseEvent* mouse = static_cast<QMouseEvent*>(event);
-        if (mouse->pos().x() > option.rect.width() - 30 && mouse->pos().y() < option.rect.y() + 30) {
+        if (mouse->pos().x() > option.rect.width() - 50 && mouse->pos().y() < option.rect.y() + 30) {
             QJsonObject jsonObject = model->data(index).toJsonObject();
             bool favorite = true;
             if (jsonObject[RadioStation::getType(RadioStation::IsFavorite)].toBool())

@@ -111,7 +111,7 @@ void ControlsGuiHeader::setupUI()
     */
 
     //setStyleSheet("QWidget { background-color: gray; border: 0px }");
-    setStyleSheet("QWidget { border-image: url(://resources/orange.png) 0 0 0 0 stretch stretch; border: 0px }");
+    setStyleSheet("QWidget { border-image: url(://resources/blue_bg.png) 0 0 0 0 stretch stretch; border: 0px }");
     guiHeaderLayout->addWidget(volumeSlider);
     guiHeaderLayout->setContentsMargins(0, 0, 0, 0);
     guiHeaderLayout->setMargin(0);

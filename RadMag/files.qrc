@@ -17,5 +17,8 @@
         <file>resources/searchb.png</file>
         <file>resources/orange.png</file>
         <file>resources/radioblack.png</file>
+        <file>resources/blue_bg.png</file>
+        <file>resources/roundwhitestar.png</file>
+        <file>resources/roundwhitestarfilled.png</file>
     </qresource>
 </RCC>
