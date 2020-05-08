@@ -75,11 +75,13 @@ private slots:
     void playFromFavourites();
 
     // update both tableviews depending on whether the star gives a favorite or not
-    void updateRadioStationFavorite(int position, bool favorite);
+    void updateRadioStationFavorite(int position, bool favorite, int yMousePosition);
     void removeRadioStationFromFavorite(int position);
     //setcurrentindex from favorite
     void currentIndexFavorite(int index);
     void currentIndexRadioStation(int index);
+
+    void starAnimationEnd();
 
 private:
     void playRadioStation(RadioStation* data);
@@ -106,6 +108,8 @@ private:
 
     NetworkDataManager* networkDataManager;
     QWidget* favoritesWidget;
+
+    QWidget* starWidget;
 };
 
 #endif // MAINWINDOW_H

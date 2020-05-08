@@ -63,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     connect(favouritesTableView, &QTableView::doubleClicked, this, &MainWindow::playFromFavourites);
 
-    connect(radioStationDelegate, &RadioStationDelegate::starClicked, this, &MainWindow::updateRadioStationFavorite);
+    connect(radioStationDelegate, &RadioStationDelegate::starClickedMouse, this, &MainWindow::updateRadioStationFavorite);
 
     connect(favouritesDelegate, &FavouritesDelegate::removeClicked, this, &MainWindow::removeRadioFromFavourite);
     connect(favouritesDelegate, &FavouritesDelegate::playFavoriteClicked, this, &MainWindow::playFromFavourites);
@@ -218,7 +218,7 @@ void MainWindow::playFromFavourites()
     }
 }
 
-void MainWindow::updateRadioStationFavorite(int position, bool favorite)
+void MainWindow::updateRadioStationFavorite(int position, bool favorite, int yMousePosition)
 {
     int numberOfStations = favouritesModel->rowCount(QModelIndex());
     radiostationsModel->updateModelFavorite(position, favorite);
@@ -227,6 +227,19 @@ void MainWindow::updateRadioStationFavorite(int position, bool favorite)
         if (CompareModels::findRadioStationInModel(radio, favouritesModel) == -1) {
             favouritesModel->addFavourite(radiostationsModel->rowCount(QModelIndex()), radio);
             favouritesJsonFile->addJsonObjectToFile(radio->getObject(), 0);
+
+            starWidget = new QWidget(this);
+            starWidget->setGeometry(this->width() - 60, yMousePosition + 40, 42, 42);
+            starWidget->setStyleSheet("QWidget { background-image: url(://resources/roundwhitestarfilled.png) }");
+
+            starWidget->show();
+            QPropertyAnimation* starAnimation = new QPropertyAnimation(starWidget, "geometry");
+            starAnimation->setStartValue(QRect(starWidget->x(), starWidget->y(), starWidget->width(), starWidget->height()));
+            starAnimation->setEndValue(QRect(50, starWidget->y(), starWidget->width(), starWidget->height()));
+            starAnimation->setDuration(1000);
+            starAnimation->setEasingCurve(QEasingCurve::InCirc);
+            starAnimation->start();
+            connect(starAnimation, &QPropertyAnimation::finished, this, &MainWindow::starAnimationEnd);
         }
 
     }
@@ -269,6 +282,11 @@ void MainWindow::currentIndexRadioStation(int index)
 {
     QModelIndex radioStationIndex = radiostationsModel->index(index, 0);
     radioResultsTableView->setCurrentIndex(radioStationIndex);
+}
+
+void MainWindow::starAnimationEnd()
+{
+    delete starWidget;
 }
 
 void MainWindow::fillDataModel(QByteArray data)

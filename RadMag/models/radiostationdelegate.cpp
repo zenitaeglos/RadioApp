@@ -62,7 +62,7 @@ bool RadioStationDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
             bool favorite = true;
             if (jsonObject[RadioStation::getType(RadioStation::IsFavorite)].toBool())
                 favorite = false;
-            emit starClicked(index.row(), favorite);
+            emit starClickedMouse(index.row(), favorite, mouse->pos().y());
         }
         else {
             emit currentIndexChanged(index.row());
