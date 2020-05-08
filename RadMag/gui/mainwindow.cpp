@@ -379,8 +379,9 @@ void MainWindow::setupUI()
     mainWidget->setLayout(mainLayout);
     mainWidget->setStyleSheet("QWidget { background-image: url(://resources/blue_bg.png); border: 0px; }");
 
-
     //setWindowFlags(Qt::FramelessWindowHint);
+
+    setStyleSheet("QMainWindow { background-image: url(://resources/blue_bg.png) }");
 
     setCentralWidget(mainWidget);
     //gui geometry

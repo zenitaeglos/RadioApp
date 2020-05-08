@@ -16,6 +16,7 @@ ControlsGuiHeader::ControlsGuiHeader(QWidget *parent) : QWidget(parent),
 
     // connections
     connect(searchStationsButton, &QPushButton::clicked, this, &ControlsGuiHeader::fetchRadioStations);
+    connect(searchLineEdit, &QLineEdit::textChanged, this, &ControlsGuiHeader::changeSearchSize);
 
 }
 
@@ -59,10 +60,21 @@ void ControlsGuiHeader::didNotReceiveData(QString error)
 
 void ControlsGuiHeader::fetchRadioStations(bool checked)
 {
+    QPropertyAnimation* animation = new QPropertyAnimation(searchLineEdit, "geometry");
+    animation->setStartValue(QRect(searchLineEdit->x(), searchLineEdit->y(), searchLineEdit->width(), searchLineEdit->height()));
+    animation->setEndValue(QRect(searchLineEdit->x(), searchLineEdit->y(), searchLineEdit->width(), 40));
+    animation->setDuration(200);
+
+    animation->start();
+
+    searchLineEdit->setStyleSheet("QLineEdit { font-size: 13px }");
+
     Q_UNUSED(checked);
     QString lineEditText = searchLineEdit->text();
     int filterIndex = lineEditText.indexOf(":");
     QString baseUrl;
+
+    searchLineEdit->setText("");
 
     // check for filtering options
     if (filterIndex > 0) {
@@ -78,22 +90,38 @@ void ControlsGuiHeader::fetchRadioStations(bool checked)
     }
 }
 
+void ControlsGuiHeader::changeSearchSize()
+{
+    if (searchLineEdit->height() != 60) {
+        QPropertyAnimation* animation = new QPropertyAnimation(searchLineEdit, "geometry");
+        animation->setStartValue(QRect(searchLineEdit->x(), searchLineEdit->y(), searchLineEdit->width(), searchLineEdit->height()));
+        animation->setEndValue(QRect(searchLineEdit->x(), searchLineEdit->y(), searchLineEdit->width(), 60));
+        animation->setDuration(200);
+
+        animation->start();
+
+        searchLineEdit->setStyleSheet("QLineEdit { font-size: 24px }");
+    }
+
+}
+
 void ControlsGuiHeader::setupUI()
 {
     searchLineEdit->setPlaceholderText(tr("Search Radio"));
     searchLineEdit->setToolTip(tr("Search radio station"));
+    qDebug() << searchLineEdit->font();
 
-    searchLineEdit->setMinimumHeight(60);
-    searchLineEdit->setMaximumHeight(60);
-    searchLineEdit->setStyleSheet("QLineEdit { font-size: 24px; padding: 10px }");
+    //searchLineEdit->setMinimumHeight(60);
+    //searchLineEdit->setMaximumHeight(60);
+    //searchLineEdit->setStyleSheet("QLineEdit { font-size: 24px; padding: 10px }");
 
 
     volumeSlider->setMinimum(0);
     volumeSlider->setMaximum(100);
     volumeSlider->setValue(50);
     volumeSlider->setMaximumWidth(80);
-    volumeSlider->setMinimumHeight(60);
-    volumeSlider->setMaximumHeight(60);
+    //volumeSlider->setMinimumHeight(60);
+    //volumeSlider->setMaximumHeight(60);
     volumeSlider->setToolTip(tr("Change volume"));
 
 
@@ -111,7 +139,7 @@ void ControlsGuiHeader::setupUI()
     */
 
     //setStyleSheet("QWidget { background-color: gray; border: 0px }");
-    setStyleSheet("QWidget { border-image: url(://resources/blue_bg.png) 0 0 0 0 stretch stretch; border: 0px }");
+    setStyleSheet("QWidget { border-image: url(://resources/blue_bg.png) 0 0 0 0 stretch stretch; border: 10px }");
     guiHeaderLayout->addWidget(volumeSlider);
     guiHeaderLayout->setContentsMargins(0, 0, 0, 0);
     guiHeaderLayout->setMargin(0);

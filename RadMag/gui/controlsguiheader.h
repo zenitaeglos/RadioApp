@@ -10,6 +10,7 @@
 #include <QSlider>
 #include <QCompleter>
 #include <QMessageBox>
+#include <QPropertyAnimation>
 #include "custom/radioappbutton.h"
 #include "datasource/datasource.h"
 
@@ -42,6 +43,8 @@ signals:
 
 private slots:
     void fetchRadioStations(bool checked);
+
+    void changeSearchSize();
 
 private:
     void setupUI();

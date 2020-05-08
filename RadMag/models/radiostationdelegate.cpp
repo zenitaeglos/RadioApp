@@ -28,9 +28,10 @@ void RadioStationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
     font.setPointSize(8);
     painter->setFont(font);
     painter->drawText(countryRect, tr("Country: ") + jsonObject[RadioStation::getType(RadioStation::Country)].toString());
-    QRectF bitRateRect(countryRect.bottomRight().x(), countryRect.topRight().y(), option.rect.width() - countryRect.width(), 20);
+    QRectF bitRateRect(countryRect.bottomRight().x(), countryRect.topRight().y(), option.rect.width() - countryRect.width() - 60, 20);
+    int bitrateValue = jsonObject[RadioStation::getType(RadioStation::Bitrate)].toInt();
     painter->drawText(bitRateRect,
-                      Qt::AlignCenter | Qt::TextWordWrap, tr("Bitrate: ") + jsonObject[RadioStation::getType(RadioStation::Bitrate)].toString());
+                      Qt::AlignCenter | Qt::TextWordWrap, tr("Bitrate: ") + QString::number(bitrateValue));
 
     //set the icon to only be border or complete, depending if it belongs to favorites or not.
     if (jsonObject["favorite"].toBool() == true) {
@@ -55,7 +56,8 @@ bool RadioStationDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
 {
     if (event->type() == QEvent::MouseButtonPress) {
         QMouseEvent* mouse = static_cast<QMouseEvent*>(event);
-        if (mouse->pos().x() > option.rect.width() - 50 && mouse->pos().y() < option.rect.y() + 30) {
+        if (mouse->pos().x() > option.rect.width() - 50 && mouse->pos().y() < option.rect.y() + 30 &&
+                mouse->pos().x() < option.rect.width() - 30) {
             QJsonObject jsonObject = model->data(index).toJsonObject();
             bool favorite = true;
             if (jsonObject[RadioStation::getType(RadioStation::IsFavorite)].toBool())
