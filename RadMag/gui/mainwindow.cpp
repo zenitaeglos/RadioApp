@@ -370,25 +370,13 @@ void MainWindow::setupUI()
     QLabel* favoritesLabel = new QLabel("Favorites", this);
     label->setStyleSheet("QLabel { color: white; padding-bottom: 20px; }");
 
-
-    /*
-    QPropertyAnimation* widgetTestAnimationWidth = new QPropertyAnimation(widgetTest, "maximumWidth");
-    widgetTestAnimationWidth->setStartValue(0);
-    widgetTestAnimationWidth->setEndValue(this->width() / 3);
-    widgetTestAnimationWidth->setDuration(1000);
-    widgetTestAnimationWidth->start();
-    widgetTestAnimationWidth->setEasingCurve(QEasingCurve::OutBack);
-    */
-
     favLay->addWidget(label);
     favLay->addWidget(favoritesLabel);
     favLay->addWidget(favouritesTableView);
     favoritesWidget->setLayout(favLay);
-    //favLay->setMargin(0);
-    //favLay->setSpacing(0);
+
     favoritesWidget->setStyleSheet("QWidget { background-image: url(://resources/sidebar_bg.png) }");
 
-    //tablesHLayout->addWidget(favouritesTableView);
     tablesHLayout->addWidget(favoritesWidget);
 
     tablesHLayout->addLayout(resultsAndBottomLayout);
