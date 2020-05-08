@@ -110,6 +110,8 @@ private:
     QWidget* favoritesWidget;
 
     QWidget* starWidget;
+
+    RadioStation* radioAddToFavorites;
 };
 
 #endif // MAINWINDOW_H

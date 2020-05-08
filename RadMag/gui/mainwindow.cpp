@@ -222,11 +222,9 @@ void MainWindow::updateRadioStationFavorite(int position, bool favorite, int yMo
 {
     int numberOfStations = favouritesModel->rowCount(QModelIndex());
     radiostationsModel->updateModelFavorite(position, favorite);
-    RadioStation* radio = radiostationsModel->dataInstance(position);
+    radioAddToFavorites = radiostationsModel->dataInstance(position);
     if (favorite) {
-        if (CompareModels::findRadioStationInModel(radio, favouritesModel) == -1) {
-            favouritesModel->addFavourite(radiostationsModel->rowCount(QModelIndex()), radio);
-            favouritesJsonFile->addJsonObjectToFile(radio->getObject(), 0);
+        if (CompareModels::findRadioStationInModel(radioAddToFavorites, favouritesModel) == -1) {
 
             starWidget = new QWidget(this);
             starWidget->setGeometry(this->width() - 60, yMousePosition + 40, 42, 42);
@@ -244,7 +242,7 @@ void MainWindow::updateRadioStationFavorite(int position, bool favorite, int yMo
 
     }
     else {
-        int radioPositionToDelete = CompareModels::removeRadioFromModel(radio, favouritesModel);
+        int radioPositionToDelete = CompareModels::removeRadioFromModel(radioAddToFavorites, favouritesModel);
         favouritesJsonFile->removeJsonObjectFromFile(radioPositionToDelete);
     }
 
@@ -287,6 +285,8 @@ void MainWindow::currentIndexRadioStation(int index)
 void MainWindow::starAnimationEnd()
 {
     delete starWidget;
+    favouritesModel->addFavourite(radiostationsModel->rowCount(QModelIndex()), radioAddToFavorites);
+    favouritesJsonFile->addJsonObjectToFile(radioAddToFavorites->getObject(), 0);
 }
 
 void MainWindow::fillDataModel(QByteArray data)
