@@ -227,7 +227,7 @@ void MainWindow::updateRadioStationFavorite(int position, bool favorite, int yMo
         if (CompareModels::findRadioStationInModel(radioAddToFavorites, favouritesModel) == -1) {
 
             starWidget = new QWidget(this);
-            starWidget->setGeometry(this->width() - 60, yMousePosition + 40, 42, 42);
+            starWidget->setGeometry(this->width() - 68, yMousePosition + 40, 42, 42);
             starWidget->setStyleSheet("QWidget { background-image: url(://resources/roundwhitestarfilled.png) }");
 
             starWidget->show();
