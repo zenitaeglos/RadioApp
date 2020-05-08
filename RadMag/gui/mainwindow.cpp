@@ -364,7 +364,12 @@ void MainWindow::setupUI()
 
     QVBoxLayout* favLay = new QVBoxLayout;
     QLabel* label = new QLabel("RADMAG", this);
+    label->setStyleSheet("QLabel { color: white }");
     label->setAlignment(Qt::AlignCenter);
+
+    QLabel* favoritesLabel = new QLabel("Favorites", this);
+    label->setStyleSheet("QLabel { color: white; padding-bottom: 20px; }");
+
 
     /*
     QPropertyAnimation* widgetTestAnimationWidth = new QPropertyAnimation(widgetTest, "maximumWidth");
@@ -376,6 +381,7 @@ void MainWindow::setupUI()
     */
 
     favLay->addWidget(label);
+    favLay->addWidget(favoritesLabel);
     favLay->addWidget(favouritesTableView);
     favoritesWidget->setLayout(favLay);
     //favLay->setMargin(0);
