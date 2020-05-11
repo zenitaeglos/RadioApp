@@ -220,12 +220,13 @@ void MainWindow::playFromFavourites()
 
 void MainWindow::updateRadioStationFavorite(int position, bool favorite, int yMousePosition)
 {
+    if (starWidget != NULL)
+        return;
     int numberOfStations = favouritesModel->rowCount(QModelIndex());
     radiostationsModel->updateModelFavorite(position, favorite);
     radioAddToFavorites = radiostationsModel->dataInstance(position);
     if (favorite) {
         if (CompareModels::findRadioStationInModel(radioAddToFavorites, favouritesModel) == -1) {
-
             starWidget = new QWidget(this);
             starWidget->setGeometry(this->width() - 68, yMousePosition + 40, 42, 42);
             starWidget->setStyleSheet("QWidget { background-image: url(://resources/roundwhitestarfilled.png) }");
@@ -285,6 +286,7 @@ void MainWindow::currentIndexRadioStation(int index)
 void MainWindow::starAnimationEnd()
 {
     delete starWidget;
+    starWidget = nullptr;
     favouritesModel->addFavourite(radiostationsModel->rowCount(QModelIndex()), radioAddToFavorites);
     favouritesJsonFile->addJsonObjectToFile(radioAddToFavorites->getObject(), 0);
 }
@@ -368,7 +370,7 @@ void MainWindow::setupUI()
     label->setAlignment(Qt::AlignCenter);
 
     QLabel* favoritesLabel = new QLabel("Favorites", this);
-    label->setStyleSheet("QLabel { color: white; padding-bottom: 20px; }");
+    favoritesLabel->setStyleSheet("QLabel { color: white; padding-bottom: 20px; }");
 
     favLay->addWidget(label);
     favLay->addWidget(favoritesLabel);
